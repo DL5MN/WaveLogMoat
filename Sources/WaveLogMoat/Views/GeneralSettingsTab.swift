@@ -92,7 +92,11 @@ public struct GeneralSettingsTab: View {
     private func checkNotificationStatus() {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
             DispatchQueue.main.async {
-                notificationsDenied = settings.authorizationStatus == .denied
+                let denied = settings.authorizationStatus == .denied
+                notificationsDenied = denied
+                if denied {
+                    appState.config.showNotifications = false
+                }
             }
         }
     }
