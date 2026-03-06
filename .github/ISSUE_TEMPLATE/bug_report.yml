@@ -1,0 +1,96 @@
+name: "\U0001F41E Bug Report"
+description: Report a bug or unexpected behavior
+labels: ["bug"]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug!
+        Please search [existing issues](https://github.com/dl5mn/WaveLogMoat/issues?q=is%3Aissue) before filing a new one.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+      description: A clear description of what the bug is.
+      placeholder: What happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen instead?
+      placeholder: What should have happened?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: How can we reproduce the issue?
+      placeholder: |
+        1. Open Settings
+        2. Go to '...'
+        3. Click on '...'
+        4. See error
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: WaveLogMoat version
+      description: "Found in Settings → About"
+      placeholder: "e.g. 0.1.0 (1)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: macos
+    attributes:
+      label: macOS version
+      options:
+        - macOS 15 (Sequoia)
+        - macOS 14 (Sonoma)
+    validations:
+      required: true
+
+  - type: input
+    id: wsjtx-version
+    attributes:
+      label: WSJT-X version
+      placeholder: "e.g. 2.7.1 or wsjtx-improved 2.7.1"
+
+  - type: input
+    id: wavelog-version
+    attributes:
+      label: Wavelog version
+      description: "Shown in the WaveLogMoat menu bar panel"
+      placeholder: "e.g. 2.1.0"
+
+  - type: dropdown
+    id: protocol
+    attributes:
+      label: Which protocol is affected?
+      options:
+        - Text (ADIF/XML)
+        - Binary (QDataStream)
+        - Both
+        - Not protocol related
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Log output
+      description: "Paste any relevant log output from Console.app (filter by 'WaveLogMoat')."
+      render: text
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
+      description: Screenshots, network setup, anything else that might help.
