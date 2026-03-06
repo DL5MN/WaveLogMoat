@@ -108,7 +108,7 @@ public final class AppState {
         var newQSO = qso
 
         do {
-            let adifString = ADIFGenerator.generate(newQSO)
+            let adifString = ADIFGenerator.generate([newQSO])
             _ = try await apiClient.logQSO(
                 adifString: adifString,
                 apiKey: apiKey,

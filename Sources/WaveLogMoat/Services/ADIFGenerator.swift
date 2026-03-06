@@ -12,15 +12,6 @@ public enum ADIFGenerator {
         + "<EOH>\n"
     }
 
-    public static func generate(_ qso: QSO, includeHeader: Bool = true) -> String {
-        var adif = ""
-        if includeHeader {
-            adif += generateHeader()
-        }
-        adif += generateRecord(qso)
-        return adif
-    }
-
     public static func generate(_ qsos: [QSO], includeHeader: Bool = true) -> String {
         var adif = ""
         if includeHeader {

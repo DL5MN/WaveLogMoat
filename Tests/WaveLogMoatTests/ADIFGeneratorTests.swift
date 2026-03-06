@@ -8,7 +8,7 @@ final class ADIFGeneratorTests: XCTestCase {
         qso.mode = "FT8"
         qso.frequency = "14.074000"
 
-        let output = ADIFGenerator.generate(qso)
+        let output = ADIFGenerator.generate([qso])
 
         XCTAssertTrue(output.contains("<ADIF_VER:5>3.1.6"))
         XCTAssertTrue(output.contains("<PROGRAMID:"))
@@ -20,7 +20,7 @@ final class ADIFGeneratorTests: XCTestCase {
         var qso = QSO()
         qso.call = "K1JT"
 
-        let output = ADIFGenerator.generate(qso, includeHeader: false)
+        let output = ADIFGenerator.generate([qso], includeHeader: false)
 
         XCTAssertFalse(output.contains("<EOH>"))
         XCTAssertTrue(output.contains("<CALL:4>K1JT"))
@@ -52,7 +52,7 @@ final class ADIFGeneratorTests: XCTestCase {
         input.qsoDate = "20250105"
         input.timeOn = "181530"
 
-        let adif = ADIFGenerator.generate(input, includeHeader: true)
+        let adif = ADIFGenerator.generate([input], includeHeader: true)
         let parsed = try ADIFParser.parse(adif)
 
         XCTAssertEqual(parsed.count, 1)
