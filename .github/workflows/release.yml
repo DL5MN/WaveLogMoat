@@ -17,11 +17,17 @@ jobs:
       - name: Select Xcode
         run: sudo xcode-select -s /Applications/Xcode_16.4.app
 
-      - name: Archive Release
-        run: xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Release -archivePath build/WaveLogMoat.xcarchive archive
+      - name: Install SwiftLint
+        run: brew install swiftlint
+
+      - name: Lint
+        run: swiftlint lint --strict
 
       - name: Run Tests
         run: swift test
+
+      - name: Archive Release
+        run: xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Release -archivePath build/WaveLogMoat.xcarchive archive
 
       - name: Get Version
         id: version
@@ -31,10 +37,6 @@ jobs:
         run: |
           APP_NAME="WaveLogMoat"
           APP_PATH="build/WaveLogMoat.xcarchive/Products/Applications/${APP_NAME}.app"
-          if [ -z "$APP_PATH" ]; then
-            echo "Could not locate ${APP_NAME}.app after build"
-            exit 1
-          fi
           if [ ! -d "$APP_PATH" ]; then
             echo "Could not locate ${APP_NAME}.app at $APP_PATH"
             exit 1
@@ -42,6 +44,10 @@ jobs:
           mkdir -p dist/stage
           ditto "$APP_PATH" "dist/stage/${APP_NAME}.app"
           hdiutil create -volname "$APP_NAME" -srcfolder "dist/stage" -ov -format UDZO "dist/${APP_NAME}-${GITHUB_REF_NAME}.dmg"
+
+      - name: Compute DMG SHA256
+        id: sha
+        run: echo "SHA256=$(shasum -a 256 dist/WaveLogMoat-${GITHUB_REF_NAME}.dmg | awk '{print $1}')" >> $GITHUB_OUTPUT
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
@@ -53,3 +59,21 @@ jobs:
           files: dist/WaveLogMoat-${{ github.ref_name }}.dmg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update Homebrew Tap
+        env:
+          TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          SHA256="${{ steps.sha.outputs.SHA256 }}"
+
+          git clone https://x-access-token:${TAP_TOKEN}@github.com/dl5mn/homebrew-wavelogmoat.git /tmp/tap
+          cd /tmp/tap
+
+          sed -i '' "s/version \".*\"/version \"${VERSION}\"/" Casks/wavelogmoat.rb
+          sed -i '' "s/sha256 .*/sha256 \"${SHA256}\"/" Casks/wavelogmoat.rb
+
+          git config user.name "DL5MN"
+          git config user.email "dl5mn@users.noreply.github.com"
+          git add Casks/wavelogmoat.rb
+          git diff --cached --quiet && echo "No changes to commit" || (git commit -m "bump: WaveLogMoat ${VERSION}" && git push)
