@@ -1,4 +1,4 @@
-.PHONY: build test clean run lint format release app archive changelog
+.PHONY: build test clean run lint format release app archive changelog open
 
 build:
 	swift build
@@ -23,6 +23,9 @@ format:
 
 release:
 	xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Release -destination 'platform=macOS' build
+
+open:
+	open "$$(xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Debug -showBuildSettings 2>/dev/null | grep -m1 'BUILT_PRODUCTS_DIR' | awk '{print $$NF}')/WaveLogMoat.app"
 
 changelog:
 	git-cliff --output CHANGELOG.md
