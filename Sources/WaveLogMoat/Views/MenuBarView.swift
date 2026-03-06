@@ -2,6 +2,8 @@ import SwiftUI
 
 public struct MenuBarView: View {
     @Bindable var appState: AppState
+    @Environment(\.dismiss) private var dismiss
+    @Environment(\.openSettings) private var openSettings
     let checkForUpdates: () -> Void
 
     public init(appState: AppState, checkForUpdates: @escaping () -> Void) {
@@ -65,22 +67,28 @@ public struct MenuBarView: View {
             Divider()
 
             VStack(alignment: .leading, spacing: 8) {
-                SettingsLink {
+                Button {
+                    dismiss()
+                    openSettings()
+                } label: {
                     Label("Settings...", systemImage: "gear")
                 }
                 .keyboardShortcut(",", modifiers: .command)
                 .buttonStyle(.plain)
 
-                Button(
-                    action: { checkForUpdates() },
-                    label: { Label("Check for Updates...", systemImage: "arrow.triangle.2.circlepath") }
-                )
+                Button {
+                    dismiss()
+                    checkForUpdates()
+                } label: {
+                    Label("Check for Updates...", systemImage: "arrow.triangle.2.circlepath")
+                }
                 .buttonStyle(.plain)
 
-                Button(
-                    action: { NSApplication.shared.terminate(nil) },
-                    label: { Label("Quit WaveLogMoat", systemImage: "power") }
-                )
+                Button {
+                    NSApplication.shared.terminate(nil)
+                } label: {
+                    Label("Quit WaveLogMoat", systemImage: "power")
+                }
                 .keyboardShortcut("q", modifiers: .command)
                 .buttonStyle(.plain)
             }
