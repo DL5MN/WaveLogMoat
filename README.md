@@ -7,6 +7,8 @@
 
 > Native macOS menu bar application for automatic QSO logging from WSJT-X to [Wavelog](https://www.wavelog.org).
 
+There are already several tools that bridge WSJT-X and Wavelog — [WaveLogGate](https://github.com/wavelog/WaveLogGate), [WaveLogStoat](https://github.com/int2001/WaveLogStoat), and [WaveLogGoat](https://github.com/johnsonm/WaveLogGoat). They all work, but none of them are native macOS apps. I wanted something that feels at home on my Mac: a lightweight menu bar app built with SwiftUI that uses the macOS Keychain for secrets, sends native notifications, supports Sparkle auto-updates, and doesn't bundle an entire Electron runtime or require a terminal to run. That's WaveLogMoat.
+
 WaveLogMoat listens for QSO data from WSJT-X and automatically forwards it to your Wavelog instance in real-time. It supports both the text-based ADIF/XML protocol (Secondary UDP Server) and the binary QDataStream protocol for richer status information.
 
 ## Screenshots
@@ -153,12 +155,23 @@ WaveLogMoat is built with:
 
 See [PLAN.md](PLAN.md) for detailed architecture documentation.
 
-## Related Projects
+## How It Compares
 
-- [WaveLogGate](https://github.com/wavelog/WaveLogGate) - Official Electron-based bridge (CAT + QSO logging)
-- [WaveLogStoat](https://github.com/int2001/WaveLogStoat) - Lightweight Go CLI for QSO transport
-- [WaveLogGoat](https://github.com/johnsonm/WaveLogGoat) - Go-based CAT control
-- [Wavelog](https://github.com/wavelog/wavelog) - The logging platform
+| | WaveLogMoat | [WaveLogGate](https://github.com/wavelog/WaveLogGate) | [WaveLogStoat](https://github.com/int2001/WaveLogStoat) | [WaveLogGoat](https://github.com/johnsonm/WaveLogGoat) |
+|---|---|---|---|---|
+| **Platform** | macOS (native) | Windows, macOS, Linux (Electron) | Windows, macOS, Linux (Go CLI) | Windows, macOS, Linux (Go) |
+| **QSO Logging** | Yes | Yes | Yes | No |
+| **CAT Control** | No | Yes (FLRig/Hamlib) | No | Yes |
+| **UI** | Menu bar app (SwiftUI) | Desktop window (Electron) | Terminal | Terminal |
+| **Binary size** | ~5 MB | ~200 MB+ (Electron) | ~10 MB | ~10 MB |
+| **Auto-updates** | Sparkle | Electron auto-updater | Manual | Manual |
+| **Secrets storage** | macOS Keychain | Config file | Config file | Config file |
+| **Notifications** | Native macOS | Electron notifications | None | None |
+| **Self-signed certs** | Yes | Yes | Yes | Yes |
+
+WaveLogMoat focuses on doing one thing well: getting QSOs from WSJT-X into Wavelog with zero friction. If you need CAT control, use WaveLogGate or WaveLogGoat. If you want a native Mac experience for QSO logging, this is it.
+
+See also: [Wavelog](https://github.com/wavelog/wavelog) — the logging platform itself.
 
 ## License
 
