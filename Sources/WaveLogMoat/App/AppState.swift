@@ -29,6 +29,17 @@ public final class AppState {
     public var lastError: String?
     public var showingError: Bool = false
 
+    public var apiKey: String = "" {
+        didSet {
+            guard apiKey != oldValue else { return }
+            do {
+                try KeychainHelper.save(key: "wavelog_api_key", value: apiKey)
+            } catch {
+                Log.api.error("Failed to save API key to Keychain: \(error.localizedDescription)")
+            }
+        }
+    }
+
     private var heartbeatTimer: Timer?
 
     public init() {
@@ -37,6 +48,7 @@ public final class AppState {
             allowSelfSignedCerts: true,
             timeout: 5.0
         )
+        self.apiKey = (try? KeychainHelper.load(key: "wavelog_api_key")) ?? ""
         loadConfig()
         setupCallbacks()
     }
@@ -200,14 +212,4 @@ public final class AppState {
         startListening()
     }
 
-    public var apiKey: String {
-        get { (try? KeychainHelper.load(key: "wavelog_api_key")) ?? "" }
-        set {
-            do {
-                try KeychainHelper.save(key: "wavelog_api_key", value: newValue)
-            } catch {
-                Log.api.error("Failed to save API key to Keychain: \(error.localizedDescription)")
-            }
-        }
-    }
 }
