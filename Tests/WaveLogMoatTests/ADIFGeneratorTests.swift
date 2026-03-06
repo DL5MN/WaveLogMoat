@@ -10,8 +10,8 @@ final class ADIFGeneratorTests: XCTestCase {
 
         let output = ADIFGenerator.generate(qso)
 
-        XCTAssertTrue(output.contains("<ADIF_VER:5>3.1.4"))
-        XCTAssertTrue(output.contains("<PROGRAMID:12>WaveLogMoat"))
+        XCTAssertTrue(output.contains("<ADIF_VER:5>3.1.6"))
+        XCTAssertTrue(output.contains("<PROGRAMID:"))
         XCTAssertTrue(output.contains("<CALL:5>DL5MN"))
         XCTAssertTrue(output.contains("<EOR>"))
     }

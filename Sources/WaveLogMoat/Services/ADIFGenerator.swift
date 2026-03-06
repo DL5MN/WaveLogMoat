@@ -1,12 +1,21 @@
 import Foundation
 
 public enum ADIFGenerator {
+    private static let adifVersion = "3.1.6"
+    private static var programName: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? "WaveLogMoat"
+    }
+
+    private static func generateHeader() -> String {
+        formatField("ADIF_VER", value: adifVersion) + "\n"
+        + formatField("PROGRAMID", value: programName) + "\n"
+        + "<EOH>\n"
+    }
+
     public static func generate(_ qso: QSO, includeHeader: Bool = true) -> String {
         var adif = ""
         if includeHeader {
-            adif += "<ADIF_VER:5>3.1.4\n"
-            adif += "<PROGRAMID:12>WaveLogMoat\n"
-            adif += "<EOH>\n"
+            adif += generateHeader()
         }
         adif += generateRecord(qso)
         return adif
@@ -15,9 +24,7 @@ public enum ADIFGenerator {
     public static func generate(_ qsos: [QSO], includeHeader: Bool = true) -> String {
         var adif = ""
         if includeHeader {
-            adif += "<ADIF_VER:5>3.1.4\n"
-            adif += "<PROGRAMID:12>WaveLogMoat\n"
-            adif += "<EOH>\n"
+            adif += generateHeader()
         }
         for qso in qsos {
             adif += generateRecord(qso)
