@@ -51,6 +51,46 @@ jobs:
         id: sha
         run: echo "SHA256=$(shasum -a 256 dist/WaveLogMoat-${GITHUB_REF_NAME}.dmg | awk '{print $1}')" >> $GITHUB_OUTPUT
 
+      - name: Sign DMG for Sparkle
+        id: sparkle
+        env:
+          SPARKLE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+        run: |
+          DMG_PATH="dist/WaveLogMoat-${GITHUB_REF_NAME}.dmg"
+          SIGN_OUTPUT=$(echo "$SPARKLE_KEY" | .build/artifacts/sparkle/Sparkle/bin/sign_update "$DMG_PATH" --ed-key-file -)
+          echo "SIGNATURE=${SIGN_OUTPUT}" >> $GITHUB_OUTPUT
+
+      - name: Update Appcast
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          DMG_PATH="dist/WaveLogMoat-${GITHUB_REF_NAME}.dmg"
+          DMG_SIZE=$(stat -f%z "$DMG_PATH")
+          DOWNLOAD_URL="https://github.com/dl5mn/WaveLogMoat/releases/download/${GITHUB_REF_NAME}/WaveLogMoat-${GITHUB_REF_NAME}.dmg"
+
+          mkdir -p docs
+          cat > docs/appcast.xml << 'APPCAST_HEADER'
+          <?xml version="1.0" standalone="yes"?>
+          <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+            <channel>
+              <title>WaveLogMoat</title>
+          APPCAST_HEADER
+
+          cat >> docs/appcast.xml << APPCAST_ITEM
+              <item>
+                <title>Version ${VERSION}</title>
+                <pubDate>$(date -R)</pubDate>
+                <sparkle:version>${VERSION}</sparkle:version>
+                <sparkle:shortVersionString>${VERSION}</sparkle:shortVersionString>
+                <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
+                <enclosure url="${DOWNLOAD_URL}" ${{ steps.sparkle.outputs.SIGNATURE }} type="application/octet-stream"/>
+              </item>
+          APPCAST_ITEM
+
+          cat >> docs/appcast.xml << 'APPCAST_FOOTER'
+            </channel>
+          </rss>
+          APPCAST_FOOTER
+
       - name: Generate Release Notes
         run: git-cliff --latest --strip header -o RELEASE_NOTES.md
 
@@ -73,6 +113,20 @@ jobs:
           git add CHANGELOG.md
           git diff --cached --quiet && echo "No changelog changes to commit" || git commit -m "docs: update changelog for ${GITHUB_REF_NAME}"
           git push origin HEAD:main
+
+      - name: Deploy Appcast to GitHub Pages
+        run: |
+          git config user.name "DL5MN"
+          git config user.email "dl5mn@users.noreply.github.com"
+
+          git fetch origin gh-pages:gh-pages 2>/dev/null || git checkout --orphan gh-pages
+
+          APPCAST_CONTENT=$(cat docs/appcast.xml)
+          git checkout gh-pages
+          echo "$APPCAST_CONTENT" > appcast.xml
+          git add appcast.xml
+          git diff --cached --quiet && echo "No appcast changes" || (git commit -m "update appcast for ${GITHUB_REF_NAME}" && git push origin gh-pages)
+          git checkout main
 
       - name: Update Homebrew Tap
         env:
