@@ -57,43 +57,64 @@ public struct MenuBarView: View {
             Divider()
 
             HStack {
-                Text("Total: \(appState.totalQSOsLogged) logged, \(appState.totalQSOsFailed) failed")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
+                Text(
+                    "Total: \(appState.totalQSOsLogged) logged, \(appState.totalQSOsFailed) failed"
+                )
+                .font(.caption)
+                .foregroundStyle(.secondary)
                 Spacer()
             }
             .padding()
 
             Divider()
 
-            VStack(alignment: .leading, spacing: 8) {
+            VStack(alignment: .leading, spacing: 0) {
                 Button {
                     dismiss()
                     openSettings()
                 } label: {
-                    Label("Settings...", systemImage: "gear")
+                    MenuRow(title: "Settings...", systemImage: "gear", shortcut: "⌘,")
                 }
                 .keyboardShortcut(",", modifiers: .command)
-                .buttonStyle(.plain)
+                .buttonStyle(.accessoryBar)
 
                 Button {
                     dismiss()
                     checkForUpdates()
                 } label: {
-                    Label("Check for Updates...", systemImage: "arrow.triangle.2.circlepath")
+                    MenuRow(
+                        title: "Check for Updates...", systemImage: "arrow.triangle.2.circlepath")
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.accessoryBar)
 
                 Button {
                     NSApplication.shared.terminate(nil)
                 } label: {
-                    Label("Quit WaveLogMoat", systemImage: "power")
+                    MenuRow(title: "Quit WaveLogMoat", systemImage: "power", shortcut: "⌘Q")
                 }
                 .keyboardShortcut("q", modifiers: .command)
-                .buttonStyle(.plain)
+                .buttonStyle(.accessoryBar)
             }
-            .padding()
+            .padding(.vertical, 4)
         }
         .frame(width: 350)
+    }
+}
+
+private struct MenuRow: View {
+    let title: String
+    let systemImage: String
+    var shortcut: String?
+
+    var body: some View {
+        HStack {
+            Label(title, systemImage: systemImage).foregroundStyle(.primary)
+            Spacer()
+            if let shortcut {
+                Text(shortcut)
+                    .foregroundStyle(.secondary)
+                    .font(.callout)
+            }
+        }
     }
 }
