@@ -42,6 +42,8 @@ public final class AppState {
 
     private var heartbeatTimer: Timer?
 
+    private var wavelogCheckTimer: Timer?
+
     public init() {
         self.udpService = UDPService()
         self.apiClient = WavelogAPIClient(
@@ -51,6 +53,8 @@ public final class AppState {
         self.apiKey = (try? KeychainHelper.load(key: "wavelog_api_key")) ?? ""
         loadConfig()
         setupCallbacks()
+        startListening()
+        checkConnectionsOnStartup()
     }
 
     private func setupCallbacks() {
@@ -132,6 +136,39 @@ public final class AppState {
         recentQSOs.insert(newQSO, at: 0)
         if recentQSOs.count > 50 {
             recentQSOs.removeLast()
+        }
+    }
+
+    private func checkConnectionsOnStartup() {
+        if !apiKey.isEmpty && !config.wavelogURL.isEmpty {
+            Task { @MainActor in
+                await fetchStationProfiles()
+            }
+        }
+
+        startWavelogCheckTimer()
+    }
+
+    private func startWavelogCheckTimer() {
+        wavelogCheckTimer?.invalidate()
+        wavelogCheckTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { [weak self] _ in
+            Task { @MainActor in
+                guard let self,
+                      !self.apiKey.isEmpty,
+                      !self.config.wavelogURL.isEmpty else { return }
+
+                do {
+                    _ = try await self.apiClient.fetchVersion(
+                        apiKey: self.apiKey,
+                        baseURL: self.config.wavelogURL
+                    )
+                    if self.wavelogConnectionStatus != .connected {
+                        self.wavelogConnectionStatus = .connected
+                    }
+                } catch {
+                    self.wavelogConnectionStatus = .error
+                }
+            }
         }
     }
 
