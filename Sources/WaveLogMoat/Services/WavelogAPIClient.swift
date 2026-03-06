@@ -159,7 +159,8 @@ public final class WavelogAPIClient: @unchecked Sendable {
     }
 
     private func endpointURL(baseURL: String, endpointPath: String) -> URL? {
-        guard var url = URL(string: baseURL.trimmingCharacters(in: .whitespacesAndNewlines)) else {
+        let normalized = Self.normalizeURL(baseURL)
+        guard var url = URL(string: normalized) else {
             return nil
         }
 
@@ -167,6 +168,17 @@ public final class WavelogAPIClient: @unchecked Sendable {
         url.appendPathComponent("api")
         url.appendPathComponent(trimmed)
         return url
+    }
+
+    public static func normalizeURL(_ urlString: String) -> String {
+        let trimmed = urlString.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty { return trimmed }
+
+        let lowered = trimmed.lowercased()
+        if lowered.hasPrefix("http://") || lowered.hasPrefix("https://") {
+            return trimmed
+        }
+        return "https://\(trimmed)"
     }
 
     private func perform<T: Decodable>(_ request: URLRequest, decodeAs type: T.Type) async throws -> T {
@@ -177,7 +189,8 @@ public final class WavelogAPIClient: @unchecked Sendable {
             (data, response) = try await urlSession.data(for: request)
         } catch {
             Log.api.error("Network request failed for \(request.url?.absoluteString ?? "unknown"): \(error.localizedDescription)")
-            throw APIError(message: "Network request failed: \(error.localizedDescription)")
+            let hint = Self.isLikelyTLSError(error) ? " — if your server doesn't support HTTPS, try using http:// in the URL" : ""
+            throw APIError(message: "Network request failed: \(error.localizedDescription)\(hint)")
         }
 
         guard let http = response as? HTTPURLResponse else {
@@ -199,6 +212,20 @@ public final class WavelogAPIClient: @unchecked Sendable {
             Log.api.error("Failed to decode API response from \(request.url?.absoluteString ?? "unknown"): \(error.localizedDescription)")
             throw APIError(message: "Failed to decode response: \(error.localizedDescription)")
         }
+    }
+
+    private static func isLikelyTLSError(_ error: Error) -> Bool {
+        let nsError = error as NSError
+        let tlsCodes: Set<Int> = [
+            NSURLErrorSecureConnectionFailed,
+            NSURLErrorServerCertificateUntrusted,
+            NSURLErrorServerCertificateHasBadDate,
+            NSURLErrorServerCertificateHasUnknownRoot,
+            NSURLErrorServerCertificateNotYetValid,
+            NSURLErrorCannotFindHost,
+            NSURLErrorCannotConnectToHost,
+        ]
+        return nsError.domain == NSURLErrorDomain && tlsCodes.contains(nsError.code)
     }
 
     private static func extractErrorMessage(from data: Data) -> String {

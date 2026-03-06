@@ -26,6 +26,22 @@ final class WavelogAPIClientTests: XCTestCase {
         XCTAssertEqual(json["key"] as? String, "VERSION_KEY")
     }
 
+    func testNormalizeURLPrefixesHTTPS() {
+        XCTAssertEqual(WavelogAPIClient.normalizeURL("log.example.com/index.php"), "https://log.example.com/index.php")
+        XCTAssertEqual(WavelogAPIClient.normalizeURL("  log.example.com  "), "https://log.example.com")
+    }
+
+    func testNormalizeURLPreservesExistingScheme() {
+        XCTAssertEqual(WavelogAPIClient.normalizeURL("https://log.example.com"), "https://log.example.com")
+        XCTAssertEqual(WavelogAPIClient.normalizeURL("http://log.example.com"), "http://log.example.com")
+        XCTAssertEqual(WavelogAPIClient.normalizeURL("HTTP://log.example.com"), "HTTP://log.example.com")
+    }
+
+    func testNormalizeURLHandlesEmpty() {
+        XCTAssertEqual(WavelogAPIClient.normalizeURL(""), "")
+        XCTAssertEqual(WavelogAPIClient.normalizeURL("   "), "")
+    }
+
     private func decodeJSON(_ data: Data) throws -> [String: Any] {
         let object = try JSONSerialization.jsonObject(with: data)
         guard let dictionary = object as? [String: Any] else {

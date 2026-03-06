@@ -16,7 +16,7 @@ public struct WavelogSettingsTab: View {
     public var body: some View {
         Form {
             Section("Server") {
-                TextField("URL", text: $appState.config.wavelogURL)
+                TextField("URL", text: $appState.config.wavelogURL, prompt: Text("log.example.com/index.php"))
                     .textContentType(.URL)
                     .autocorrectionDisabled()
 
