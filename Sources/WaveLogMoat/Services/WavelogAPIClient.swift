@@ -109,8 +109,7 @@ public final class WavelogAPIClient: @unchecked Sendable {
         apiKey: String,
         baseURL: String
     ) async throws -> [StationProfile] {
-        let payload = Self.buildStationInfoPayload(apiKey: apiKey)
-        let request = try buildRequest(baseURL: baseURL, endpointPath: "station_info", body: payload)
+        let request = try buildRequest(baseURL: baseURL, endpointPath: "station_info/\(apiKey)", body: Data())
         return try await perform(request, decodeAs: [StationProfile].self)
     }
 
@@ -139,14 +138,10 @@ public final class WavelogAPIClient: @unchecked Sendable {
         return (try? encoder.encode(payload)) ?? Data()
     }
 
-    public static func buildStationInfoPayload(apiKey: String) -> Data {
+    public static func buildVersionPayload(apiKey: String) -> Data {
         let payload = KeyPayload(key: apiKey)
         let encoder = JSONEncoder()
         return (try? encoder.encode(payload)) ?? Data()
-    }
-
-    public static func buildVersionPayload(apiKey: String) -> Data {
-        buildStationInfoPayload(apiKey: apiKey)
     }
 
     private func buildRequest(baseURL: String, endpointPath: String, body: Data) throws -> URLRequest {
@@ -175,25 +170,33 @@ public final class WavelogAPIClient: @unchecked Sendable {
     }
 
     private func perform<T: Decodable>(_ request: URLRequest, decodeAs type: T.Type) async throws -> T {
+        Log.api.debug("Sending API request to \(request.url?.absoluteString ?? "unknown")")
+
         let (data, response): (Data, URLResponse)
         do {
             (data, response) = try await urlSession.data(for: request)
         } catch {
+            Log.api.error("Network request failed for \(request.url?.absoluteString ?? "unknown"): \(error.localizedDescription)")
             throw APIError(message: "Network request failed: \(error.localizedDescription)")
         }
 
         guard let http = response as? HTTPURLResponse else {
+            Log.api.error("Received non-HTTP response for \(request.url?.absoluteString ?? "unknown")")
             throw APIError(message: "Invalid HTTP response")
         }
 
+        Log.api.debug("API response status \(http.statusCode) from \(request.url?.absoluteString ?? "unknown")")
+
         guard (200...299).contains(http.statusCode) else {
             let message = String(data: data, encoding: .utf8) ?? "Unknown error"
+            Log.api.error("API request failed with status \(http.statusCode): \(message)")
             throw APIError(message: message, statusCode: http.statusCode)
         }
 
         do {
             return try jsonDecoder.decode(T.self, from: data)
         } catch {
+            Log.api.error("Failed to decode API response from \(request.url?.absoluteString ?? "unknown"): \(error.localizedDescription)")
             throw APIError(message: "Failed to decode response: \(error.localizedDescription)")
         }
     }

@@ -18,14 +18,6 @@ final class WavelogAPIClientTests: XCTestCase {
         XCTAssertEqual(json["string"] as? String, adif)
     }
 
-    func testBuildStationInfoPayload() throws {
-        let payload = WavelogAPIClient.buildStationInfoPayload(apiKey: "ABC123")
-        let json = try decodeJSON(payload)
-
-        XCTAssertEqual(json.count, 1)
-        XCTAssertEqual(json["key"] as? String, "ABC123")
-    }
-
     func testBuildVersionPayload() throws {
         let payload = WavelogAPIClient.buildVersionPayload(apiKey: "VERSION_KEY")
         let json = try decodeJSON(payload)

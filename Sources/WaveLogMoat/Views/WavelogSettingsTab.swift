@@ -4,7 +4,9 @@ public struct WavelogSettingsTab: View {
     @Bindable var appState: AppState
     @State private var isTestingConnection = false
     @State private var testResult: Bool?
+    @State private var testErrorMessage: String?
     @State private var isFetchingProfiles = false
+    @State private var stationProfilesErrorMessage: String?
     @State private var showAPIKey = false
 
     public init(appState: AppState) {
@@ -46,8 +48,12 @@ public struct WavelogSettingsTab: View {
                         action: {
                             Task {
                                 isFetchingProfiles = true
+                                stationProfilesErrorMessage = nil
                                 await appState.fetchStationProfiles()
                                 isFetchingProfiles = false
+                                if appState.wavelogConnectionStatus == .error {
+                                    stationProfilesErrorMessage = appState.lastError ?? "Failed to fetch station profiles"
+                                }
                             }
                         },
                         label: {
@@ -61,6 +67,12 @@ public struct WavelogSettingsTab: View {
                     .buttonStyle(.plain)
                     .disabled(appState.apiKey.isEmpty || appState.config.wavelogURL.isEmpty)
                 }
+
+                if let stationProfilesErrorMessage {
+                    Text(stationProfilesErrorMessage)
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                }
             }
 
             Section {
@@ -68,8 +80,12 @@ public struct WavelogSettingsTab: View {
                     Button("Test Connection") {
                         Task {
                             isTestingConnection = true
+                            testErrorMessage = nil
                             testResult = await appState.testWavelogConnection()
                             isTestingConnection = false
+                            if testResult == false {
+                                testErrorMessage = appState.lastError ?? "Connection test failed"
+                            }
                         }
                     }
                     .disabled(appState.apiKey.isEmpty || appState.config.wavelogURL.isEmpty || isTestingConnection)
@@ -85,25 +101,27 @@ public struct WavelogSettingsTab: View {
                             .foregroundStyle(result ? .green : .red)
                     }
                 }
+
+                if testResult == false, let testErrorMessage {
+                    Text(testErrorMessage)
+                        .font(.caption)
+                        .foregroundStyle(.red)
+                }
             }
 
             Section {
                 Toggle("Allow self-signed certificates", isOn: $appState.config.allowSelfSignedCerts)
-
-                HStack {
-                    Text("Timeout:")
-                    TextField("ms", value: $appState.config.httpTimeout, format: .number)
-                        .frame(width: 80)
-                        .textFieldStyle(.roundedBorder)
-                    Text("ms")
-                }
             }
         }
         .padding()
         .onAppear {
             if !appState.apiKey.isEmpty && !appState.config.wavelogURL.isEmpty && appState.stationProfiles.isEmpty {
                 Task {
+                    stationProfilesErrorMessage = nil
                     await appState.fetchStationProfiles()
+                    if appState.wavelogConnectionStatus == .error {
+                        stationProfilesErrorMessage = appState.lastError ?? "Failed to fetch station profiles"
+                    }
                 }
             }
         }

@@ -202,6 +202,12 @@ public final class AppState {
 
     public var apiKey: String {
         get { (try? KeychainHelper.load(key: "wavelog_api_key")) ?? "" }
-        set { try? KeychainHelper.save(key: "wavelog_api_key", value: newValue) }
+        set {
+            do {
+                try KeychainHelper.save(key: "wavelog_api_key", value: newValue)
+            } catch {
+                Log.api.error("Failed to save API key to Keychain: \(error.localizedDescription)")
+            }
+        }
     }
 }
