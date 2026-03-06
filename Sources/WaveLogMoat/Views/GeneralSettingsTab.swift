@@ -4,6 +4,7 @@ import UserNotifications
 public struct GeneralSettingsTab: View {
     @Bindable var appState: AppState
     @State private var notificationsDenied = false
+    @Environment(\.scenePhase) private var scenePhase
 
     public init(appState: AppState) {
         self.appState = appState
@@ -76,6 +77,14 @@ public struct GeneralSettingsTab: View {
         .formStyle(.grouped)
         .onAppear {
             appState.config.launchAtLogin = LaunchAtLoginService.isEnabled
+            checkNotificationStatus()
+        }
+        .onChange(of: scenePhase) { _, newPhase in
+            if newPhase == .active {
+                checkNotificationStatus()
+            }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
             checkNotificationStatus()
         }
     }
