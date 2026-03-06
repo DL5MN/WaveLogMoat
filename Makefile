@@ -1,4 +1,4 @@
-.PHONY: build test clean run lint format release app archive
+.PHONY: build test clean run lint format release app archive changelog
 
 build:
 	swift build
@@ -23,5 +23,8 @@ format:
 
 release:
 	xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Release -destination 'platform=macOS' build
+
+changelog:
+	git-cliff --output CHANGELOG.md
 
 .DEFAULT_GOAL := build
