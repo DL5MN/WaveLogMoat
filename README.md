@@ -63,7 +63,7 @@ In WSJT-X, go to **Settings -> Reporting** and configure the **Secondary UDP Ser
 - **Address**: `127.0.0.1`
 - **Port**: `2333`
 
-> **Important**: Use the *Secondary* UDP Server, NOT the primary one.
+> **Important**: Use the _Secondary_ UDP Server, NOT the primary one.
 
 ### 2. Configure WaveLogMoat
 
@@ -84,19 +84,19 @@ Once configured, WaveLogMoat automatically listens for QSOs. When you log a QSO 
 
 ## Configuration Options
 
-| Setting | Default | Description |
-|---------|---------|-------------|
-| Wavelog URL | - | Your Wavelog instance URL including `/index.php` |
-| API Key | - | Read+Write API key from Wavelog |
-| Station Profile | - | Selected from your Wavelog station locations |
-| Text UDP Port | 2333 | WSJT-X Secondary UDP Server port |
-| Binary UDP Port | 2237 | WSJT-X Primary UDP Server port (optional) |
-| Listen Address | 127.0.0.1 | Network interface to listen on |
-| Allow Self-Signed Certs | On | For self-hosted Wavelog with self-signed TLS |
-| Show in Menu Bar | On | Display icon in menu bar |
-| Show in Dock | Off | Display icon in dock |
-| Launch at Login | Off | Start automatically at login |
-| Show Notifications | On | macOS notifications for QSO events |
+| Setting                 | Default   | Description                                      |
+| ----------------------- | --------- | ------------------------------------------------ |
+| Wavelog URL             | -         | Your Wavelog instance URL including `/index.php` |
+| API Key                 | -         | Read+Write API key from Wavelog                  |
+| Station Profile         | -         | Selected from your Wavelog station locations     |
+| Text UDP Port           | 2333      | WSJT-X Secondary UDP Server port                 |
+| Binary UDP Port         | 2237      | WSJT-X Primary UDP Server port (optional)        |
+| Listen Address          | 127.0.0.1 | Network interface to listen on                   |
+| Allow Self-Signed Certs | On        | For self-hosted Wavelog with self-signed TLS     |
+| Show in Menu Bar        | On        | Display icon in menu bar                         |
+| Show in Dock            | Off       | Display icon in dock                             |
+| Launch at Login         | Off       | Start automatically at login                     |
+| Show Notifications      | On        | macOS notifications for QSO events               |
 
 ## Binary Protocol (Optional)
 
@@ -150,17 +150,16 @@ See [PLAN.md](PLAN.md) for detailed architecture documentation.
 
 ## How It Compares
 
-| | WaveLogMoat | [WaveLogGate](https://github.com/wavelog/WaveLogGate) | [WaveLogStoat](https://github.com/int2001/WaveLogStoat) | [WaveLogGoat](https://github.com/johnsonm/WaveLogGoat) |
-|---|---|---|---|---|
-| **Platform** | macOS (native) | Windows, macOS, Linux (Electron) | Windows, macOS, Linux (Go CLI) | Windows, macOS, Linux (Go) |
-| **QSO Logging** | Yes | Yes | Yes | No |
-| **CAT Control** | No | Yes (FLRig/Hamlib) | No | Yes |
-| **UI** | Menu bar app (SwiftUI) | Desktop window (Electron) | Terminal | Terminal |
-| **Binary size** | ~5 MB | ~200 MB+ (Electron) | ~10 MB | ~10 MB |
-| **Auto-updates** | Sparkle | Electron auto-updater | Manual | Manual |
-| **Secrets storage** | macOS Keychain | Config file | Config file | Config file |
-| **Notifications** | Native macOS | Electron notifications | None | None |
-| **Self-signed certs** | Yes | Yes | Yes | Yes |
+|                       | WaveLogMoat            | [WaveLogGate](https://github.com/wavelog/WaveLogGate) | [WaveLogStoat](https://github.com/int2001/WaveLogStoat) | [WaveLogGoat](https://github.com/johnsonm/WaveLogGoat) |
+| --------------------- | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------ |
+| **Platform**          | macOS (native)         | Windows, macOS, Linux (Electron)                      | Windows, macOS, Linux (Go CLI)                          | Windows, macOS, Linux (Go)                             |
+| **QSO Logging**       | Yes                    | Yes                                                   | Yes                                                     | No                                                     |
+| **CAT Control**       | No                     | Yes (FLRig/Hamlib)                                    | No                                                      | Yes                                                    |
+| **UI**                | Menu bar app (SwiftUI) | Desktop window (Electron)                             | Terminal                                                | Terminal                                               |
+| **Auto-updates**      | Sparkle                | Electron auto-updater                                 | Manual                                                  | Manual                                                 |
+| **Secrets storage**   | macOS Keychain         | Config file                                           | Config file                                             | Config file                                            |
+| **Notifications**     | Native macOS           | Electron notifications                                | None                                                    | None                                                   |
+| **Self-signed certs** | Yes                    | Yes                                                   | Yes                                                     | Yes                                                    |
 
 WaveLogMoat focuses on doing one thing well: getting QSOs from WSJT-X into Wavelog with zero friction. If you need CAT control, use WaveLogGate or WaveLogGoat. If you want a native Mac experience for QSO logging, this is it.
 
