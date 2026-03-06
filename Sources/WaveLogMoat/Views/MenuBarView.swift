@@ -74,7 +74,7 @@ public struct MenuBarView: View {
                     openSettings()
                     NSApplication.shared.activate(ignoringOtherApps: true)
                 } label: {
-                    MenuRow(title: "Settings...", systemImage: "gear", shortcut: "⌘,")
+                    MenuRow(title: "Settings", systemImage: "gear", shortcut: "⌘,")
                 }
                 .buttonStyle(.accessoryBar)
 
@@ -83,7 +83,7 @@ public struct MenuBarView: View {
                     checkForUpdates()
                 } label: {
                     MenuRow(
-                        title: "Check for Updates...", systemImage: "arrow.triangle.2.circlepath")
+                        title: "Check for Updates", systemImage: "arrow.triangle.2.circlepath")
                 }
                 .buttonStyle(.accessoryBar)
 

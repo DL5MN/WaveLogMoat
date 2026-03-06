@@ -17,7 +17,7 @@ public enum ConnectionStatus: String, Sendable {
         switch self {
         case .connected: return "Connected"
         case .disconnected: return "Disconnected"
-        case .connecting: return "Connecting..."
+        case .connecting: return "Connecting"
         case .error: return "Error"
         }
     }
