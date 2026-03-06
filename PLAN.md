@@ -71,9 +71,9 @@ A moat protects the castle — a bridge/guardian between WSJT-X and Wavelog.
 
 ### 2b. Key Design Decisions
 
-1. **ADIF-first data path**: All QSO data flows through the same pipeline regardless of source (text ADIF, XML, or binary). Binary QSO Logged messages are converted to QSO models, then to ADIF for the Wavelog API. The Logged ADIF message (type 12) provides ready-made ADIF and is the preferred path.
+1. **ADIF-first data path**: All QSO data flows through the same pipeline regardless of source (text ADIF, XML, or binary). Binary QSO Logged messages (type 5) are converted to QSO models, then to ADIF for the Wavelog API.
 
-2. **Binary protocol opt-in**: The primary UDP binary protocol (port 2237) is **disabled by default** because it may conflict with JTAlert, GridTracker, or other tools that also listen on that port. Users enable it explicitly in settings with clear documentation.
+2. **Exclusive protocol choice**: Text and binary protocols are mutually exclusive — the user picks one via a segmented control in settings. Text (port 2333) is the default because it uses the WSJT-X Secondary UDP Server and doesn't conflict with other tools. Binary (port 2237) adds real-time status but claims the primary UDP port exclusively.
 
 3. **Keychain for API key**: Unlike WaveLogGate (plaintext config) and WaveLogStoat (plaintext INI), we store the API key in macOS Keychain for proper security.
 
@@ -92,43 +92,45 @@ A moat protects the castle — a bridge/guardian between WSJT-X and Wavelog.
 ```
 WSJT-X
   │
-  ├──UDP:2333 (text)──► TextUDPListener ──► Format Detection
-  │                                              │
-  │                                    ┌─────────┴─────────┐
-  │                                    ▼                   ▼
-  │                              ADIFParser          XMLContactParser
-  │                                    │                   │
-  │                                    └─────────┬─────────┘
-  │                                              ▼
-  ├──UDP:2237 (binary)─► BinaryUDPListener ──► QDataStreamReader
-  │                                              │
-  │                              ┌───────────────┼───────────────┐
-  │                              ▼               ▼               ▼
-  │                         Heartbeat        Status          QSO Logged /
-  │                         → update         → update        Logged ADIF
-  │                           connection       WSJTXStatus      │
-  │                           indicator        in AppState      ▼
-  │                                                         QSO (model)
-  │                                                             │
-  └─────────────────────────────────────────────────────────────┘
-                                                                │
-                                                         QSONormalizer
-                                                    (power, band, mode)
-                                                                │
-                                                         ADIFGenerator
-                                                       (QSO → ADIF string)
-                                                                │
-                                                      WavelogAPIClient
-                                                   POST /api/qso (JSON)
-                                                                │
-                                                   ┌────────────┴────────────┐
-                                                Success                  Failure
-                                                   │                        │
-                                            Notification:            Notification:
-                                           "QSO logged:             "Failed to log
-                                            DJ7NT on 20m"            QSO: [reason]"
-                                                   │                        │
-                                             AppState.recentQSOs updated (success/fail indicator)
+  │  ┌─────────────────── User selects one protocol ──────────────────┐
+  │  │                                                                │
+  ├──UDP:2333 (text)──► TextUDPListener ──► Format Detection          │
+  │                                              │                    │
+  │                                    ┌─────────┴─────────┐          │
+  │                                    ▼                   ▼          │
+  │                              ADIFParser          XMLContactParser │
+  │                                    │                   │          │
+  │                                    └─────────┬─────────┘          │
+  │                                              ▼                    │
+  │                                          QSO (model) ─────────────┤
+  │                                                                   │
+  └──UDP:2237 (binary)─► BinaryUDPListener ──► QDataStreamReader      │
+                                                 │                    │
+                                 ┌───────────────┼──────────┐         │
+                                 ▼               ▼          ▼         │
+                            Heartbeat        Status     QSO Logged    │
+                            → update         → update   (type 5)      │
+                              connection       WSJTXStatus  │         │
+                              indicator        in AppState  ▼         │
+                                                        QSO (model) ──┘
+                                                            │
+                                                     QSONormalizer
+                                                (power, band, mode)
+                                                            │
+                                                     ADIFGenerator
+                                                   (QSO → ADIF string)
+                                                            │
+                                                  WavelogAPIClient
+                                               POST /api/qso (JSON)
+                                                            │
+                                               ┌────────────┴────────────┐
+                                            Success                  Failure
+                                               │                         │
+                                        Notification:            Notification:
+                                       "QSO logged:             "Failed to log
+                                        DJ7NT on 20m"            QSO: [reason]"
+                                               │                         │
+                                         AppState.recentQSOs updated (success/fail indicator)
 ```
 
 ### 2d. Module Breakdown
@@ -208,15 +210,19 @@ WSJT-X
 
 ### 3d. Live Testing
 
-**Status**: All 44 unit tests pass. App builds and launches. Not yet tested against a live WSJT-X instance.
+**Status**: All 44 unit tests pass. Tested against WSJT-X 3.1.0 and a live Wavelog instance.
+
+**Completed:**
+
+- Text UDP listener with WSJT-X Secondary UDP Server
+- Binary UDP listener with WSJT-X Primary UDP Server (heartbeat, status, QSO logging)
+- QSO logging end-to-end against a real Wavelog instance
+- Settings persistence across app restarts
 
 **Remaining:**
 
-- Test text UDP listener with WSJT-X Secondary UDP Server
-- Test binary UDP listener with WSJT-X Primary UDP Server
-- Test QSO logging end-to-end against a real Wavelog instance
 - Verify notification delivery
-- Test settings persistence across app restarts
+- Extended field testing across different bands and modes
 
 ### 3e. First Release
 
@@ -281,3 +287,4 @@ WSJT-X
 | 14  | Auto-prefix https:// on URLs     | Users often omit protocol. Prefix https://, hint about http:// on TLS errors.     | 2026-03-06 |
 | 15  | Notification denied UX           | Sync toggle to OS state, show warning + "Open Notification Settings" button.       | 2026-03-06 |
 | 16  | Dock visibility via policy       | `NSApp.setActivationPolicy(.regular/.accessory)` applied on init and config save.  | 2026-03-06 |
+| 17  | Exclusive protocol choice        | Text and binary UDP are mutually exclusive (segmented picker). Eliminates dedup.   | 2026-03-06 |
