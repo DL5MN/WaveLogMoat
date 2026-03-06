@@ -1,0 +1,630 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0C7E1A247D66E03DC80B85DB /* ADIFParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2766D4EDCA643150DFDD49A /* ADIFParser.swift */; };
+		1905CE41C1C265379D9BD342 /* ADIFParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6BD8035DCD305AE8FA5F53 /* ADIFParserTests.swift */; };
+		22D4CB753FF46712D484157A /* BandMapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8DF31EFA48937836FDD825 /* BandMapTests.swift */; };
+		355837C0344B064511B1C431 /* ConnectionStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C89F54C5AEB9A1C684A21E7 /* ConnectionStatusView.swift */; };
+		3ABB49DA8449EED2D5BD8D34 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B99FA4E5018814EB70F64DD /* Logger.swift */; };
+		4EF5594242AC333C63A8B68E /* ADIFField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02735B1092C1E2CFB05E26A7 /* ADIFField.swift */; };
+		5411DCB0145F8D6DF98CC22D /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB344EEA9275F03344C8D9D /* KeychainHelper.swift */; };
+		59BED63DB824B3F0042CBD38 /* QSONormalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B319338ECBF4B6F6D80734D2 /* QSONormalizer.swift */; };
+		59BFF2FABA587AEE8A66AACC /* ADIFGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02FADA9E0D6C635A03834CD /* ADIFGenerator.swift */; };
+		61A7B5A3602F34533C5E72DA /* ConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B7033F9022154816223736 /* ConnectionStatus.swift */; };
+		6C139D2EFCF396769FFCAFBE /* UDPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE75B66B62508DC234CC0BD5 /* UDPService.swift */; };
+		6E0F47AAC931F01D7FFDB1CA /* ADIFGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04184CF0648EDE5A9A2DAA7 /* ADIFGeneratorTests.swift */; };
+		76811CDDDB1857E354ED1E76 /* BandMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C3C819FC806322BFA9089 /* BandMap.swift */; };
+		79B463DBAA89DFCB9278142E /* BinaryUDPListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5E8826E64EA7CFE26A7362 /* BinaryUDPListener.swift */; };
+		870A69F2347A907FA579084C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EBC6C81160C118BA1367644 /* SettingsView.swift */; };
+		888F98D430EBE9307B9E7751 /* WavelogSettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = A29F6B11D010882D776A1E38 /* WavelogSettingsTab.swift */; };
+		8DD27C8C09B001B075543C7C /* WavelogConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A23D5FDFE1BFFD32785B0E0 /* WavelogConfig.swift */; };
+		8F30A3FDDF5700B1609FAB8B /* XMLContactParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F80D82A316ABDF645CE0AE4D /* XMLContactParserTests.swift */; };
+		92116E1B21AF79FB3E00CAD1 /* QDataStreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B887F59C946F4C5F086BC7 /* QDataStreamReader.swift */; };
+		A195F0E064C031158510FCB0 /* QSOLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBD11626B42F31C18A080A6 /* QSOLogView.swift */; };
+		ABDA1F28777EBF80678D9C14 /* QDataStreamReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F555B523E387C90F43B8D1 /* QDataStreamReaderTests.swift */; };
+		AC1E29FEF479D0B9041ADDC2 /* QSO.swift in Sources */ = {isa = PBXBuildFile; fileRef = C27FBF4B021E2C8553778A59 /* QSO.swift */; };
+		AE4454657D3F8E91E718C4BB /* QSONormalizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A9F399728694B255E61F52B /* QSONormalizerTests.swift */; };
+		B198DEF6BC541F83E0397332 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = E3C3D3C4DFB97E1B4CACA84E /* Sparkle */; };
+		B2CDFB7D499B4E7F073DF9B7 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66554DC434FBBD1D72127A8D /* AppState.swift */; };
+		B4513090F85FFB95779A3604 /* WSJTXMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96225B572C0A7BC546C3C233 /* WSJTXMessage.swift */; };
+		BB2BFC6D6F90E6A27C8B3F80 /* XMLContactParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDFC34FDD4FB160035B2DF6 /* XMLContactParser.swift */; };
+		BC2C53173BEE3A5EA2931D9F /* GeneralSettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58445ADAC5548C06C961B32 /* GeneralSettingsTab.swift */; };
+		BC99775A0AFF65E5C14F8F62 /* WSJTXStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D830DDA3CC0D456EC8DF8BD /* WSJTXStatus.swift */; };
+		C18DFEF6D186CAD5466BE48D /* WaveLogMoatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63DA194BC9FE58C7DFF0F07 /* WaveLogMoatApp.swift */; };
+		D39EBD60CC3784F3473D5753 /* WavelogAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD9A55B7758B8C5C5E68612 /* WavelogAPIClient.swift */; };
+		D3CD94781172F2D935ED84AF /* StationProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFD1F8EDE82391068004020 /* StationProfile.swift */; };
+		D8E8D93C15355838E6177718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D18F21C023C134569DE93B04 /* Assets.xcassets */; };
+		E00182CFA71E7CAFE355CF83 /* TextUDPListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB3F0CA2CCA7D28FA3E3468E /* TextUDPListener.swift */; };
+		E6B481980610438F501BFEB5 /* LaunchAtLoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5027D08247F1318AE0E276E2 /* LaunchAtLoginService.swift */; };
+		EE98456F5C1A0B19C2E701BF /* WSJTXSettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19C29D65FD4EF33EF048709C /* WSJTXSettingsTab.swift */; };
+		EFFE246ED7C9BB3D8E9CF7F3 /* WavelogAPIClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81520763129218459D693DA5 /* WavelogAPIClientTests.swift */; };
+		F5F089CD8A0C60AA5803DBEA /* AboutTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44D6F3425897D9E01733027 /* AboutTab.swift */; };
+		FE0D6794E8E190365746880E /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D91FDD9A5D28D182469C358 /* NotificationService.swift */; };
+		FF1DBD45D229E679399D7C53 /* MenuBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA5DA9F5D9D416F9DE09083 /* MenuBarView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5DB22937EB7DF8FB57E5027B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3F18F0FEF5FE4BAB2C137110 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 63B0C65D9F8B7EB050A241B3;
+			remoteInfo = WaveLogMoat;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		02735B1092C1E2CFB05E26A7 /* ADIFField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADIFField.swift; sourceTree = "<group>"; };
+		0A9F399728694B255E61F52B /* QSONormalizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QSONormalizerTests.swift; sourceTree = "<group>"; };
+		0BB344EEA9275F03344C8D9D /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		19C29D65FD4EF33EF048709C /* WSJTXSettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSJTXSettingsTab.swift; sourceTree = "<group>"; };
+		1EBC6C81160C118BA1367644 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		2AFD1F8EDE82391068004020 /* StationProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationProfile.swift; sourceTree = "<group>"; };
+		2B99FA4E5018814EB70F64DD /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		3A5E8826E64EA7CFE26A7362 /* BinaryUDPListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryUDPListener.swift; sourceTree = "<group>"; };
+		4CBD11626B42F31C18A080A6 /* QSOLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QSOLogView.swift; sourceTree = "<group>"; };
+		5027D08247F1318AE0E276E2 /* LaunchAtLoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLoginService.swift; sourceTree = "<group>"; };
+		5C89F54C5AEB9A1C684A21E7 /* ConnectionStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatusView.swift; sourceTree = "<group>"; };
+		5CA5DA9F5D9D416F9DE09083 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
+		5EDDCF1E8E0FE1C880D2E26D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		66554DC434FBBD1D72127A8D /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		6D830DDA3CC0D456EC8DF8BD /* WSJTXStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSJTXStatus.swift; sourceTree = "<group>"; };
+		6D91FDD9A5D28D182469C358 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		75295FB2DB1CD0497BCFAB38 /* WaveLogMoatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WaveLogMoatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		75B7033F9022154816223736 /* ConnectionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatus.swift; sourceTree = "<group>"; };
+		7EDFC34FDD4FB160035B2DF6 /* XMLContactParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLContactParser.swift; sourceTree = "<group>"; };
+		81520763129218459D693DA5 /* WavelogAPIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavelogAPIClientTests.swift; sourceTree = "<group>"; };
+		8FD9A55B7758B8C5C5E68612 /* WavelogAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavelogAPIClient.swift; sourceTree = "<group>"; };
+		96225B572C0A7BC546C3C233 /* WSJTXMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSJTXMessage.swift; sourceTree = "<group>"; };
+		9A23D5FDFE1BFFD32785B0E0 /* WavelogConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavelogConfig.swift; sourceTree = "<group>"; };
+		9A8DF31EFA48937836FDD825 /* BandMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMapTests.swift; sourceTree = "<group>"; };
+		A29F6B11D010882D776A1E38 /* WavelogSettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavelogSettingsTab.swift; sourceTree = "<group>"; };
+		A63DA194BC9FE58C7DFF0F07 /* WaveLogMoatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveLogMoatApp.swift; sourceTree = "<group>"; };
+		B04184CF0648EDE5A9A2DAA7 /* ADIFGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADIFGeneratorTests.swift; sourceTree = "<group>"; };
+		B2F555B523E387C90F43B8D1 /* QDataStreamReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QDataStreamReaderTests.swift; sourceTree = "<group>"; };
+		B319338ECBF4B6F6D80734D2 /* QSONormalizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QSONormalizer.swift; sourceTree = "<group>"; };
+		B58445ADAC5548C06C961B32 /* GeneralSettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralSettingsTab.swift; sourceTree = "<group>"; };
+		BB3F0CA2CCA7D28FA3E3468E /* TextUDPListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextUDPListener.swift; sourceTree = "<group>"; };
+		C27FBF4B021E2C8553778A59 /* QSO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QSO.swift; sourceTree = "<group>"; };
+		C3B887F59C946F4C5F086BC7 /* QDataStreamReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QDataStreamReader.swift; sourceTree = "<group>"; };
+		CE75B66B62508DC234CC0BD5 /* UDPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPService.swift; sourceTree = "<group>"; };
+		CF12265720C120E9E01764C7 /* WaveLogMoat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaveLogMoat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D18F21C023C134569DE93B04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D2766D4EDCA643150DFDD49A /* ADIFParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADIFParser.swift; sourceTree = "<group>"; };
+		D44D6F3425897D9E01733027 /* AboutTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTab.swift; sourceTree = "<group>"; };
+		F02FADA9E0D6C635A03834CD /* ADIFGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADIFGenerator.swift; sourceTree = "<group>"; };
+		F57C3C819FC806322BFA9089 /* BandMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMap.swift; sourceTree = "<group>"; };
+		F80D82A316ABDF645CE0AE4D /* XMLContactParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLContactParserTests.swift; sourceTree = "<group>"; };
+		FC6BD8035DCD305AE8FA5F53 /* ADIFParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADIFParserTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3893D279024E2EE7FAD08E79 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B198DEF6BC541F83E0397332 /* Sparkle in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		25E42050F750DD2FB2B66EFF /* WaveLogMoatTests */ = {
+			isa = PBXGroup;
+			children = (
+				B04184CF0648EDE5A9A2DAA7 /* ADIFGeneratorTests.swift */,
+				FC6BD8035DCD305AE8FA5F53 /* ADIFParserTests.swift */,
+				9A8DF31EFA48937836FDD825 /* BandMapTests.swift */,
+				B2F555B523E387C90F43B8D1 /* QDataStreamReaderTests.swift */,
+				0A9F399728694B255E61F52B /* QSONormalizerTests.swift */,
+				81520763129218459D693DA5 /* WavelogAPIClientTests.swift */,
+				F80D82A316ABDF645CE0AE4D /* XMLContactParserTests.swift */,
+			);
+			name = WaveLogMoatTests;
+			path = Tests/WaveLogMoatTests;
+			sourceTree = "<group>";
+		};
+		2B951068868D709BD55F7663 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				66554DC434FBBD1D72127A8D /* AppState.swift */,
+				A63DA194BC9FE58C7DFF0F07 /* WaveLogMoatApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		62811118575515BF4A86DAE9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D44D6F3425897D9E01733027 /* AboutTab.swift */,
+				5C89F54C5AEB9A1C684A21E7 /* ConnectionStatusView.swift */,
+				B58445ADAC5548C06C961B32 /* GeneralSettingsTab.swift */,
+				5CA5DA9F5D9D416F9DE09083 /* MenuBarView.swift */,
+				4CBD11626B42F31C18A080A6 /* QSOLogView.swift */,
+				1EBC6C81160C118BA1367644 /* SettingsView.swift */,
+				A29F6B11D010882D776A1E38 /* WavelogSettingsTab.swift */,
+				19C29D65FD4EF33EF048709C /* WSJTXSettingsTab.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		6668120E00EA9BE478095450 = {
+			isa = PBXGroup;
+			children = (
+				A09D95967077D62498305056 /* WaveLogMoat */,
+				25E42050F750DD2FB2B66EFF /* WaveLogMoatTests */,
+				F49A90160660A23AC9228F75 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7BAD63CD5A87C90BD4F4EF10 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				02735B1092C1E2CFB05E26A7 /* ADIFField.swift */,
+				75B7033F9022154816223736 /* ConnectionStatus.swift */,
+				C27FBF4B021E2C8553778A59 /* QSO.swift */,
+				2AFD1F8EDE82391068004020 /* StationProfile.swift */,
+				9A23D5FDFE1BFFD32785B0E0 /* WavelogConfig.swift */,
+				96225B572C0A7BC546C3C233 /* WSJTXMessage.swift */,
+				6D830DDA3CC0D456EC8DF8BD /* WSJTXStatus.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		998C50EA2C14056F7BAAC838 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F02FADA9E0D6C635A03834CD /* ADIFGenerator.swift */,
+				D2766D4EDCA643150DFDD49A /* ADIFParser.swift */,
+				3A5E8826E64EA7CFE26A7362 /* BinaryUDPListener.swift */,
+				5027D08247F1318AE0E276E2 /* LaunchAtLoginService.swift */,
+				6D91FDD9A5D28D182469C358 /* NotificationService.swift */,
+				C3B887F59C946F4C5F086BC7 /* QDataStreamReader.swift */,
+				B319338ECBF4B6F6D80734D2 /* QSONormalizer.swift */,
+				BB3F0CA2CCA7D28FA3E3468E /* TextUDPListener.swift */,
+				CE75B66B62508DC234CC0BD5 /* UDPService.swift */,
+				8FD9A55B7758B8C5C5E68612 /* WavelogAPIClient.swift */,
+				7EDFC34FDD4FB160035B2DF6 /* XMLContactParser.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		9D0E066E8FB3B61698A4B650 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F57C3C819FC806322BFA9089 /* BandMap.swift */,
+				0BB344EEA9275F03344C8D9D /* KeychainHelper.swift */,
+				2B99FA4E5018814EB70F64DD /* Logger.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		A09D95967077D62498305056 /* WaveLogMoat */ = {
+			isa = PBXGroup;
+			children = (
+				D18F21C023C134569DE93B04 /* Assets.xcassets */,
+				5EDDCF1E8E0FE1C880D2E26D /* Info.plist */,
+				2B951068868D709BD55F7663 /* App */,
+				7BAD63CD5A87C90BD4F4EF10 /* Models */,
+				998C50EA2C14056F7BAAC838 /* Services */,
+				9D0E066E8FB3B61698A4B650 /* Utilities */,
+				62811118575515BF4A86DAE9 /* Views */,
+			);
+			name = WaveLogMoat;
+			path = Sources/WaveLogMoat;
+			sourceTree = "<group>";
+		};
+		F49A90160660A23AC9228F75 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CF12265720C120E9E01764C7 /* WaveLogMoat.app */,
+				75295FB2DB1CD0497BCFAB38 /* WaveLogMoatTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		5ACFEA050F5EA503E09FB005 /* WaveLogMoatTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3CA7DE00E38B0CC99C55F632 /* Build configuration list for PBXNativeTarget "WaveLogMoatTests" */;
+			buildPhases = (
+				4DCF6869A8388C0A579EFCB9 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				38C343B615963F43699D2B35 /* PBXTargetDependency */,
+			);
+			name = WaveLogMoatTests;
+			packageProductDependencies = (
+			);
+			productName = WaveLogMoatTests;
+			productReference = 75295FB2DB1CD0497BCFAB38 /* WaveLogMoatTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		63B0C65D9F8B7EB050A241B3 /* WaveLogMoat */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 13FFA15027889E3CCC7E9F74 /* Build configuration list for PBXNativeTarget "WaveLogMoat" */;
+			buildPhases = (
+				80371F0C34ACD1DB08FBC117 /* Sources */,
+				0A47AC7200BC1F4E8AD56050 /* Resources */,
+				3893D279024E2EE7FAD08E79 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WaveLogMoat;
+			packageProductDependencies = (
+				E3C3D3C4DFB97E1B4CACA84E /* Sparkle */,
+			);
+			productName = WaveLogMoat;
+			productReference = CF12265720C120E9E01764C7 /* WaveLogMoat.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3F18F0FEF5FE4BAB2C137110 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = C9CC5FC92F44E5DF4F725229 /* Build configuration list for PBXProject "WaveLogMoat" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 6668120E00EA9BE478095450;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				DBDE9FC0AFF77DA40D93ECC1 /* XCRemoteSwiftPackageReference "Sparkle" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = F49A90160660A23AC9228F75 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				63B0C65D9F8B7EB050A241B3 /* WaveLogMoat */,
+				5ACFEA050F5EA503E09FB005 /* WaveLogMoatTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0A47AC7200BC1F4E8AD56050 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8E8D93C15355838E6177718 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4DCF6869A8388C0A579EFCB9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E0F47AAC931F01D7FFDB1CA /* ADIFGeneratorTests.swift in Sources */,
+				1905CE41C1C265379D9BD342 /* ADIFParserTests.swift in Sources */,
+				22D4CB753FF46712D484157A /* BandMapTests.swift in Sources */,
+				ABDA1F28777EBF80678D9C14 /* QDataStreamReaderTests.swift in Sources */,
+				AE4454657D3F8E91E718C4BB /* QSONormalizerTests.swift in Sources */,
+				EFFE246ED7C9BB3D8E9CF7F3 /* WavelogAPIClientTests.swift in Sources */,
+				8F30A3FDDF5700B1609FAB8B /* XMLContactParserTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		80371F0C34ACD1DB08FBC117 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EF5594242AC333C63A8B68E /* ADIFField.swift in Sources */,
+				59BFF2FABA587AEE8A66AACC /* ADIFGenerator.swift in Sources */,
+				0C7E1A247D66E03DC80B85DB /* ADIFParser.swift in Sources */,
+				F5F089CD8A0C60AA5803DBEA /* AboutTab.swift in Sources */,
+				B2CDFB7D499B4E7F073DF9B7 /* AppState.swift in Sources */,
+				76811CDDDB1857E354ED1E76 /* BandMap.swift in Sources */,
+				79B463DBAA89DFCB9278142E /* BinaryUDPListener.swift in Sources */,
+				61A7B5A3602F34533C5E72DA /* ConnectionStatus.swift in Sources */,
+				355837C0344B064511B1C431 /* ConnectionStatusView.swift in Sources */,
+				BC2C53173BEE3A5EA2931D9F /* GeneralSettingsTab.swift in Sources */,
+				5411DCB0145F8D6DF98CC22D /* KeychainHelper.swift in Sources */,
+				E6B481980610438F501BFEB5 /* LaunchAtLoginService.swift in Sources */,
+				3ABB49DA8449EED2D5BD8D34 /* Logger.swift in Sources */,
+				FF1DBD45D229E679399D7C53 /* MenuBarView.swift in Sources */,
+				FE0D6794E8E190365746880E /* NotificationService.swift in Sources */,
+				92116E1B21AF79FB3E00CAD1 /* QDataStreamReader.swift in Sources */,
+				AC1E29FEF479D0B9041ADDC2 /* QSO.swift in Sources */,
+				A195F0E064C031158510FCB0 /* QSOLogView.swift in Sources */,
+				59BED63DB824B3F0042CBD38 /* QSONormalizer.swift in Sources */,
+				870A69F2347A907FA579084C /* SettingsView.swift in Sources */,
+				D3CD94781172F2D935ED84AF /* StationProfile.swift in Sources */,
+				E00182CFA71E7CAFE355CF83 /* TextUDPListener.swift in Sources */,
+				6C139D2EFCF396769FFCAFBE /* UDPService.swift in Sources */,
+				B4513090F85FFB95779A3604 /* WSJTXMessage.swift in Sources */,
+				EE98456F5C1A0B19C2E701BF /* WSJTXSettingsTab.swift in Sources */,
+				BC99775A0AFF65E5C14F8F62 /* WSJTXStatus.swift in Sources */,
+				C18DFEF6D186CAD5466BE48D /* WaveLogMoatApp.swift in Sources */,
+				D39EBD60CC3784F3473D5753 /* WavelogAPIClient.swift in Sources */,
+				8DD27C8C09B001B075543C7C /* WavelogConfig.swift in Sources */,
+				888F98D430EBE9307B9E7751 /* WavelogSettingsTab.swift in Sources */,
+				BB2BFC6D6F90E6A27C8B3F80 /* XMLContactParser.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		38C343B615963F43699D2B35 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 63B0C65D9F8B7EB050A241B3 /* WaveLogMoat */;
+			targetProxy = 5DB22937EB7DF8FB57E5027B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		24DD1985C90C586759127337 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaveLogMoat.app/Contents/MacOS/WaveLogMoat";
+			};
+			name = Debug;
+		};
+		4DAF5DC3038133A685779486 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WaveLogMoat.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Sources/WaveLogMoat/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dl5mn.WaveLogMoat;
+				PRODUCT_NAME = WaveLogMoat;
+				SDKROOT = macosx;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		5F004B8A54E4B699757DD6E8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		CE5103305848C334CC5FC774 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = WaveLogMoat.entitlements;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Sources/WaveLogMoat/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dl5mn.WaveLogMoat;
+				PRODUCT_NAME = WaveLogMoat;
+				SDKROOT = macosx;
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+		E329D03C1140AC2356A4D763 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F035E220AFABF34D689E0D40 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.9;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaveLogMoat.app/Contents/MacOS/WaveLogMoat";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		13FFA15027889E3CCC7E9F74 /* Build configuration list for PBXNativeTarget "WaveLogMoat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DAF5DC3038133A685779486 /* Debug */,
+				CE5103305848C334CC5FC774 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3CA7DE00E38B0CC99C55F632 /* Build configuration list for PBXNativeTarget "WaveLogMoatTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				24DD1985C90C586759127337 /* Debug */,
+				F035E220AFABF34D689E0D40 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C9CC5FC92F44E5DF4F725229 /* Build configuration list for PBXProject "WaveLogMoat" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E329D03C1140AC2356A4D763 /* Debug */,
+				5F004B8A54E4B699757DD6E8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		DBDE9FC0AFF77DA40D93ECC1 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E3C3D3C4DFB97E1B4CACA84E /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DBDE9FC0AFF77DA40D93ECC1 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 3F18F0FEF5FE4BAB2C137110 /* Project object */;
+}

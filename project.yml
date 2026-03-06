@@ -1,0 +1,55 @@
+name: WaveLogMoat
+options:
+  deploymentTarget:
+    macOS: "14.0"
+packages:
+  Sparkle:
+    url: https://github.com/sparkle-project/Sparkle
+    from: 2.5.0
+targets:
+  WaveLogMoat:
+    type: application
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: Sources/WaveLogMoat
+    dependencies:
+      - package: Sparkle
+        product: Sparkle
+    info:
+      path: Sources/WaveLogMoat/Info.plist
+      properties:
+        CFBundleDisplayName: WaveLogMoat
+        CFBundleShortVersionString: "0.1.0"
+        CFBundleVersion: "1"
+        LSMinimumSystemVersion: "14.0"
+        LSUIElement: true
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: true
+        SUFeedURL: "https://dl5mn.github.io/WaveLogMoat/appcast.xml"
+        SUPublicEDKey: ""
+    entitlements:
+      path: WaveLogMoat.entitlements
+      properties:
+        com.apple.security.network.client: true
+        com.apple.security.network.server: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dl5mn.WaveLogMoat
+        PRODUCT_NAME: WaveLogMoat
+        SWIFT_VERSION: 5.9
+        MACOSX_DEPLOYMENT_TARGET: 14.0
+        SUPPORTS_MACCATALYST: NO
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
+  WaveLogMoatTests:
+    type: bundle.unit-test
+    platform: macOS
+    deploymentTarget: "14.0"
+    sources:
+      - path: Tests/WaveLogMoatTests
+    dependencies:
+      - target: WaveLogMoat
+    settings:
+      base:
+        SWIFT_VERSION: 5.9
+        MACOSX_DEPLOYMENT_TARGET: 14.0
