@@ -1,0 +1,55 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-14
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app
+
+      - name: Archive Release
+        run: xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Release -archivePath build/WaveLogMoat.xcarchive archive
+
+      - name: Run Tests
+        run: swift test
+
+      - name: Get Version
+        id: version
+        run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: Package DMG
+        run: |
+          APP_NAME="WaveLogMoat"
+          APP_PATH="build/WaveLogMoat.xcarchive/Products/Applications/${APP_NAME}.app"
+          if [ -z "$APP_PATH" ]; then
+            echo "Could not locate ${APP_NAME}.app after build"
+            exit 1
+          fi
+          if [ ! -d "$APP_PATH" ]; then
+            echo "Could not locate ${APP_NAME}.app at $APP_PATH"
+            exit 1
+          fi
+          mkdir -p dist/stage
+          ditto "$APP_PATH" "dist/stage/${APP_NAME}.app"
+          hdiutil create -volname "$APP_NAME" -srcfolder "dist/stage" -ov -format UDZO "dist/${APP_NAME}-${GITHUB_REF_NAME}.dmg"
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: WaveLogMoat ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: dist/WaveLogMoat-${{ github.ref_name }}.dmg
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
