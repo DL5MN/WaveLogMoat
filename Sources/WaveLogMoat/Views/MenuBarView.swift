@@ -72,6 +72,7 @@ public struct MenuBarView: View {
                 Button {
                     dismiss()
                     openSettings()
+                    NSApplication.shared.activate(ignoringOtherApps: true)
                 } label: {
                     MenuRow(title: "Settings...", systemImage: "gear", shortcut: "⌘,")
                 }
