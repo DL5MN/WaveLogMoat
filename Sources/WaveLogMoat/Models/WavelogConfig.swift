@@ -19,7 +19,7 @@ public struct WavelogConfig: Codable, Sendable, Equatable {
     public var allowSelfSignedCerts: Bool = true
     public var httpTimeout: Int = 5000
 
-    public var showFrequencyInMenuBar: Bool = true
+    public var showFrequencyInMenuBar: Bool = false
 
     public init() {}
 }
