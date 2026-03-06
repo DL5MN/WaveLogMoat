@@ -21,52 +21,53 @@ public struct WSJTXSettingsTab: View {
                     .foregroundStyle(.secondary)
             }
 
-            Section("Text Protocol (ADIF/XML)") {
-                Toggle("Enable Text Protocol", isOn: $appState.config.enableTextUDP)
+            Section("Protocol") {
+                Picker("Protocol", selection: $appState.config.udpProtocol) {
+                    Text("Text (ADIF/XML)").tag(UDPProtocol.text)
+                    Text("Binary (QDataStream)").tag(UDPProtocol.binary)
+                }
+                .pickerStyle(.segmented)
 
-                TextField("Port", value: $appState.config.textUDPPort, format: Self.portFormat)
-                    .textContentType(.none)
+                switch appState.config.udpProtocol {
+                case .text:
+                    TextField("Port", value: $appState.config.textUDPPort, format: Self.portFormat)
+                        .textContentType(.none)
 
-                Text("Receives logged QSOs as ADIF text from WSJT-X. This is the standard method — enable this unless you have a specific reason not to.")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
+                    Text("Listens on the WSJT-X Secondary UDP Server for logged QSOs as ADIF text. Simple and reliable — works alongside JTAlert, GridTracker, and other tools without conflict.")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+
+                case .binary:
+                    TextField("Port", value: $appState.config.binaryUDPPort, format: Self.portFormat)
+                        .textContentType(.none)
+
+                    Text("Listens on the WSJT-X primary UDP port for logged QSOs and real-time status updates including frequency, mode, and DX call. Only one application can use this port — do not use if JTAlert or GridTracker need it.")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+
+                    Label("Only one application can listen on the primary UDP port. This will conflict with JTAlert, GridTracker, or any other tool using this port.", systemImage: "exclamationmark.triangle.fill")
+                        .font(.callout)
+                        .foregroundStyle(.yellow)
+                }
 
                 LabeledContent("Status") {
                     HStack(spacing: 6) {
                         Circle()
-                            .fill(appState.udpService.isTextListening ? .green : .gray)
+                            .fill(isListening ? .green : .gray)
                             .frame(width: 8, height: 8)
-                        Text(appState.udpService.isTextListening ? "Listening" : "Disabled")
+                        Text(isListening ? "Listening" : "Not listening")
                             .foregroundStyle(.secondary)
                     }
                 }
-            }
-
-            Section("Binary Protocol (QDataStream)") {
-                Toggle("Enable Binary Protocol", isOn: $appState.config.enableBinaryUDP)
-
-                TextField("Port", value: $appState.config.binaryUDPPort, format: Self.portFormat)
-                    .textContentType(.none)
-
-                Text("Receives real-time status updates (frequency, mode, DX call) via WSJT-X's native binary protocol. Only one application can listen on this port at a time.")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-
-                LabeledContent("Status") {
-                    HStack(spacing: 6) {
-                        Circle()
-                            .fill(appState.udpService.isBinaryListening ? .green : .gray)
-                            .frame(width: 8, height: 8)
-                        Text(appState.udpService.isBinaryListening ? "Listening" : "Disabled")
-                            .foregroundStyle(.secondary)
-                    }
-                }
-
-                Label("May conflict with JTAlert or GridTracker if they use the same port.", systemImage: "exclamationmark.triangle.fill")
-                    .font(.callout)
-                    .foregroundStyle(.yellow)
             }
         }
         .formStyle(.grouped)
+    }
+
+    private var isListening: Bool {
+        switch appState.config.udpProtocol {
+        case .text: appState.udpService.isTextListening
+        case .binary: appState.udpService.isBinaryListening
+        }
     }
 }

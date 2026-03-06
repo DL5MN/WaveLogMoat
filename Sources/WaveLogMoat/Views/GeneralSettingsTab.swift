@@ -20,8 +20,8 @@ public struct GeneralSettingsTab: View {
                     .disabled(!appState.config.showInMenuBar && appState.config.showInDock)
                 Toggle("Show frequency in menu bar", isOn: $appState.config.showFrequencyInMenuBar)
 
-                if appState.config.showFrequencyInMenuBar && !appState.config.enableBinaryUDP {
-                    Label("Frequency data requires the binary protocol. Enable it in the WSJT-X tab.", systemImage: "exclamationmark.triangle.fill")
+                if appState.config.showFrequencyInMenuBar && appState.config.udpProtocol != .binary {
+                    Label("Frequency data requires the binary protocol. Switch to it in the WSJT-X tab.", systemImage: "exclamationmark.triangle.fill")
                         .font(.callout)
                         .foregroundStyle(.yellow)
                 }
