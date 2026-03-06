@@ -63,7 +63,9 @@ public struct GeneralSettingsTab: View {
                             .foregroundStyle(.yellow)
 
                         Button("Open Notification Settings") {
-                            NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.notifications")!)
+                            if let url = URL(string: "x-apple.systempreferences:com.apple.preference.notifications") {
+                                NSWorkspace.shared.open(url)
+                            }
                         }
                         .font(.callout)
                     }
