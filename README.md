@@ -74,7 +74,7 @@ Configuration depends on which protocol you choose in WaveLogMoat:
 1. Open WaveLogMoat from the menu bar (antenna icon)
 2. Click **Settings**
 3. **Wavelog tab**:
-   - Enter your Wavelog URL (e.g., `https://log.example.com/index.php`)
+   - Enter your Wavelog URL (e.g., `https://log.example.com`)
    - Enter your API Key (from Wavelog -> User Menu -> API Keys, must be Read+Write)
    - Select your Station Profile from the dropdown
    - Click **Test Connection** to verify
@@ -91,7 +91,7 @@ Once configured, WaveLogMoat automatically listens for QSOs. When you log a QSO 
 
 | Setting                 | Default   | Description                                                |
 | ----------------------- | --------- | ---------------------------------------------------------- |
-| Wavelog URL             | -         | Your Wavelog instance URL including `/index.php`           |
+| Wavelog URL             | -         | Your Wavelog instance URL                                  |
 | API Key                 | -         | Read+Write API key from Wavelog                            |
 | Station Profile         | -         | Selected from your Wavelog station locations               |
 | Protocol                | Text      | Text (ADIF/XML) or Binary (QDataStream) — one at a time   |

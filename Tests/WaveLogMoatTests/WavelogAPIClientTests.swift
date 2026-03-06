@@ -27,7 +27,7 @@ final class WavelogAPIClientTests: XCTestCase {
     }
 
     func testNormalizeURLPrefixesHTTPS() {
-        XCTAssertEqual(WavelogAPIClient.normalizeURL("log.example.com/index.php"), "https://log.example.com/index.php")
+        XCTAssertEqual(WavelogAPIClient.normalizeURL("log.example.com"), "https://log.example.com")
         XCTAssertEqual(WavelogAPIClient.normalizeURL("  log.example.com  "), "https://log.example.com")
     }
 

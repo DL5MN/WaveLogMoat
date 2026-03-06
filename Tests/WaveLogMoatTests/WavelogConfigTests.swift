@@ -60,7 +60,7 @@ final class WavelogConfigTests: XCTestCase {
 
     func testRoundTripPreservesAllFields() throws {
         var config = WavelogConfig()
-        config.wavelogURL = "https://log.example.com/index.php"
+        config.wavelogURL = "https://log.example.com"
         config.stationProfileID = "42"
         config.udpProtocol = .binary
         config.textUDPPort = 3000
