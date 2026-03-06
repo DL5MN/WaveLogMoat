@@ -1,0 +1,21 @@
+disabled_rules:
+  - trailing_comma
+  - identifier_name
+  - type_body_length
+  - file_length
+  - function_body_length
+  - line_length
+  - cyclomatic_complexity
+  - nesting
+
+opt_in_rules:
+  - empty_count
+  - closure_spacing
+  - force_unwrapping
+  - implicit_return
+
+excluded:
+  - .build
+  - Tests
+
+reporter: "xcode"
