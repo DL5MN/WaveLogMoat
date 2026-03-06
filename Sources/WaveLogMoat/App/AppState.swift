@@ -20,7 +20,8 @@ public final class AppState {
 
     public var config: WavelogConfig = WavelogConfig() {
         didSet {
-            saveConfig()
+            guard !isLoadingConfig else { return }
+            saveConfig(previous: oldValue)
         }
     }
 
@@ -43,13 +44,11 @@ public final class AppState {
 
     private var heartbeatTimer: Timer?
     private var wavelogCheckTimer: Timer?
+    private var isLoadingConfig = false
 
     public init() {
         self.udpService = UDPService()
-        self.apiClient = WavelogAPIClient(
-            allowSelfSignedCerts: true,
-            timeout: 5.0
-        )
+        self.apiClient = WavelogAPIClient()
         self.apiKey = (try? KeychainHelper.load(key: "wavelog_api_key")) ?? ""
         loadConfig()
         setupCallbacks()
@@ -144,6 +143,10 @@ public final class AppState {
     }
 
     private func checkConnectionsOnStartup() {
+        Task {
+            _ = await NotificationService.requestAuthorization()
+        }
+
         if !apiKey.isEmpty && !config.wavelogURL.isEmpty {
             Task { @MainActor in
                 await fetchStationProfiles()
@@ -234,6 +237,9 @@ public final class AppState {
     }
 
     public func loadConfig() {
+        isLoadingConfig = true
+        defer { isLoadingConfig = false }
+
         if let data = UserDefaults.standard.data(forKey: "wavelog_config"),
            let decoded = try? JSONDecoder().decode(WavelogConfig.self, from: data) {
             config = decoded
@@ -245,18 +251,38 @@ public final class AppState {
         )
     }
 
-    public func saveConfig() {
+    public func saveConfig(previous: WavelogConfig? = nil) {
         if let encoded = try? JSONEncoder().encode(config) {
             UserDefaults.standard.set(encoded, forKey: "wavelog_config")
         }
 
-        apiClient = WavelogAPIClient(
-            allowSelfSignedCerts: config.allowSelfSignedCerts,
-            timeout: TimeInterval(config.httpTimeout) / 1000.0
-        )
+        let needsNewAPIClient = previous.map {
+            $0.allowSelfSignedCerts != config.allowSelfSignedCerts || $0.httpTimeout != config.httpTimeout
+        } ?? true
 
-        startListening()
-        applyDockVisibility()
+        if needsNewAPIClient {
+            apiClient = WavelogAPIClient(
+                allowSelfSignedCerts: config.allowSelfSignedCerts,
+                timeout: TimeInterval(config.httpTimeout) / 1000.0
+            )
+        }
+
+        let needsListenerRestart = previous.map {
+            $0.udpProtocol != config.udpProtocol
+            || $0.textUDPPort != config.textUDPPort
+            || $0.binaryUDPPort != config.binaryUDPPort
+            || $0.listenAddress != config.listenAddress
+        } ?? true
+
+        if needsListenerRestart {
+            startListening()
+        }
+
+        let needsDockUpdate = previous.map { $0.showInDock != config.showInDock } ?? true
+
+        if needsDockUpdate {
+            applyDockVisibility()
+        }
     }
 
 }
