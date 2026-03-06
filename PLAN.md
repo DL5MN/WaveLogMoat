@@ -40,6 +40,7 @@ A native macOS menu bar app that:
 ### Naming
 
 "WaveLogMoat" continues the Wavelog companion app naming convention:
+
 - WaveLogGate (official Electron app)
 - WaveLogGoat (Go-based CAT control)
 - WaveLogStoat (Go-based QSO transport CLI)
@@ -53,20 +54,20 @@ A moat protects the castle — a bridge/guardian between WSJT-X and Wavelog.
 
 ### 2a. Technology Choices
 
-| Concern | Choice | Rationale |
-|---------|--------|-----------|
-| UI Framework | SwiftUI + `MenuBarExtra` | macOS 14+ native API, perfect for menu bar apps |
-| Min macOS | macOS 14 (Sonoma) | `@Observable` macro, modern SwiftUI features |
-| Networking (UDP) | `Network.framework` (`NWListener`) | Apple's modern networking, native UDP support |
-| Networking (HTTP) | `URLSession` | Native, async/await, certificate trust handling |
-| Auto-updates | Sparkle 2.x via SPM | Industry standard for non-App Store macOS apps |
-| Settings storage | `@AppStorage` / `UserDefaults` | Simple, native, automatic sync |
-| Secure storage | Keychain (Security framework) | API keys must not be in plaintext |
-| Launch at login | `ServiceManagement` framework | `SMAppService.mainApp.register()` (macOS 13+) |
-| Notifications | `UserNotifications` framework | Native macOS notification center |
-| Package manager | Swift Package Manager | Xcode-native, minimal dependencies |
-| CI/CD | GitHub Actions | macOS runners for build/test/sign/notarize |
-| Linting | SwiftLint | Standard Swift linting |
+| Concern           | Choice                             | Rationale                                       |
+| ----------------- | ---------------------------------- | ----------------------------------------------- |
+| UI Framework      | SwiftUI + `MenuBarExtra`           | macOS 14+ native API, perfect for menu bar apps |
+| Min macOS         | macOS 14 (Sonoma)                  | `@Observable` macro, modern SwiftUI features    |
+| Networking (UDP)  | `Network.framework` (`NWListener`) | Apple's modern networking, native UDP support   |
+| Networking (HTTP) | `URLSession`                       | Native, async/await, certificate trust handling |
+| Auto-updates      | Sparkle 2.x via SPM                | Industry standard for non-App Store macOS apps  |
+| Settings storage  | `@AppStorage` / `UserDefaults`     | Simple, native, automatic sync                  |
+| Secure storage    | Keychain (Security framework)      | API keys must not be in plaintext               |
+| Launch at login   | `ServiceManagement` framework      | `SMAppService.mainApp.register()` (macOS 13+)   |
+| Notifications     | `UserNotifications` framework      | Native macOS notification center                |
+| Package manager   | Swift Package Manager              | Xcode-native, minimal dependencies              |
+| CI/CD             | GitHub Actions                     | macOS runners for build/test/sign/notarize      |
+| Linting           | SwiftLint                          | Standard Swift linting                          |
 
 ### 2b. Key Design Decisions
 
@@ -134,10 +135,10 @@ WSJT-X
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│                         WaveLogMoatApp                                │
+│                         WaveLogMoatApp                               │
 │  @main, MenuBarExtra, Settings Window                                │
 ├──────────────────────────────────────────────────────────────────────┤
-│                      AppState (@Observable)                           │
+│                      AppState (@Observable)                          │
 │  Single source of truth: connectionStatus, wsjtxStatus,              │
 │  recentQSOs, stationProfiles, isListening, errors                    │
 ├────────────────┬────────────────┬────────────────┬───────────────────┤
@@ -145,18 +146,18 @@ WSJT-X
 │                │                │                │                   │
 │ MenuBarView    │ UDPService     │ QSO            │ BandMap           │
 │ SettingsView   │  ├ TextUDP     │ WSJTXStatus    │ ADIFGenerator     │
-│  ├ WavelogTab  │  └ BinaryUDP  │ WSJTXMessage   │ KeychainHelper    │
-│  ├ WSJTXTab    │ QDataStream   │ WavelogConfig  │ Logger            │
-│  ├ GeneralTab  │  Reader       │ ConnectionSt.  │                   │
-│  └ AboutTab    │ ADIFParser    │ StationProfile │                   │
-│ QSOLogView     │ XMLContact    │ ADIFField      │                   │
-│ ConnectionSt.  │  Parser       │                │                   │
-│  View          │ QSONormalizer │                │                   │
-│                │ WavelogAPI    │                │                   │
-│                │ Notification  │                │                   │
-│                │  Service      │                │                   │
-│                │ LaunchAtLogin │                │                   │
-│                │  Service      │                │                   │
+│  ├ WavelogTab  │  └ BinaryUDP   │ WSJTXMessage   │ KeychainHelper    │
+│  ├ WSJTXTab    │ QDataStream    │ WavelogConfig  │ Logger            │
+│  ├ GeneralTab  │  Reader        │ ConnectionSt.  │                   │
+│  └ AboutTab    │ ADIFParser     │ StationProfile │                   │
+│ QSOLogView     │ XMLContact     │ ADIFField      │                   │
+│ ConnectionSt.  │  Parser        │                │                   │
+│  View          │ QSONormalizer  │                │                   │
+│                │ WavelogAPI     │                │                   │
+│                │ Notification   │                │                   │
+│                │  Service       │                │                   │
+│                │ LaunchAtLogin  │                │                   │
+│                │  Service       │                │                   │
 └────────────────┴────────────────┴────────────────┴───────────────────┘
 ```
 
@@ -169,6 +170,7 @@ WSJT-X
 **Status**: Developer ID account to be acquired.
 
 **Setup (when ready):**
+
 - Apple Developer ID Application certificate
 - Store certificate + password as GitHub Actions encrypted secrets
 - Use `apple-actions/import-codesign-certs` in CI
@@ -176,10 +178,12 @@ WSJT-X
 - Staple notarization ticket to DMG
 
 **Without signing (current):**
+
 - Users run: `xattr -d com.apple.quarantine /Applications/WaveLogMoat.app`
 - Documented in README
 
 **CI secrets needed:**
+
 - `APPLE_CERTIFICATE_P12` — Base64-encoded .p12 certificate
 - `APPLE_CERTIFICATE_PASSWORD` — Certificate password
 - `APPLE_ID` — Apple ID email
@@ -188,13 +192,13 @@ WSJT-X
 
 ### 3b. Sparkle Appcast Setup
 
-**Status**: Sparkle framework integrated, `SPUStandardUpdaterController` wired, "Check for Updates" menu item present. Appcast URL in Info.plist is placeholder.
+**Status**: Sparkle framework integrated, EdDSA key pair generated, `SUPublicEDKey` set in Info.plist. Release pipeline signs DMGs and generates appcast XML for GitHub Pages deployment.
 
 **Remaining:**
-- Generate EdDSA (Ed25519) key pair for update signing
-- Create appcast XML (hosted on GitHub Pages or in release assets)
-- Update `SUFeedURL` in Info.plist with real URL
-- Add appcast generation step to release pipeline
+
+- Enable GitHub Pages on the repository (requires public repo or GitHub Pro)
+- Update `SUFeedURL` in Info.plist with the actual GitHub Pages URL
+- Verify end-to-end update flow with a tagged release
 
 ### 3c. Homebrew — Official Cask
 
@@ -204,9 +208,10 @@ WSJT-X
 
 ### 3d. Live Testing
 
-**Status**: All 42 unit tests pass. App builds and launches. Not yet tested against a live WSJT-X instance.
+**Status**: All 44 unit tests pass. App builds and launches. Not yet tested against a live WSJT-X instance.
 
 **Remaining:**
+
 - Test text UDP listener with WSJT-X Secondary UDP Server
 - Test binary UDP listener with WSJT-X Primary UDP Server
 - Test QSO logging end-to-end against a real Wavelog instance
@@ -218,6 +223,7 @@ WSJT-X
 **Status**: Release pipeline (`release.yml`) is configured with lint, test, archive, DMG, changelog (git-cliff), GitHub Release, and Homebrew tap update.
 
 **Remaining:**
+
 - Take screenshots for README
 - Tag `v0.1.0` and verify full pipeline
 - Consider whether to make repos public before or after first release
@@ -235,33 +241,43 @@ WSJT-X
 ## 4. Reference Implementations
 
 ### WaveLogStoat (Go CLI)
+
 - **Repository**: https://github.com/int2001/WaveLogStoat
 - **Relevance**: Direct reference for UDP→Wavelog data flow, ADIF parsing, normalization
 
 ### WaveLogGate (Electron)
+
 - **Repository**: https://github.com/wavelog/WaveLogGate
 - **Relevance**: Official companion app, defines the expected UX and API usage patterns
 
 ### WSJT-X Protocol Spec
+
 - **Source**: `Network/NetworkMessage.hpp` in WSJT-X source
 - **Mirror**: https://github.com/saitohirga/WSJT-X/blob/master/Network/NetworkMessage.hpp
 
 ### Wavelog API Documentation
+
 - **URL**: https://docs.wavelog.org/developer/api/
 
 ---
 
 ## 5. Design Decisions Log
 
-| # | Decision | Rationale | Date |
-|---|----------|-----------|------|
-| 1 | macOS 14+ minimum | `@Observable` macro, modern SwiftUI. Covers ~85%+ active Macs. | 2026-03-06 |
-| 2 | Binary UDP disabled by default | Port 2237 conflicts with JTAlert/GridTracker. Opt-in with documentation. | 2026-03-06 |
-| 3 | MIT license | Matches WaveLogGate (official companion). Permissive for ham radio community. | 2026-03-06 |
-| 4 | Keychain for API key | Security best practice. WaveLogGate/Stoat use plaintext — we improve on this. | 2026-03-06 |
-| 5 | No CAT control | Scope limitation. WaveLogGate already does CAT. We focus on QSO logging. | 2026-03-06 |
-| 6 | Sparkle for updates | Industry standard for non-App Store macOS. EdDSA signing, GitHub Releases hosting. | 2026-03-06 |
-| 7 | Custom Homebrew tap first | Instant publishing. Submit to homebrew-cask when app has traction. | 2026-03-06 |
-| 8 | Station profile dropdown via API | Better UX than manual ID entry. `/api/station_info` provides the data. | 2026-03-06 |
-| 9 | App name: WaveLogMoat | Continues Gate/Goat/Stoat naming. Moat = bridge/guardian. | 2026-03-06 |
-| 10 | CI signing deferred | Developer ID account pending. Pipeline prepared for secrets. | 2026-03-06 |
+| #   | Decision                         | Rationale                                                                          | Date       |
+| --- | -------------------------------- | ---------------------------------------------------------------------------------- | ---------- |
+| 1   | macOS 14+ minimum                | `@Observable` macro, modern SwiftUI. Covers ~85%+ active Macs.                     | 2026-03-06 |
+| 2   | Binary UDP disabled by default   | Port 2237 conflicts with JTAlert/GridTracker. Opt-in with documentation.           | 2026-03-06 |
+| 3   | MIT license                      | Matches WaveLogGate (official companion). Permissive for ham radio community.      | 2026-03-06 |
+| 4   | Keychain for API key             | Security best practice. WaveLogGate/Stoat use plaintext — we improve on this.      | 2026-03-06 |
+| 5   | No CAT control                   | Scope limitation. WaveLogGate already does CAT. We focus on QSO logging.           | 2026-03-06 |
+| 6   | Sparkle for updates              | Industry standard for non-App Store macOS. EdDSA signing, GitHub Releases hosting. | 2026-03-06 |
+| 7   | Custom Homebrew tap first        | Instant publishing. Submit to homebrew-cask when app has traction.                 | 2026-03-06 |
+| 8   | Station profile dropdown via API | Better UX than manual ID entry. `/api/station_info` provides the data.             | 2026-03-06 |
+| 9   | App name: WaveLogMoat            | Continues Gate/Goat/Stoat naming. Moat = bridge/guardian.                          | 2026-03-06 |
+| 10  | CI signing deferred              | Developer ID account pending. Pipeline prepared for secrets.                       | 2026-03-06 |
+| 11  | station_info key in URL path     | Wavelog expects API key at `/api/station_info/{key}`, not in JSON body.            | 2026-03-06 |
+| 12  | In-memory API key cache          | Keychain prompts on every read from unsigned builds. Load once, write-through.     | 2026-03-06 |
+| 13  | Grouped form settings UI         | `.formStyle(.grouped)` for native macOS card layout. Avoids clipping in 2-col.    | 2026-03-06 |
+| 14  | Auto-prefix https:// on URLs     | Users often omit protocol. Prefix https://, hint about http:// on TLS errors.     | 2026-03-06 |
+| 15  | Notification denied UX           | Sync toggle to OS state, show warning + "Open Notification Settings" button.       | 2026-03-06 |
+| 16  | Dock visibility via policy       | `NSApp.setActivationPolicy(.regular/.accessory)` applied on init and config save.  | 2026-03-06 |
