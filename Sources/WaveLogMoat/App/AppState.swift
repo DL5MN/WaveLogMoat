@@ -55,6 +55,7 @@ public final class AppState {
         loadConfig()
         setupCallbacks()
         startListening()
+        applyDockVisibility()
         checkConnectionsOnStartup()
     }
 
@@ -176,6 +177,11 @@ public final class AppState {
         }
     }
 
+    public func applyDockVisibility() {
+        let policy: NSApplication.ActivationPolicy = config.showInDock ? .regular : .accessory
+        NSApplication.shared.setActivationPolicy(policy)
+    }
+
     public func startListening() {
         if config.enableTextUDP {
             udpService.startTextListener(port: config.textUDPPort, address: config.listenAddress)
@@ -251,6 +257,7 @@ public final class AppState {
         )
 
         startListening()
+        applyDockVisibility()
     }
 
 }

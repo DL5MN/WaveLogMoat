@@ -11,7 +11,10 @@ public struct GeneralSettingsTab: View {
         Form {
             Section("Appearance") {
                 Toggle("Show in menu bar", isOn: $appState.config.showInMenuBar)
+                    .disabled(appState.config.showInMenuBar && !appState.config.showInDock)
+
                 Toggle("Show in dock", isOn: $appState.config.showInDock)
+                    .disabled(!appState.config.showInMenuBar && appState.config.showInDock)
                 Toggle("Show frequency in menu bar", isOn: $appState.config.showFrequencyInMenuBar)
 
                 if appState.config.showFrequencyInMenuBar && !appState.config.enableBinaryUDP {
