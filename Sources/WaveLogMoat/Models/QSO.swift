@@ -68,6 +68,7 @@ public struct QSO: Codable, Identifiable, Equatable, Sendable {
 
     public var loggedSuccessfully: Bool?
     public var logError: String?
+    public var logErrorRaw: String?
     public var loggedAt: Date?
 
     public init(id: UUID = UUID()) {

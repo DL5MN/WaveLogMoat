@@ -127,6 +127,9 @@ public final class AppState {
         } catch {
             newQSO.loggedSuccessfully = false
             newQSO.logError = error.localizedDescription
+            if let apiError = error as? WavelogAPIClient.APIError {
+                newQSO.logErrorRaw = apiError.rawBody
+            }
             newQSO.loggedAt = Date()
             totalQSOsFailed += 1
 

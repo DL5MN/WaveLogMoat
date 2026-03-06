@@ -4,10 +4,12 @@ public final class WavelogAPIClient: @unchecked Sendable {
     public struct APIError: Error, LocalizedError, Sendable {
         public let message: String
         public let statusCode: Int?
+        public let rawBody: String?
 
-        public init(message: String, statusCode: Int? = nil) {
+        public init(message: String, statusCode: Int? = nil, rawBody: String? = nil) {
             self.message = message
             self.statusCode = statusCode
+            self.rawBody = rawBody
         }
 
         public var errorDescription: String? {
@@ -201,9 +203,10 @@ public final class WavelogAPIClient: @unchecked Sendable {
         Log.api.debug("API response status \(http.statusCode) from \(request.url?.absoluteString ?? "unknown")")
 
         guard (200...299).contains(http.statusCode) else {
+            let rawBody = String(data: data, encoding: .utf8)
             let message = Self.extractErrorMessage(from: data)
             Log.api.error("API request failed with status \(http.statusCode): \(message)")
-            throw APIError(message: message, statusCode: http.statusCode)
+            throw APIError(message: message, statusCode: http.statusCode, rawBody: rawBody)
         }
 
         do {
@@ -229,11 +232,49 @@ public final class WavelogAPIClient: @unchecked Sendable {
     }
 
     private static func extractErrorMessage(from data: Data) -> String {
-        if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
-           let reason = json["reason"] as? String {
-            return reason
+        guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
+            return String(data: data, encoding: .utf8) ?? "Unknown error"
         }
+
+        if let reason = json["reason"] as? String, !reason.isEmpty {
+            return stripHTML(reason)
+        }
+
+        if let messages = json["messages"] as? [String] {
+            let cleaned = messages
+                .map { stripHTML($0) }
+                .filter { !$0.isEmpty }
+            if !cleaned.isEmpty {
+                return cleaned.joined(separator: "\n")
+            }
+        }
+
         return String(data: data, encoding: .utf8) ?? "Unknown error"
+    }
+
+    private static func stripHTML(_ string: String) -> String {
+        var result = string
+            .replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression)
+            .replacingOccurrences(of: "&amp;", with: "&")
+            .replacingOccurrences(of: "&lt;", with: "<")
+            .replacingOccurrences(of: "&gt;", with: ">")
+            .replacingOccurrences(of: "&quot;", with: "\"")
+            .replacingOccurrences(of: "&apos;", with: "'")
+            .replacingOccurrences(of: "&#39;", with: "'")
+            .replacingOccurrences(of: "&#039;", with: "'")
+
+        // Decode numeric HTML entities (&#NNN;)
+        while let range = result.range(of: "&#\\d+;", options: .regularExpression) {
+            let entity = result[range]
+            let digits = entity.dropFirst(2).dropLast()
+            if let code = UInt32(digits), let scalar = Unicode.Scalar(code) {
+                result.replaceSubrange(range, with: String(scalar))
+            } else {
+                break
+            }
+        }
+
+        return result.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
 
