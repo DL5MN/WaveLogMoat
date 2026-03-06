@@ -42,8 +42,8 @@ public final class AppState {
     }
 
     private var heartbeatTimer: Timer?
-
     private var wavelogCheckTimer: Timer?
+    private var recentQSOKeys: [String: Date] = [:]
 
     public init() {
         self.udpService = UDPService()
@@ -105,7 +105,24 @@ public final class AppState {
         }
     }
 
+    private func isDuplicate(_ qso: QSO) -> Bool {
+        let key = "\(qso.call)|\(qso.band)|\(qso.mode)|\(qso.qsoDate)|\(qso.timeOn)"
+        let now = Date()
+
+        recentQSOKeys = recentQSOKeys.filter { now.timeIntervalSince($0.value) < 30 }
+
+        if recentQSOKeys[key] != nil {
+            Log.api.debug("Ignoring duplicate QSO for \(qso.call) on \(qso.band)")
+            return true
+        }
+
+        recentQSOKeys[key] = now
+        return false
+    }
+
     private func handleQSOReceived(_ qso: QSO) async {
+        guard !isDuplicate(qso) else { return }
+
         var newQSO = qso
 
         do {
