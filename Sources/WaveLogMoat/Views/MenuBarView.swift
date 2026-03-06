@@ -75,7 +75,6 @@ public struct MenuBarView: View {
                 } label: {
                     MenuRow(title: "Settings...", systemImage: "gear", shortcut: "⌘,")
                 }
-                .keyboardShortcut(",", modifiers: .command)
                 .buttonStyle(.accessoryBar)
 
                 Button {
@@ -92,7 +91,6 @@ public struct MenuBarView: View {
                 } label: {
                     MenuRow(title: "Quit WaveLogMoat", systemImage: "power", shortcut: "⌘Q")
                 }
-                .keyboardShortcut("q", modifiers: .command)
                 .buttonStyle(.accessoryBar)
             }
             .padding(.vertical, 4)
