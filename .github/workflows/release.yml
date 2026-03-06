@@ -29,7 +29,7 @@ jobs:
         run: swift test
 
       - name: Archive Release
-        run: xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Release -archivePath build/WaveLogMoat.xcarchive archive
+        run: xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Release -archivePath build/WaveLogMoat.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO archive
 
       - name: Get Version
         id: version

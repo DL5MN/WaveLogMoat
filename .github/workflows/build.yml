@@ -22,7 +22,7 @@ jobs:
         run: swiftlint lint --strict
 
       - name: Build (Xcode)
-        run: xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Debug -destination 'platform=macOS' build
+        run: xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Debug -destination 'platform=macOS' CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO build
 
       - name: Test (SPM)
         run: swift test
