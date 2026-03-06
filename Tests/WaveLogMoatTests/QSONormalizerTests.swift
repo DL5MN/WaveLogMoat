@@ -29,6 +29,47 @@ final class QSONormalizerTests: XCTestCase {
         XCTAssertEqual(QSONormalizer.normalizeKIndex("11"), "9")
     }
 
+    func testNormalizeKIndexEmptyReturnsEmpty() {
+        XCTAssertEqual(QSONormalizer.normalizeKIndex(""), "")
+        XCTAssertEqual(QSONormalizer.normalizeKIndex("  "), "  ")
+    }
+
+    func testNormalizeKIndexNonNumericReturnsEmpty() {
+        XCTAssertEqual(QSONormalizer.normalizeKIndex("abc"), "")
+        XCTAssertEqual(QSONormalizer.normalizeKIndex("N/A"), "")
+    }
+
+    func testNormalizeKIndexBoundaryValues() {
+        XCTAssertEqual(QSONormalizer.normalizeKIndex("0"), "0")
+        XCTAssertEqual(QSONormalizer.normalizeKIndex("9"), "9")
+        XCTAssertEqual(QSONormalizer.normalizeKIndex("4.5"), "5")
+    }
+
+    func testNormalizeModeCaseInsensitive() {
+        XCTAssertEqual(QSONormalizer.normalizeMode("usb"), "SSB")
+        XCTAssertEqual(QSONormalizer.normalizeMode("lsb"), "SSB")
+        XCTAssertEqual(QSONormalizer.normalizeMode("Usb"), "SSB")
+    }
+
+    func testNormalizePowerEmptyPassthrough() {
+        XCTAssertEqual(QSONormalizer.normalizePower(""), "")
+        XCTAssertEqual(QSONormalizer.normalizePower("  "), "  ")
+    }
+
+    func testNormalizePowerNonNumericPassthrough() {
+        XCTAssertEqual(QSONormalizer.normalizePower("QRP"), "QRP")
+    }
+
+    func testNormalizePreservesBandWhenAlreadySet() {
+        var qso = QSO()
+        qso.call = "DL5MN"
+        qso.frequency = "14.074000"
+        qso.band = "20m"
+
+        let normalized = QSONormalizer.normalize(qso)
+        XCTAssertEqual(normalized.band, "20m")
+    }
+
     func testNormalizeAddsBandFromFrequency() {
         var qso = QSO()
         qso.call = "DL5MN"

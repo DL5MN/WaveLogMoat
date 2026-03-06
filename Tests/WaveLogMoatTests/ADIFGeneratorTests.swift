@@ -44,6 +44,34 @@ final class ADIFGeneratorTests: XCTestCase {
         XCTAssertEqual(field, "<COMMENT:7>CQ TEST")
     }
 
+    func testFormatFieldMultiByteUTF8() {
+        let field = ADIFGenerator.formatField("COMMENT", value: "73 de DL5MN ü")
+        XCTAssertEqual(field, "<COMMENT:14>73 de DL5MN ü")
+    }
+
+    func testRoundTripMultiByteComment() throws {
+        var input = QSO()
+        input.call = "DL5MN"
+        input.comment = "Grüße aus München"
+
+        let adif = ADIFGenerator.generate([input], includeHeader: false)
+        let parsed = try ADIFParser.parse(adif)
+
+        XCTAssertEqual(parsed.count, 1)
+        XCTAssertEqual(parsed[0].comment, "Grüße aus München")
+    }
+
+    func testGenerateEmptyFieldsAreOmitted() {
+        var qso = QSO()
+        qso.call = "W1AW"
+
+        let output = ADIFGenerator.generate([qso], includeHeader: false)
+
+        XCTAssertFalse(output.contains("<MODE:"))
+        XCTAssertFalse(output.contains("<FREQ:"))
+        XCTAssertTrue(output.contains("<CALL:4>W1AW"))
+    }
+
     func testRoundTripGeneratorParser() throws {
         var input = QSO()
         input.call = "JA1ABC"
