@@ -11,13 +11,6 @@ There are already several tools that bridge WSJT-X and Wavelog — [WaveLogGate]
 
 WaveLogMoat listens for QSO data from WSJT-X and automatically forwards it to your Wavelog instance in real-time. It supports both the text-based ADIF/XML protocol (Secondary UDP Server) and the binary QDataStream protocol for richer status information.
 
-## Screenshots
-
-![WaveLogMoat menu bar overview](docs/screenshots/menu-bar-overview.png)
-![WaveLogMoat settings window](docs/screenshots/settings-window.png)
-
-_Screenshots coming soon._
-
 ## Features
 
 - **Automatic QSO Logging** - QSOs from WSJT-X are logged to Wavelog in real-time
