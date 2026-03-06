@@ -10,6 +10,7 @@ public final class AppState {
     public var wsjtxStatus: WSJTXStatus = WSJTXStatus()
     public var wsjtxClientId: String = ""
     public var wsjtxVersion: String = ""
+    public var wavelogVersion: String = ""
 
     public var recentQSOs: [QSO] = []
     public private(set) var totalQSOsLogged: Int = 0
@@ -143,31 +144,34 @@ public final class AppState {
         if !apiKey.isEmpty && !config.wavelogURL.isEmpty {
             Task { @MainActor in
                 await fetchStationProfiles()
+                await checkWavelogVersion()
             }
         }
 
         startWavelogCheckTimer()
     }
 
+    private func checkWavelogVersion() async {
+        guard !apiKey.isEmpty, !config.wavelogURL.isEmpty else { return }
+        do {
+            let version = try await apiClient.fetchVersion(
+                apiKey: apiKey,
+                baseURL: config.wavelogURL
+            )
+            wavelogVersion = version
+            if wavelogConnectionStatus != .connected {
+                wavelogConnectionStatus = .connected
+            }
+        } catch {
+            wavelogConnectionStatus = .error
+        }
+    }
+
     private func startWavelogCheckTimer() {
         wavelogCheckTimer?.invalidate()
         wavelogCheckTimer = Timer.scheduledTimer(withTimeInterval: 60.0, repeats: true) { [weak self] _ in
             Task { @MainActor in
-                guard let self,
-                      !self.apiKey.isEmpty,
-                      !self.config.wavelogURL.isEmpty else { return }
-
-                do {
-                    _ = try await self.apiClient.fetchVersion(
-                        apiKey: self.apiKey,
-                        baseURL: self.config.wavelogURL
-                    )
-                    if self.wavelogConnectionStatus != .connected {
-                        self.wavelogConnectionStatus = .connected
-                    }
-                } catch {
-                    self.wavelogConnectionStatus = .error
-                }
+                await self?.checkWavelogVersion()
             }
         }
     }

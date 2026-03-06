@@ -23,7 +23,7 @@ public struct MenuBarView: View {
                 ConnectionStatusView(
                     label: "Wavelog",
                     status: appState.wavelogConnectionStatus,
-                    detail: nil
+                    detail: appState.wavelogVersion.isEmpty ? nil : "v\(appState.wavelogVersion)"
                 )
             }
             .padding()
