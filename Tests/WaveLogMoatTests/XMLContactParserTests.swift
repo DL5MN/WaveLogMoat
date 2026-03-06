@@ -30,12 +30,14 @@ final class XMLContactParserTests: XCTestCase {
         XCTAssertEqual(qso.timeOn, "120000")
     }
 
-    func testParseNormalizesUSBAndLSBToSSB() throws {
+    func testParsePreservesRawMode() throws {
         let usbXML = "<contactinfo><call>W1AW</call><mode>USB</mode></contactinfo>"
         let lsbXML = "<contactinfo><call>K1ABC</call><mode>LSB</mode></contactinfo>"
+        let ft8XML = "<contactinfo><call>DL5MN</call><mode>FT8</mode></contactinfo>"
 
-        XCTAssertEqual(try XMLContactParser.parse(usbXML).mode, "SSB")
-        XCTAssertEqual(try XMLContactParser.parse(lsbXML).mode, "SSB")
+        XCTAssertEqual(try XMLContactParser.parse(usbXML).mode, "USB")
+        XCTAssertEqual(try XMLContactParser.parse(lsbXML).mode, "LSB")
+        XCTAssertEqual(try XMLContactParser.parse(ft8XML).mode, "FT8")
     }
 
     func testParseSupportsMultipleTimestampFormats() throws {

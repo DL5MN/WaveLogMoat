@@ -18,8 +18,6 @@ struct WaveLogMoatApp: App {
     @State private var appState = AppState()
     @State private var updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
 
-    init() {}
-
     var body: some Scene {
         MenuBarExtra {
             MenuBarView(appState: appState) {

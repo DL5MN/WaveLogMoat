@@ -1,6 +1,9 @@
 import Foundation
 
 public enum ADIFParser {
+    // swiftlint:disable:next force_try
+    private static let eorRegex = try! NSRegularExpression(pattern: "(?i)<eor>")
+
     public enum ParseError: Error, LocalizedError, Equatable {
         case emptyInput
         case noRecordsFound
@@ -41,9 +44,8 @@ public enum ADIFParser {
             content = String(content[eohRange.upperBound...])
         }
 
-        let eorRegex = try? NSRegularExpression(pattern: "(?i)<eor>")
         let range = NSRange(content.startIndex..<content.endIndex, in: content)
-        let separated = eorRegex?.stringByReplacingMatches(in: content, range: range, withTemplate: "\u{1E}") ?? content
+        let separated = eorRegex.stringByReplacingMatches(in: content, range: range, withTemplate: "\u{1E}")
 
         return separated
             .split(separator: "\u{1E}")

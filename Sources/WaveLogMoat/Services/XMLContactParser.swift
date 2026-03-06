@@ -65,10 +65,7 @@ public enum XMLContactParser {
             qso.timeOff = time
         }
 
-        if var mode = fields["mode"] {
-            if mode.uppercased() == "USB" || mode.uppercased() == "LSB" {
-                mode = "SSB"
-            }
+        if let mode = fields["mode"] {
             qso.mode = mode
         }
 
