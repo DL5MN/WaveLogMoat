@@ -1,7 +1,9 @@
 import SwiftUI
+import UserNotifications
 
 public struct GeneralSettingsTab: View {
     @Bindable var appState: AppState
+    @State private var notificationsDenied = false
 
     public init(appState: AppState) {
         self.appState = appState
@@ -47,19 +49,42 @@ public struct GeneralSettingsTab: View {
                                 let granted = await NotificationService.requestAuthorization()
                                 if !granted {
                                     appState.config.showNotifications = false
+                                    notificationsDenied = true
                                 }
                             }
                         }
                     }
 
-                Text("Get notified when a QSO is logged or fails to log.")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
+                if notificationsDenied {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Label("Notifications are disabled in System Settings.", systemImage: "exclamationmark.triangle.fill")
+                            .font(.callout)
+                            .foregroundStyle(.yellow)
+
+                        Button("Open Notification Settings") {
+                            NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.notifications")!)
+                        }
+                        .font(.callout)
+                    }
+                } else {
+                    Text("Get notified when a QSO is logged or fails to log.")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                }
             }
         }
         .formStyle(.grouped)
         .onAppear {
             appState.config.launchAtLogin = LaunchAtLoginService.isEnabled
+            checkNotificationStatus()
+        }
+    }
+
+    private func checkNotificationStatus() {
+        UNUserNotificationCenter.current().getNotificationSettings { settings in
+            DispatchQueue.main.async {
+                notificationsDenied = settings.authorizationStatus == .denied
+            }
         }
     }
 }
