@@ -73,7 +73,7 @@ public final class BinaryUDPListener: @unchecked Sendable {
     private func handleConnection(_ connection: NWConnection) {
         connection.stateUpdateHandler = { state in
             if case .failed(let error) = state {
-                Log.udp.error("Binary UDP connection failed: \(error.localizedDescription)")
+                Log.udp.error("Binary UDP connection failed: \(error.localizedDescription, privacy: .public)")
             }
         }
 
@@ -114,7 +114,7 @@ public final class BinaryUDPListener: @unchecked Sendable {
         case .close(let clientId):
             onClose?(clientId)
         case .unknown(let typeValue, let clientId):
-            Log.udp.debug("Ignoring unknown WSJT-X message type \(typeValue) from \(clientId)")
+            Log.udp.debug("Ignoring unknown WSJT-X message type \(typeValue, privacy: .public) from \(clientId, privacy: .public)")
         }
     }
 }

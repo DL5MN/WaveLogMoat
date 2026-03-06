@@ -36,7 +36,7 @@ public final class AppState {
             do {
                 try KeychainHelper.save(key: "wavelog_api_key", value: apiKey)
             } catch {
-                Log.api.error("Failed to save API key to Keychain: \(error.localizedDescription)")
+                Log.api.error("Failed to save API key to Keychain: \(error.localizedDescription, privacy: .public)")
             }
         }
     }

@@ -67,7 +67,7 @@ public final class TextUDPListener: @unchecked Sendable {
     private func handleConnection(_ connection: NWConnection) {
         connection.stateUpdateHandler = { state in
             if case .failed(let error) = state {
-                Log.udp.error("Text UDP connection failed: \(error.localizedDescription)")
+                Log.udp.error("Text UDP connection failed: \(error.localizedDescription, privacy: .public)")
             }
         }
 

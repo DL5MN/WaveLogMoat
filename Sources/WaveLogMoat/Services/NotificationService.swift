@@ -6,7 +6,7 @@ public enum NotificationService {
         do {
             return try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
         } catch {
-            Log.app.error("Notification authorization request failed: \(error.localizedDescription)")
+            Log.app.error("Notification authorization request failed: \(error.localizedDescription, privacy: .public)")
             return false
         }
     }
@@ -44,7 +44,7 @@ public enum NotificationService {
 
         UNUserNotificationCenter.current().add(request) { error in
             if let error {
-                Log.app.error("Failed to send notification: \(error.localizedDescription)")
+                Log.app.error("Failed to send notification: \(error.localizedDescription, privacy: .public)")
             }
         }
     }
