@@ -8,20 +8,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Initial project structure and implementation
-- ADIF parser and generator
-- XML contact parser for WSJT-X
-- QDataStream binary protocol parser
-- Text UDP listener (port 2333)
-- Binary UDP listener (port 2237)
-- Wavelog API client (QSO logging, station info, version check, connection test)
-- QSO data normalization (power, band, mode)
-- macOS menu bar UI with SwiftUI MenuBarExtra
-- Settings window with Wavelog, WSJT-X, General, and About tabs
-- Connection status indicators for WSJT-X and Wavelog
-- Recent QSO log in menu bar dropdown
-- macOS notification support
-- Keychain storage for API key
-- Launch at login support
-- Self-signed certificate support for Wavelog
-- Unit tests for core functionality (42 tests)
+
+- Add app icon
+- Add Xcode project with app target and Sparkle integration
+- Add settings window with all tabs
+- Implement menu bar UI
+- Add app entry point and state management
+- Add notification and launch-at-login services
+- Implement Wavelog API client
+- Add UDP listeners for text and binary protocols
+- Implement QDataStream binary protocol reader
+- Add band map utility and logging
+- Add XML contact parser and QSO normalizer
+- Implement ADIF parser and generator
+- Add Wavelog configuration and station profile models
+- Add WSJT-X protocol models
+- Add QSO data model and ADIF field definitions
+
+### CI/CD
+
+- Add linting to release pipeline and auto-update homebrew tap
+- Add swiftlint step to build pipeline
+- Upgrade runners to macos-15 with Xcode 16.4
+- Add build and release GitHub Actions workflows
+
+### Changed
+
+- Fix all swiftlint violations
+
+### Documentation
+
+- Add motivation and feature comparison with related projects
+- Add README, contributing guide, and changelog
+- Add project plan and architecture
+
+### Fixed
+
+- Generate properly sized app icon PNGs and exclude asset catalog from SPM
+
+### Other
+
+- Initialize project structure
+
+### Testing
+
+- Add networking tests
+- Add unit tests for parsers and models
