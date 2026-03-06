@@ -24,6 +24,7 @@ let package = Package(
             ],
             exclude: [
                 "Info.plist",
+                "Assets.xcassets",
             ],
             swiftSettings: [
                 .define("BUILDING_FOR_SWIFT_PACKAGE"),
