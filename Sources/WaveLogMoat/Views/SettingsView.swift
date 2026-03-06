@@ -2,11 +2,11 @@ import SwiftUI
 
 public struct SettingsView: View {
     @Bindable var appState: AppState
-    
+
     public init(appState: AppState) {
         self.appState = appState
     }
-    
+
     public var body: some View {
         TabView {
             WavelogSettingsTab(appState: appState)

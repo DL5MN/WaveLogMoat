@@ -301,10 +301,10 @@ public final class QDataStreamReader: @unchecked Sendable {
         return buffer[start..<end]
     }
 
-    private func gregorianDateComponents(fromJulianDay julianDay: Int64) throws -> (Int, Int, Int) {
+    private func gregorianDateComponents(fromJulianDay julianDay: Int64) throws -> (year: Int, month: Int, day: Int) {
         var l = julianDay + 68569
         let n = (4 * l) / 146097
-        l = l - (146097 * n + 3) / 4
+        l -= (146097 * n + 3) / 4
         let i = (4000 * (l + 1)) / 1461001
         l = l - (1461 * i) / 4 + 31
         let j = (80 * l) / 2447

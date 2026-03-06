@@ -17,9 +17,9 @@ public final class SPUStandardUpdaterController {
 struct WaveLogMoatApp: App {
     @State private var appState = AppState()
     @State private var updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
-    
+
     init() {}
-    
+
     var body: some Scene {
         MenuBarExtra {
             MenuBarView(appState: appState) {
@@ -29,7 +29,7 @@ struct WaveLogMoatApp: App {
             MenuBarLabel(appState: appState)
         }
         .menuBarExtraStyle(.window)
-        
+
         Settings {
             SettingsView(appState: appState)
         }
@@ -38,7 +38,7 @@ struct WaveLogMoatApp: App {
 
 struct MenuBarLabel: View {
     let appState: AppState
-    
+
     var body: some View {
         HStack(spacing: 4) {
             Image(systemName: "antenna.radiowaves.left.and.right")

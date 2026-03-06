@@ -18,4 +18,7 @@ excluded:
   - .build
   - Tests
 
+large_tuple:
+  warning: 3
+
 reporter: "xcode"

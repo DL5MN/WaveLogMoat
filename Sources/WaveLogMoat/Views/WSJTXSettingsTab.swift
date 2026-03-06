@@ -2,18 +2,18 @@ import SwiftUI
 
 public struct WSJTXSettingsTab: View {
     @Bindable var appState: AppState
-    
+
     public init(appState: AppState) {
         self.appState = appState
     }
-    
+
     public var body: some View {
         Form {
             Section {
                 TextField("Listen Address", text: $appState.config.listenAddress)
                     .textFieldStyle(.roundedBorder)
             }
-            
+
             Section(header: Text("Text Protocol (ADIF/XML)")) {
                 HStack {
                     Toggle("Enabled", isOn: $appState.config.enableTextUDP)
@@ -23,7 +23,7 @@ public struct WSJTXSettingsTab: View {
                         .frame(width: 80)
                         .textFieldStyle(.roundedBorder)
                 }
-                
+
                 HStack {
                     Text("Status:")
                     Circle()
@@ -33,7 +33,7 @@ public struct WSJTXSettingsTab: View {
                         .foregroundStyle(.secondary)
                 }
             }
-            
+
             Section(header: Text("Binary Protocol (QDataStream)")) {
                 HStack {
                     Toggle("Enabled", isOn: $appState.config.enableBinaryUDP)
@@ -43,7 +43,7 @@ public struct WSJTXSettingsTab: View {
                         .frame(width: 80)
                         .textFieldStyle(.roundedBorder)
                 }
-                
+
                 HStack {
                     Image(systemName: "exclamationmark.triangle.fill")
                         .foregroundStyle(.yellow)
@@ -51,7 +51,7 @@ public struct WSJTXSettingsTab: View {
                         .font(.caption)
                         .foregroundStyle(.secondary)
                 }
-                
+
                 HStack {
                     Text("Status:")
                     Circle()

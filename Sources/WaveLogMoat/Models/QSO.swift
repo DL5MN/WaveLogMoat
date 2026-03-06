@@ -66,9 +66,9 @@ public struct QSO: Codable, Identifiable, Equatable, Sendable {
     public var rxPower: String = ""
     public var prefix: String = ""
 
-    public var loggedSuccessfully: Bool? = nil
-    public var logError: String? = nil
-    public var loggedAt: Date? = nil
+    public var loggedSuccessfully: Bool?
+    public var logError: String?
+    public var loggedAt: Date?
 
     public init(id: UUID = UUID()) {
         self.id = id
