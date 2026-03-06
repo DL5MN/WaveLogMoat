@@ -15,67 +15,74 @@ public struct WavelogSettingsTab: View {
 
     public var body: some View {
         Form {
-            Section {
+            Section("Server") {
                 TextField("URL", text: $appState.config.wavelogURL)
-                    .textFieldStyle(.roundedBorder)
+                    .textContentType(.URL)
+                    .autocorrectionDisabled()
 
                 HStack {
-                    if showAPIKey {
-                        TextField("API Key", text: $appState.apiKey)
-                            .textFieldStyle(.roundedBorder)
-                    } else {
-                        SecureField("API Key", text: $appState.apiKey)
-                            .textFieldStyle(.roundedBorder)
+                    Group {
+                        if showAPIKey {
+                            TextField("API Key", text: $appState.apiKey)
+                        } else {
+                            SecureField("API Key", text: $appState.apiKey)
+                        }
                     }
+                    .textContentType(.none)
+                    .autocorrectionDisabled()
 
-                    Button(
-                        action: { showAPIKey.toggle() },
-                        label: { Image(systemName: showAPIKey ? "eye.slash" : "eye") }
-                    )
+                    Button {
+                        showAPIKey.toggle()
+                    } label: {
+                        Image(systemName: showAPIKey ? "eye.slash" : "eye")
+                            .foregroundStyle(.secondary)
+                    }
                     .buttonStyle(.plain)
+                    .help(showAPIKey ? "Hide API key" : "Show API key")
+                }
+            }
+
+            Section("Station Profile") {
+                Picker("Station", selection: $appState.config.stationProfileID) {
+                    Text("Select Station").tag("")
+                    ForEach(appState.stationProfiles) { profile in
+                        Text("\(profile.stationProfileName) (\(profile.stationCallsign))")
+                            .tag(profile.stationId)
+                    }
                 }
 
                 HStack {
-                    Picker("Station", selection: $appState.config.stationProfileID) {
-                        Text("Select Station").tag("")
-                        ForEach(appState.stationProfiles) { profile in
-                            Text("\(profile.stationProfileName) (\(profile.stationCallsign))")
-                                .tag(profile.stationId)
-                        }
-                    }
-
-                    Button(
-                        action: {
-                            Task {
-                                isFetchingProfiles = true
-                                stationProfilesErrorMessage = nil
-                                await appState.fetchStationProfiles()
-                                isFetchingProfiles = false
-                                if appState.wavelogConnectionStatus == .error {
-                                    stationProfilesErrorMessage = appState.lastError ?? "Failed to fetch station profiles"
-                                }
+                    Button {
+                        Task {
+                            isFetchingProfiles = true
+                            stationProfilesErrorMessage = nil
+                            await appState.fetchStationProfiles()
+                            isFetchingProfiles = false
+                            if appState.wavelogConnectionStatus == .error {
+                                stationProfilesErrorMessage = appState.lastError ?? "Failed to fetch station profiles"
                             }
-                        },
-                        label: {
+                        }
+                    } label: {
+                        HStack(spacing: 4) {
                             if isFetchingProfiles {
                                 ProgressView().controlSize(.small)
-                            } else {
-                                Image(systemName: "arrow.clockwise")
                             }
+                            Text("Refresh Stations")
                         }
-                    )
-                    .buttonStyle(.plain)
-                    .disabled(appState.apiKey.isEmpty || appState.config.wavelogURL.isEmpty)
+                    }
+                    .disabled(appState.apiKey.isEmpty || appState.config.wavelogURL.isEmpty || isFetchingProfiles)
+
+                    Spacer()
                 }
 
                 if let stationProfilesErrorMessage {
-                    Text(stationProfilesErrorMessage)
-                        .font(.caption)
+                    Label(stationProfilesErrorMessage, systemImage: "exclamationmark.triangle.fill")
+                        .font(.callout)
                         .foregroundStyle(.red)
                 }
             }
 
-            Section {
+            Section("Connection Test") {
                 HStack {
                     Button("Test Connection") {
                         Task {
@@ -88,32 +95,37 @@ public struct WavelogSettingsTab: View {
                             }
                         }
                     }
-                    .disabled(appState.apiKey.isEmpty || appState.config.wavelogURL.isEmpty || isTestingConnection)
+                    .disabled(appState.apiKey.isEmpty || appState.config.wavelogURL.isEmpty || appState.config.stationProfileID.isEmpty || isTestingConnection)
 
                     if isTestingConnection {
                         ProgressView().controlSize(.small)
-                            .padding(.leading, 8)
                     } else if let result = testResult {
-                        Image(systemName: result ? "checkmark.circle.fill" : "xmark.circle.fill")
-                            .foregroundStyle(result ? .green : .red)
-                            .padding(.leading, 8)
-                        Text(result ? "Connected" : "Failed")
-                            .foregroundStyle(result ? .green : .red)
+                        Label(
+                            result ? "Connected" : "Failed",
+                            systemImage: result ? "checkmark.circle.fill" : "xmark.circle.fill"
+                        )
+                        .foregroundStyle(result ? .green : .red)
                     }
+
+                    Spacer()
                 }
 
                 if testResult == false, let testErrorMessage {
-                    Text(testErrorMessage)
-                        .font(.caption)
+                    Label(testErrorMessage, systemImage: "exclamationmark.triangle.fill")
+                        .font(.callout)
                         .foregroundStyle(.red)
                 }
             }
 
-            Section {
+            Section("Security") {
                 Toggle("Allow self-signed certificates", isOn: $appState.config.allowSelfSignedCerts)
+
+                Text("Enable this if your Wavelog instance uses a self-signed TLS certificate.")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
             }
         }
-        .padding()
+        .formStyle(.grouped)
         .onAppear {
             if !appState.apiKey.isEmpty && !appState.config.wavelogURL.isEmpty && appState.stationProfiles.isEmpty {
                 Task {

@@ -9,13 +9,19 @@ public struct GeneralSettingsTab: View {
 
     public var body: some View {
         Form {
-            Section(header: Text("Appearance")) {
+            Section("Appearance") {
                 Toggle("Show in menu bar", isOn: $appState.config.showInMenuBar)
                 Toggle("Show in dock", isOn: $appState.config.showInDock)
                 Toggle("Show frequency in menu bar", isOn: $appState.config.showFrequencyInMenuBar)
+
+                if appState.config.showFrequencyInMenuBar && !appState.config.enableBinaryUDP {
+                    Label("Frequency data requires the binary protocol. Enable it in the WSJT-X tab.", systemImage: "exclamationmark.triangle.fill")
+                        .font(.callout)
+                        .foregroundStyle(.yellow)
+                }
             }
 
-            Section(header: Text("Behavior")) {
+            Section("Behavior") {
                 Toggle("Launch at login", isOn: $appState.config.launchAtLogin)
                     .onChange(of: appState.config.launchAtLogin) { _, newValue in
                         do {
@@ -42,9 +48,13 @@ public struct GeneralSettingsTab: View {
                             }
                         }
                     }
+
+                Text("Get notified when a QSO is logged or fails to log.")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
             }
         }
-        .padding()
+        .formStyle(.grouped)
         .onAppear {
             appState.config.launchAtLogin = LaunchAtLoginService.isEnabled
         }

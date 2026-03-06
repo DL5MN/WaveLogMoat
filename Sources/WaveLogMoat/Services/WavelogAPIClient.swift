@@ -188,7 +188,7 @@ public final class WavelogAPIClient: @unchecked Sendable {
         Log.api.debug("API response status \(http.statusCode) from \(request.url?.absoluteString ?? "unknown")")
 
         guard (200...299).contains(http.statusCode) else {
-            let message = String(data: data, encoding: .utf8) ?? "Unknown error"
+            let message = Self.extractErrorMessage(from: data)
             Log.api.error("API request failed with status \(http.statusCode): \(message)")
             throw APIError(message: message, statusCode: http.statusCode)
         }
@@ -199,6 +199,14 @@ public final class WavelogAPIClient: @unchecked Sendable {
             Log.api.error("Failed to decode API response from \(request.url?.absoluteString ?? "unknown"): \(error.localizedDescription)")
             throw APIError(message: "Failed to decode response: \(error.localizedDescription)")
         }
+    }
+
+    private static func extractErrorMessage(from data: Data) -> String {
+        if let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+           let reason = json["reason"] as? String {
+            return reason
+        }
+        return String(data: data, encoding: .utf8) ?? "Unknown error"
     }
 }
 

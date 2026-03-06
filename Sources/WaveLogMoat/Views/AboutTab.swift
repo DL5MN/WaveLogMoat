@@ -1,10 +1,20 @@
 import SwiftUI
 
 public struct AboutTab: View {
+    private var appVersion: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown"
+    }
+
+    private var buildNumber: String {
+        Bundle.main.object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? ""
+    }
+
     public init() {}
 
     public var body: some View {
         VStack(spacing: 16) {
+            Spacer()
+
             Image(systemName: "antenna.radiowaves.left.and.right")
                 .resizable()
                 .scaledToFit()
@@ -15,14 +25,13 @@ public struct AboutTab: View {
                 .font(.title)
                 .fontWeight(.bold)
 
-            Text("Version 0.1.0")
+            Text("Version \(appVersion) (\(buildNumber))")
                 .foregroundStyle(.secondary)
 
-            Text("A macOS menu bar app for logging QSOs from WSJT-X to Wavelog.")
+            Text("A macOS menu bar app for logging QSOs\nfrom WSJT-X to Wavelog.")
                 .multilineTextAlignment(.center)
-                .padding(.horizontal)
 
-            VStack(spacing: 8) {
+            VStack(spacing: 6) {
                 if let githubURL = URL(string: "https://github.com/dl5mn/WaveLogMoat") {
                     Link("GitHub: dl5mn/WaveLogMoat", destination: githubURL)
                 }
@@ -33,9 +42,10 @@ public struct AboutTab: View {
                     Link("WSJT-X: wsjt.sourceforge.io", destination: wsjtxURL)
                 }
             }
-            .padding(.top)
+            .padding(.top, 4)
+
+            Spacer()
         }
-        .padding()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
