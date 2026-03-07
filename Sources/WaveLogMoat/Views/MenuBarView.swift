@@ -30,7 +30,8 @@ public struct MenuBarView: View {
 
             Divider()
 
-            if appState.wsjtxConnectionStatus == .connected {
+            if appState.config.udpProtocol == .binary,
+               appState.wsjtxConnectionStatus == .connected {
                 HStack {
                     Text("\(appState.wsjtxStatus.formattedFrequency) MHz")
                         .monospacedDigit()

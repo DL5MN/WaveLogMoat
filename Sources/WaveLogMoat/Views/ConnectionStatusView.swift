@@ -15,7 +15,7 @@ public struct ConnectionStatusView: View {
         switch status {
         case .connected: return .green
         case .disconnected: return .gray
-        case .connecting: return .yellow
+        case .connecting, .listening: return .yellow
         case .error: return .red
         }
     }

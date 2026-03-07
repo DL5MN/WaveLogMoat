@@ -41,6 +41,7 @@ struct MenuBarLabel: View {
         HStack(spacing: 4) {
             Image(systemName: "antenna.radiowaves.left.and.right")
             if appState.config.showFrequencyInMenuBar,
+               appState.config.udpProtocol == .binary,
                appState.wsjtxConnectionStatus == .connected {
                 Text(appState.wsjtxStatus.formattedFrequency)
                     .monospacedDigit()

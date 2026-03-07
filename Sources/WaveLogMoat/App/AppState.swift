@@ -44,6 +44,7 @@ public final class AppState {
 
     private var heartbeatTimer: Timer?
     private var wavelogCheckTimer: Timer?
+    private var textFlashTask: Task<Void, Never>?
     private var isLoadingConfig = false
 
     public init() {
@@ -104,6 +105,16 @@ public final class AppState {
     }
 
     private func handleQSOReceived(_ qso: QSO) async {
+        if config.udpProtocol == .text {
+            wsjtxConnectionStatus = .connected
+            textFlashTask?.cancel()
+            textFlashTask = Task { @MainActor [weak self] in
+                try? await Task.sleep(for: .seconds(5))
+                guard !Task.isCancelled else { return }
+                self?.wsjtxConnectionStatus = .listening
+            }
+        }
+
         var newQSO = qso
 
         do {
@@ -189,12 +200,16 @@ public final class AppState {
 
     public func startListening() {
         udpService.stopAll()
+        heartbeatTimer?.invalidate()
+        textFlashTask?.cancel()
 
         switch config.udpProtocol {
         case .text:
             udpService.startTextListener(port: config.textUDPPort, address: config.listenAddress)
+            wsjtxConnectionStatus = .listening
         case .binary:
             udpService.startBinaryListener(port: config.binaryUDPPort, address: config.listenAddress)
+            wsjtxConnectionStatus = .disconnected
         }
     }
 
