@@ -60,7 +60,7 @@ jobs:
 
       - name: Sign DMG for Sparkle
         id: sparkle
-        if: ${{ secrets.SPARKLE_PRIVATE_KEY != '' }}
+        if: secrets.SPARKLE_PRIVATE_KEY != ''
         env:
           SPARKLE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
@@ -137,7 +137,7 @@ jobs:
           git diff --cached --quiet && echo "No appcast changes" || (git commit -m "update appcast for ${GITHUB_REF_NAME}" && git push origin gh-pages)
 
       - name: Update Homebrew Tap
-        if: ${{ secrets.HOMEBREW_TAP_TOKEN != '' }}
+        if: secrets.HOMEBREW_TAP_TOKEN != ''
         env:
           TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
         run: |
