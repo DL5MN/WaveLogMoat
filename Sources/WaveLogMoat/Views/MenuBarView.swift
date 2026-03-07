@@ -70,34 +70,48 @@ public struct MenuBarView: View {
             Divider()
 
             VStack(alignment: .leading, spacing: 0) {
-                Button {
+                HoverButton {
                     dismiss()
                     openSettings()
                     NSApplication.shared.activate(ignoringOtherApps: true)
                 } label: {
                     MenuRow(title: "Settings", systemImage: "gear", shortcut: "⌘,")
                 }
-                .buttonStyle(.accessoryBar)
 
-                Button {
+                HoverButton {
                     dismiss()
                     checkForUpdates()
                 } label: {
                     MenuRow(
                         title: "Check for Updates", systemImage: "arrow.triangle.2.circlepath")
                 }
-                .buttonStyle(.accessoryBar)
 
-                Button {
+                HoverButton {
                     NSApplication.shared.terminate(nil)
                 } label: {
                     MenuRow(title: "Quit WaveLogMoat", systemImage: "power", shortcut: "⌘Q")
                 }
-                .buttonStyle(.accessoryBar)
             }
             .padding(.vertical, 4)
         }
         .frame(width: 350)
+    }
+}
+
+private struct HoverButton<Label: View>: View {
+    let action: () -> Void
+    @ViewBuilder let label: () -> Label
+    @State private var isHovered = false
+
+    var body: some View {
+        label()
+            .padding(.horizontal, 12)
+            .padding(.vertical, 6)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(isHovered ? Color.primary.opacity(0.1) : Color.clear)
+            .contentShape(Rectangle())
+            .onTapGesture(perform: action)
+            .onHover { isHovered = $0 }
     }
 }
 
