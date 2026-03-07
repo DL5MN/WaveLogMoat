@@ -58,9 +58,15 @@ jobs:
         id: sha
         run: echo "SHA256=$(shasum -a 256 dist/WaveLogMoat-${GITHUB_REF_NAME}.dmg | awk '{print $1}')" >> $GITHUB_OUTPUT
 
+      - name: Check optional secrets
+        id: secrets
+        run: |
+          if [ -n "${{ secrets.SPARKLE_PRIVATE_KEY }}" ]; then echo "has_sparkle=true" >> $GITHUB_OUTPUT; fi
+          if [ -n "${{ secrets.HOMEBREW_TAP_TOKEN }}" ]; then echo "has_homebrew=true" >> $GITHUB_OUTPUT; fi
+
       - name: Sign DMG for Sparkle
         id: sparkle
-        if: secrets.SPARKLE_PRIVATE_KEY != ''
+        if: steps.secrets.outputs.has_sparkle == 'true'
         env:
           SPARKLE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
@@ -137,7 +143,7 @@ jobs:
           git diff --cached --quiet && echo "No appcast changes" || (git commit -m "update appcast for ${GITHUB_REF_NAME}" && git push origin gh-pages)
 
       - name: Update Homebrew Tap
-        if: secrets.HOMEBREW_TAP_TOKEN != ''
+        if: steps.secrets.outputs.has_homebrew == 'true'
         env:
           TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
         run: |
