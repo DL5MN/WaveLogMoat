@@ -1,4 +1,4 @@
-.PHONY: build test clean run lint format release app archive changelog open
+.PHONY: build test clean run lint format release release-build app archive changelog open
 
 build:
 	swift build
@@ -21,8 +21,22 @@ lint:
 format:
 	swiftformat Sources Tests
 
-release:
+release-build:
 	xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Release -destination 'platform=macOS' build
+
+release:
+ifndef VERSION
+	$(error Usage: make release VERSION=0.1.0)
+endif
+	@if [ -n "$$(git status --porcelain)" ]; then echo "Error: working tree is dirty"; exit 1; fi
+	@if git rev-parse "v$(VERSION)" >/dev/null 2>&1; then echo "Error: tag v$(VERSION) already exists"; exit 1; fi
+	@sed -i '' '/CFBundleShortVersionString/{n;s|<string>.*</string>|<string>$(VERSION)</string>|;}' Sources/WaveLogMoat/Info.plist
+	@sed -i '' 's|CFBundleShortVersionString: ".*"|CFBundleShortVersionString: "$(VERSION)"|' project.yml
+	@git add Sources/WaveLogMoat/Info.plist project.yml
+	@git diff --cached --quiet || git commit -m "bump: version $(VERSION)"
+	@git tag v$(VERSION)
+	@git push && git push origin v$(VERSION)
+	@echo "Released v$(VERSION)"
 
 open:
 	open "$$(xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Debug -showBuildSettings 2>/dev/null | grep -m1 'BUILT_PRODUCTS_DIR' | awk '{print $$NF}')/WaveLogMoat.app"

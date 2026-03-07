@@ -141,6 +141,16 @@ make test
 make clean
 ```
 
+### Releasing
+
+To create a new release, run:
+
+```bash
+make release VERSION=0.2.0
+```
+
+This bumps the version in `Info.plist` and `project.yml`, commits, tags `v0.2.0`, and pushes. The GitHub Actions release workflow then builds the DMG, creates the GitHub Release with auto-generated release notes, updates the changelog, deploys the Sparkle appcast, and bumps the Homebrew cask.
+
 ## Architecture
 
 WaveLogMoat is built with:
