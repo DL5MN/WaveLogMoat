@@ -29,7 +29,14 @@ jobs:
         run: swift test
 
       - name: Archive Release
-        run: xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Release -archivePath build/WaveLogMoat.xcarchive CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO archive
+        run: >
+          xcodebuild -project WaveLogMoat.xcodeproj
+          -scheme WaveLogMoat
+          -configuration Release
+          -destination 'platform=macOS'
+          -archivePath build/WaveLogMoat.xcarchive
+          CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          archive
 
       - name: Get Version
         id: version
@@ -53,6 +60,7 @@ jobs:
 
       - name: Sign DMG for Sparkle
         id: sparkle
+        if: ${{ secrets.SPARKLE_PRIVATE_KEY != '' }}
         env:
           SPARKLE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
@@ -61,6 +69,7 @@ jobs:
           echo "SIGNATURE=${SIGN_OUTPUT}" >> $GITHUB_OUTPUT
 
       - name: Update Appcast
+        if: steps.sparkle.outcome == 'success'
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           DMG_PATH="dist/WaveLogMoat-${GITHUB_REF_NAME}.dmg"
@@ -68,14 +77,11 @@ jobs:
           DOWNLOAD_URL="https://github.com/dl5mn/WaveLogMoat/releases/download/${GITHUB_REF_NAME}/WaveLogMoat-${GITHUB_REF_NAME}.dmg"
 
           mkdir -p docs
-          cat > docs/appcast.xml << 'APPCAST_HEADER'
+          cat > docs/appcast.xml << EOF
           <?xml version="1.0" standalone="yes"?>
           <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
             <channel>
               <title>WaveLogMoat</title>
-          APPCAST_HEADER
-
-          cat >> docs/appcast.xml << APPCAST_ITEM
               <item>
                 <title>Version ${VERSION}</title>
                 <pubDate>$(date -R)</pubDate>
@@ -84,12 +90,9 @@ jobs:
                 <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
                 <enclosure url="${DOWNLOAD_URL}" ${{ steps.sparkle.outputs.SIGNATURE }} type="application/octet-stream"/>
               </item>
-          APPCAST_ITEM
-
-          cat >> docs/appcast.xml << 'APPCAST_FOOTER'
             </channel>
           </rss>
-          APPCAST_FOOTER
+          EOF
 
       - name: Generate Release Notes
         run: git-cliff --latest --strip header -o RELEASE_NOTES.md
@@ -115,20 +118,26 @@ jobs:
           git push origin HEAD:main
 
       - name: Deploy Appcast to GitHub Pages
+        if: steps.sparkle.outcome == 'success'
         run: |
           git config user.name "DL5MN"
           git config user.email "dl5mn@users.noreply.github.com"
 
-          git fetch origin gh-pages:gh-pages 2>/dev/null || git checkout --orphan gh-pages
+          if git fetch origin gh-pages 2>/dev/null; then
+            git worktree add /tmp/gh-pages gh-pages
+          else
+            git worktree add --detach /tmp/gh-pages
+            git -C /tmp/gh-pages checkout --orphan gh-pages
+            git -C /tmp/gh-pages rm -rf .
+          fi
 
-          APPCAST_CONTENT=$(cat docs/appcast.xml)
-          git checkout gh-pages
-          echo "$APPCAST_CONTENT" > appcast.xml
+          cp docs/appcast.xml /tmp/gh-pages/appcast.xml
+          cd /tmp/gh-pages
           git add appcast.xml
           git diff --cached --quiet && echo "No appcast changes" || (git commit -m "update appcast for ${GITHUB_REF_NAME}" && git push origin gh-pages)
-          git checkout main
 
       - name: Update Homebrew Tap
+        if: ${{ secrets.HOMEBREW_TAP_TOKEN != '' }}
         env:
           TAP_TOKEN: ${{ secrets.HOMEBREW_TAP_TOKEN }}
         run: |
