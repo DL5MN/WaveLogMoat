@@ -11,12 +11,12 @@ public struct WSJTXSettingsTab: View {
 
     public var body: some View {
         Form {
-            Section("Connection") {
-                TextField("Listen Address", text: $appState.config.listenAddress)
+            Section("Receive from WSJT-X") {
+                TextField("Bind Address", text: $appState.config.listenAddress)
                     .textContentType(.none)
                     .autocorrectionDisabled()
 
-                Text("IP address to listen on. Use 127.0.0.1 for local connections or 0.0.0.0 to accept from other machines.")
+                Text("WSJT-X sends UDP data to this address. Use 127.0.0.1 for local connections or 0.0.0.0 to accept from other machines on the network.")
                     .font(.callout)
                     .foregroundStyle(.secondary)
             }
@@ -33,7 +33,7 @@ public struct WSJTXSettingsTab: View {
                     TextField("Port", value: $appState.config.textUDPPort, format: Self.portFormat)
                         .textContentType(.none)
 
-                    Text("Listens on the WSJT-X Secondary UDP Server for logged QSOs as ADIF text. Simple and reliable — works alongside JTAlert, GridTracker, and other tools without conflict.")
+                    Text("Receives logged QSOs as ADIF text from the WSJT-X Secondary UDP Server. Simple and reliable — works alongside JTAlert, GridTracker, and other tools without conflict.")
                         .font(.callout)
                         .foregroundStyle(.secondary)
 
@@ -41,11 +41,11 @@ public struct WSJTXSettingsTab: View {
                     TextField("Port", value: $appState.config.binaryUDPPort, format: Self.portFormat)
                         .textContentType(.none)
 
-                    Text("Listens on the WSJT-X primary UDP port for logged QSOs and real-time status updates including frequency, mode, and DX call. Only one application can use this port — do not use if JTAlert or GridTracker need it.")
+                    Text("Receives logged QSOs and real-time status updates (frequency, mode, DX call) from the WSJT-X primary UDP port. Only one application can use this port — do not use if JTAlert or GridTracker need it.")
                         .font(.callout)
                         .foregroundStyle(.secondary)
 
-                    Label("Only one application can listen on the primary UDP port. This will conflict with JTAlert, GridTracker, or any other tool using this port.", systemImage: "exclamationmark.triangle.fill")
+                    Label("Only one application can receive on the primary UDP port. This will conflict with JTAlert, GridTracker, or any other tool using this port.", systemImage: "exclamationmark.triangle.fill")
                         .font(.callout)
                         .foregroundStyle(.yellow)
                 }
@@ -55,7 +55,7 @@ public struct WSJTXSettingsTab: View {
                         Circle()
                             .fill(isListening ? .green : .gray)
                             .frame(width: 8, height: 8)
-                        Text(isListening ? "Listening" : "Not listening")
+                        Text(isListening ? "Receiving" : "Not receiving")
                             .foregroundStyle(.secondary)
                     }
                 }

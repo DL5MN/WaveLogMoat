@@ -9,7 +9,7 @@
 
 There are already several tools that bridge WSJT-X and Wavelog — [WaveLogGate](https://github.com/wavelog/WaveLogGate), [WaveLogStoat](https://github.com/int2001/WaveLogStoat), and [WaveLogGoat](https://github.com/johnsonm/WaveLogGoat). They all work, but none of them are native macOS apps. I wanted something that feels at home on my Mac: a lightweight menu bar app built with SwiftUI that uses the macOS Keychain for secrets, sends native notifications, supports Sparkle auto-updates, and doesn't bundle an entire Electron runtime or require a terminal to run. That's WaveLogMoat.
 
-WaveLogMoat listens for QSO data from WSJT-X and automatically forwards it to your Wavelog instance in real-time. You choose between the text-based ADIF/XML protocol (Secondary UDP Server) or the binary QDataStream protocol, which adds real-time frequency and status display.
+WaveLogMoat receives QSO data from WSJT-X and automatically forwards it to your Wavelog instance in real-time. WSJT-X sends UDP packets to WaveLogMoat — you just need to point WSJT-X at the right address and port. You choose between the text-based ADIF/XML protocol (Secondary UDP Server) or the binary QDataStream protocol, which adds real-time frequency and status display.
 
 ## Features
 
@@ -58,16 +58,16 @@ xattr -d com.apple.quarantine /Applications/WaveLogMoat.app
 
 ### 1. Configure WSJT-X
 
-Configuration depends on which protocol you choose in WaveLogMoat:
+WSJT-X sends UDP data to a configured address and port. Despite the label "UDP Server" in WSJT-X settings, WSJT-X is the sender — WaveLogMoat receives the data on the address and port you configure here.
 
-**Text protocol (default):** In WSJT-X, go to **Settings -> Reporting** and configure the **Secondary UDP Server**:
+**Text protocol (default):** In WSJT-X, go to **Settings -> Reporting** and configure the **Secondary UDP Server** to point at WaveLogMoat:
 
 - **Address**: `127.0.0.1`
 - **Port**: `2333`
 
 > **Important**: Use the _Secondary_ UDP Server, NOT the primary one. This keeps the primary port free for JTAlert, GridTracker, or other tools.
 
-**Binary protocol:** No special WSJT-X configuration needed — WaveLogMoat listens on the primary UDP port (2237) directly. Note that only one application can use this port at a time.
+**Binary protocol:** WaveLogMoat receives on the primary UDP port (2237) by default — no special WSJT-X configuration needed. Note that only one application can receive on this port at a time.
 
 ### 2. Configure WaveLogMoat
 
@@ -85,7 +85,7 @@ Configuration depends on which protocol you choose in WaveLogMoat:
 
 ### 3. Start Logging
 
-Once configured, WaveLogMoat automatically listens for QSOs. When you log a QSO in WSJT-X, it appears in the menu bar dropdown and is forwarded to Wavelog.
+Once configured, WaveLogMoat automatically receives QSOs from WSJT-X. When you log a QSO in WSJT-X, it appears in the menu bar dropdown and is forwarded to Wavelog.
 
 ## Configuration Options
 
@@ -97,7 +97,7 @@ Once configured, WaveLogMoat automatically listens for QSOs. When you log a QSO 
 | Protocol                | Text      | Text (ADIF/XML) or Binary (QDataStream) — one at a time   |
 | Text UDP Port           | 2333      | WSJT-X Secondary UDP Server port                           |
 | Binary UDP Port         | 2237      | WSJT-X Primary UDP Server port                             |
-| Listen Address          | 127.0.0.1 | Network interface to listen on                             |
+| Bind Address            | 127.0.0.1 | Address to receive WSJT-X data on                          |
 | Allow Self-Signed Certs | On        | For self-hosted Wavelog with self-signed TLS               |
 | Show in Menu Bar        | On        | Display icon in menu bar                                   |
 | Show in Dock            | Off       | Display icon in dock                                       |
@@ -112,7 +112,7 @@ Switching to the binary protocol (port 2237) provides everything the text protoc
 - WSJT-X connection heartbeat monitoring
 - DX call and grid display
 
-> **Note**: Only one application can listen on the primary UDP port. Do not use the binary protocol if JTAlert, GridTracker, or other tools need this port.
+> **Note**: Only one application can receive on the primary UDP port at a time. Do not use the binary protocol if JTAlert, GridTracker, or other tools need this port.
 
 ## Building from Source
 
@@ -156,7 +156,7 @@ This bumps the version in `Info.plist` and `project.yml`, commits, tags `v0.2.0`
 WaveLogMoat is built with:
 
 - **SwiftUI** - Native macOS UI with MenuBarExtra
-- **Network.framework** - UDP listeners
+- **Network.framework** - UDP receiver for WSJT-X data
 - **URLSession** - Wavelog REST API client
 - **Sparkle** - Auto-updates
 - **Keychain** - Secure API key storage

@@ -28,7 +28,7 @@
 
 A native macOS menu bar app that:
 
-1. **Listens** on UDP ports for QSO data from WSJT-X
+1. **Receives** QSO data from WSJT-X via UDP
 2. **Parses** incoming ADIF text, XML, or binary QDataStream payloads
 3. **Normalizes** data (power units, band from frequency, mode normalization)
 4. **Forwards** to the Wavelog `POST /api/qso` endpoint as JSON-wrapped ADIF

@@ -19,7 +19,7 @@ public enum ConnectionStatus: String, Sendable {
         case .connected: return "Connected"
         case .disconnected: return "Disconnected"
         case .connecting: return "Connecting"
-        case .listening: return "Listening for QSOs"
+        case .listening: return "Waiting for WSJT-X"
         case .error: return "Error"
         }
     }
