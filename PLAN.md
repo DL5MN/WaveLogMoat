@@ -272,7 +272,7 @@ WSJT-X
 | #   | Decision                         | Rationale                                                                          | Date       |
 | --- | -------------------------------- | ---------------------------------------------------------------------------------- | ---------- |
 | 1   | macOS 14+ minimum                | `@Observable` macro, modern SwiftUI. Covers ~85%+ active Macs.                     | 2026-03-06 |
-| 2   | Binary UDP disabled by default   | Port 2237 conflicts with JTAlert/GridTracker. Opt-in with documentation.           | 2026-03-06 |
+| 2   | Binary UDP disabled by default   | Port 2237 conflicts with JT-Bridge/GridTracker. Opt-in with documentation.           | 2026-03-06 |
 | 3   | MIT license                      | Matches WaveLogGate (official companion). Permissive for ham radio community.      | 2026-03-06 |
 | 4   | Keychain for API key             | Security best practice. WaveLogGate/Stoat use plaintext — we improve on this.      | 2026-03-06 |
 | 5   | No CAT control                   | Scope limitation. WaveLogGate already does CAT. We focus on QSO logging.           | 2026-03-06 |

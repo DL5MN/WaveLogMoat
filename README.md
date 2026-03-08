@@ -65,7 +65,7 @@ WSJT-X sends UDP data to a configured address and port. Despite the label "UDP S
 - **Address**: `127.0.0.1`
 - **Port**: `2333`
 
-> **Important**: Use the _Secondary_ UDP Server, NOT the primary one. This keeps the primary port free for JTAlert, GridTracker, or other tools.
+> **Important**: Use the _Secondary_ UDP Server, NOT the primary one. This keeps the primary port free for JT-Bridge, GridTracker, or other tools.
 
 **Binary protocol:** WaveLogMoat receives on the primary UDP port (2237) by default — no special WSJT-X configuration needed. Note that only one application can receive on this port at a time.
 
@@ -112,7 +112,7 @@ Switching to the binary protocol (port 2237) provides everything the text protoc
 - WSJT-X connection heartbeat monitoring
 - DX call and grid display
 
-> **Note**: Only one application can receive on the primary UDP port at a time. Do not use the binary protocol if JTAlert, GridTracker, or other tools need this port.
+> **Note**: Only one application can receive on the primary UDP port at a time. Do not use the binary protocol if JT-Bridge, GridTracker, or other tools need this port.
 
 ## Building from Source
 

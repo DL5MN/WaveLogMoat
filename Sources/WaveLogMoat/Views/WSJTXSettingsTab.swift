@@ -33,7 +33,7 @@ public struct WSJTXSettingsTab: View {
                     TextField("Port", value: $appState.config.textUDPPort, format: Self.portFormat)
                         .textContentType(.none)
 
-                    Text("Receives logged QSOs as ADIF text from the WSJT-X Secondary UDP Server. Simple and reliable — works alongside JTAlert, GridTracker, and other tools without conflict.")
+                    Text("Receives logged QSOs as ADIF text from the WSJT-X Secondary UDP Server. Simple and reliable — works alongside JT-Bridge, GridTracker, and other tools without conflict.")
                         .font(.callout)
                         .foregroundStyle(.secondary)
 
@@ -41,11 +41,11 @@ public struct WSJTXSettingsTab: View {
                     TextField("Port", value: $appState.config.binaryUDPPort, format: Self.portFormat)
                         .textContentType(.none)
 
-                    Text("Receives logged QSOs and real-time status updates (frequency, mode, DX call) from the WSJT-X primary UDP port. Only one application can use this port — do not use if JTAlert or GridTracker need it.")
+                    Text("Receives logged QSOs and real-time status updates (frequency, mode, DX call) from the WSJT-X primary UDP port. Only one application can use this port — do not use if JT-Bridge or GridTracker need it.")
                         .font(.callout)
                         .foregroundStyle(.secondary)
 
-                    Label("Only one application can receive on the primary UDP port. This will conflict with JTAlert, GridTracker, or any other tool using this port.", systemImage: "exclamationmark.triangle.fill")
+                    Label("Only one application can receive on the primary UDP port. This will conflict with JT-Bridge, GridTracker, or any other tool using this port.", systemImage: "exclamationmark.triangle.fill")
                         .font(.callout)
                         .foregroundStyle(.yellow)
                 }
