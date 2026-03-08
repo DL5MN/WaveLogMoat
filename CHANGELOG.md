@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-03-08
+
+### Added
+
+- Add code signing and notarization to release workflow
+
+### Documentation
+
+- Replace JTAlert with JT-Bridge (macOS equivalent)
+- Clarify that WaveLogMoat receives UDP data sent by WSJT-X
+- Update changelog for v0.1.0
+
+### Fixed
+
+- Use manual codesign to avoid provisioning profile requirement
+- Skip build workflow on version tags to avoid duplicate CI runs
+
+### Bump
+
+- Version 0.2.0
+
 ## [0.1.0] - 2026-03-07
 
 ### Added
