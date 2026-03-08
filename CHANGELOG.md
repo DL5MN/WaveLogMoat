@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Use manual codesign to avoid provisioning profile requirement
+- Remove keychain-access-groups entitlement that requires provisioning profile
 - Skip build workflow on version tags to avoid duplicate CI runs
 
 ### Bump
