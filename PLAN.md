@@ -169,22 +169,9 @@ WSJT-X
 
 ### 3a. Code Signing & Notarization
 
-**Status**: Developer ID account to be acquired.
+**Status**: Done. Developer ID Application certificate (G2 Sub-CA) configured. Release workflow signs with `Developer ID Application`, notarizes via `notarytool`, and staples the ticket before packaging the DMG.
 
-**Setup (when ready):**
-
-- Apple Developer ID Application certificate
-- Store certificate + password as GitHub Actions encrypted secrets
-- Use `apple-actions/import-codesign-certs` in CI
-- Notarize with `notarytool` (Xcode 14+)
-- Staple notarization ticket to DMG
-
-**Without signing (current):**
-
-- Users run: `xattr -d com.apple.quarantine /Applications/WaveLogMoat.app`
-- Documented in README
-
-**CI secrets needed:**
+**CI secrets configured:**
 
 - `APPLE_CERTIFICATE_P12` — Base64-encoded .p12 certificate
 - `APPLE_CERTIFICATE_PASSWORD` — Certificate password

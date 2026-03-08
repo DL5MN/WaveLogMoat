@@ -2,7 +2,7 @@ import Foundation
 import Security
 
 public enum KeychainHelper {
-    private static let service = "com.dl5mn.WaveLogMoat"
+    private static let service = "de.dl5mn.WaveLogMoat"
 
     public enum KeychainError: Error {
         case duplicateItem

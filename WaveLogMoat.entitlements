@@ -8,7 +8,7 @@
 	<true/>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)com.dl5mn.WaveLogMoat</string>
+		<string>$(AppIdentifierPrefix)de.dl5mn.WaveLogMoat</string>
 	</array>
 </dict>
 </plist>

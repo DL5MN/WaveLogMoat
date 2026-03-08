@@ -24,7 +24,7 @@ public final class BinaryUDPListener: @unchecked Sendable {
         self.port = port
         self.host = host
         self.reader = reader
-        self.queue = DispatchQueue(label: "com.dl5mn.WaveLogMoat.binary-udp-listener", qos: .utility)
+        self.queue = DispatchQueue(label: "de.dl5mn.WaveLogMoat.binary-udp-listener", qos: .utility)
     }
 
     public func start() {

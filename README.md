@@ -37,22 +37,12 @@ WaveLogMoat receives QSO data from WSJT-X and automatically forwards it to your 
 
 Download the latest release from the [Releases page](https://github.com/dl5mn/WaveLogMoat/releases).
 
-### Homebrew (coming soon)
+### Homebrew
 
 ```bash
 brew tap dl5mn/wavelogmoat
 brew install --cask wavelogmoat
 ```
-
-### macOS Security Note
-
-If you see "WaveLogMoat can't be opened because Apple cannot check it for malicious software", run:
-
-```bash
-xattr -d com.apple.quarantine /Applications/WaveLogMoat.app
-```
-
-(Code signing and notarization are planned for a future release.)
 
 ## Setup
 

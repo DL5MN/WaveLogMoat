@@ -403,14 +403,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = U55F5LXGX9;
+				DEVELOPMENT_TEAM = 48C98LB88N;
 				INFOPLIST_FILE = Sources/WaveLogMoat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dl5mn.WaveLogMoat;
+				PRODUCT_BUNDLE_IDENTIFIER = de.dl5mn.WaveLogMoat;
 				PRODUCT_NAME = WaveLogMoat;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
@@ -484,14 +484,14 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = U55F5LXGX9;
+				DEVELOPMENT_TEAM = 48C98LB88N;
 				INFOPLIST_FILE = Sources/WaveLogMoat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.dl5mn.WaveLogMoat;
+				PRODUCT_BUNDLE_IDENTIFIER = de.dl5mn.WaveLogMoat;
 				PRODUCT_NAME = WaveLogMoat;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;

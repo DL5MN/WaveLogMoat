@@ -35,7 +35,7 @@ targets:
         com.apple.security.network.server: true
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.dl5mn.WaveLogMoat
+        PRODUCT_BUNDLE_IDENTIFIER: de.dl5mn.WaveLogMoat
         PRODUCT_NAME: WaveLogMoat
         SWIFT_VERSION: 5.9
         MACOSX_DEPLOYMENT_TARGET: 14.0

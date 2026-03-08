@@ -28,6 +28,24 @@ jobs:
       - name: Run Tests
         run: swift test
 
+      - name: Import Code Signing Certificate
+        env:
+          P12_BASE64: ${{ secrets.APPLE_CERTIFICATE_P12 }}
+          P12_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+        run: |
+          CERTIFICATE_PATH=$RUNNER_TEMP/certificate.p12
+          KEYCHAIN_PATH=$RUNNER_TEMP/app-signing.keychain-db
+          KEYCHAIN_PASSWORD=$(openssl rand -base64 32)
+
+          echo -n "$P12_BASE64" | base64 --decode -o $CERTIFICATE_PATH
+
+          security create-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security set-keychain-settings -lut 21600 $KEYCHAIN_PATH
+          security unlock-keychain -p "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security import $CERTIFICATE_PATH -P "$P12_PASSWORD" -A -t cert -f pkcs12 -k $KEYCHAIN_PATH
+          security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
+          security list-keychains -d user -s $KEYCHAIN_PATH login.keychain-db
+
       - name: Archive Release
         run: >
           xcodebuild -project WaveLogMoat.xcodeproj
@@ -35,12 +53,33 @@ jobs:
           -configuration Release
           -destination 'platform=macOS'
           -archivePath build/WaveLogMoat.xcarchive
-          CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
+          CODE_SIGN_IDENTITY="Developer ID Application"
+          CODE_SIGN_STYLE=Manual
+          DEVELOPMENT_TEAM=${{ secrets.APPLE_TEAM_ID }}
           archive
 
       - name: Get Version
         id: version
         run: echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+
+      - name: Notarize App
+        env:
+          APPLE_ID: ${{ secrets.APPLE_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+          APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
+        run: |
+          APP_PATH="build/WaveLogMoat.xcarchive/Products/Applications/WaveLogMoat.app"
+          ZIP_PATH="$RUNNER_TEMP/WaveLogMoat-notarize.zip"
+
+          ditto -c -k --keepParent "$APP_PATH" "$ZIP_PATH"
+
+          xcrun notarytool submit "$ZIP_PATH" \
+            --apple-id "$APPLE_ID" \
+            --team-id "$APPLE_TEAM_ID" \
+            --password "$APPLE_APP_PASSWORD" \
+            --wait
+
+          xcrun stapler staple "$APP_PATH"
 
       - name: Package DMG
         run: |
@@ -141,6 +180,10 @@ jobs:
           cd /tmp/gh-pages
           git add appcast.xml
           git diff --cached --quiet && echo "No appcast changes" || (git commit -m "update appcast for ${GITHUB_REF_NAME}" && git push origin gh-pages)
+
+      - name: Clean Up Keychain
+        if: always()
+        run: security delete-keychain $RUNNER_TEMP/app-signing.keychain-db 2>/dev/null || true
 
       - name: Update Homebrew Tap
         if: steps.secrets.outputs.has_homebrew == 'true'
