@@ -46,17 +46,38 @@ jobs:
           security set-key-partition-list -S apple-tool:,apple: -k "$KEYCHAIN_PASSWORD" $KEYCHAIN_PATH
           security list-keychains -d user -s $KEYCHAIN_PATH login.keychain-db
 
-      - name: Archive Release
+      - name: Archive Release (unsigned)
         run: >
           xcodebuild -project WaveLogMoat.xcodeproj
           -scheme WaveLogMoat
           -configuration Release
           -destination 'platform=macOS'
           -archivePath build/WaveLogMoat.xcarchive
-          CODE_SIGN_IDENTITY="Developer ID Application"
-          CODE_SIGN_STYLE=Manual
-          DEVELOPMENT_TEAM=${{ secrets.APPLE_TEAM_ID }}
+          CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
           archive
+
+      - name: Sign App
+        run: |
+          APP_PATH="build/WaveLogMoat.xcarchive/Products/Applications/WaveLogMoat.app"
+          ENTITLEMENTS="WaveLogMoat.entitlements"
+
+          # Sign frameworks and helpers first, then the app bundle
+          find "$APP_PATH/Contents/Frameworks" -type f -perm +111 -o -name "*.dylib" | while read -r binary; do
+            codesign --force --timestamp --options runtime \
+              --sign "Developer ID Application" "$binary"
+          done
+
+          find "$APP_PATH/Contents/Frameworks" -name "*.framework" | while read -r framework; do
+            codesign --force --timestamp --options runtime \
+              --sign "Developer ID Application" "$framework"
+          done
+
+          codesign --force --timestamp --options runtime \
+            --entitlements "$ENTITLEMENTS" \
+            --sign "Developer ID Application" "$APP_PATH"
+
+          # Verify
+          codesign --verify --deep --strict "$APP_PATH"
 
       - name: Get Version
         id: version
