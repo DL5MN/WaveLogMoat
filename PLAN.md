@@ -3,8 +3,8 @@
 > Native macOS menu bar application bridging WSJT-X and Wavelog for automatic QSO logging.
 
 **Author**: DL5MN
-**Status**: In Development
-**Last Updated**: 2026-03-06
+**Status**: Active (v0.3.2 released, public repos)
+**Last Updated**: 2026-03-09
 
 ---
 
@@ -181,13 +181,13 @@ WSJT-X
 
 ### 3b. Sparkle Appcast Setup
 
-**Status**: Sparkle framework integrated, EdDSA key pair generated, `SUPublicEDKey` set in Info.plist. Release pipeline signs DMGs and generates appcast XML for GitHub Pages deployment.
+**Status**: Done. Sparkle framework integrated, EdDSA key pair generated, `SUPublicEDKey` set in Info.plist. Release pipeline signs DMGs, generates appcast XML, and deploys to GitHub Pages. Appcast uses `CFBundleVersion` (build number) for `sparkle:version` to ensure correct version comparison.
 
-**Remaining:**
+**Completed:**
 
-- Enable GitHub Pages on the repository (requires public repo or GitHub Pro)
-- Update `SUFeedURL` in Info.plist with the actual GitHub Pages URL
-- Verify end-to-end update flow with a tagged release
+- GitHub Pages enabled, appcast deployed at `https://dl5mn.github.io/WaveLogMoat/appcast.xml`
+- `SUFeedURL` set in Info.plist
+- `sparkle:version` fixed to use build number instead of version string (prevents false "up to date" results)
 
 ### 3c. Homebrew — Official Cask
 
@@ -197,7 +197,7 @@ WSJT-X
 
 ### 3d. Live Testing
 
-**Status**: All 44 unit tests pass. Tested against WSJT-X 3.1.0 and a live Wavelog instance.
+**Status**: All 62 unit tests pass. Tested against WSJT-X 3.1.0 and a live Wavelog instance.
 
 **Completed:**
 
@@ -211,15 +211,13 @@ WSJT-X
 - Verify notification delivery
 - Extended field testing across different bands and modes
 
-### 3e. First Release
+### 3e. Release Pipeline
 
-**Status**: Release pipeline (`release.yml`) is configured with lint, test, archive, DMG, changelog (git-cliff), GitHub Release, and Homebrew tap update.
+**Status**: Done. Multiple releases shipped (latest: v0.3.2). Both repos (`dl5mn/WaveLogMoat` and `dl5mn/homebrew-wavelogmoat`) are public.
 
-**Remaining:**
+**Pipeline**: `make release VERSION=x.y.z` bumps version, auto-increments `CFBundleVersion`, generates changelog (git-cliff), tags, and pushes. CI then builds, signs (Developer ID), notarizes, packages DMG, creates GitHub Release, deploys Sparkle appcast to GitHub Pages, and updates Homebrew cask.
 
-- Take screenshots for README
-- Tag `v0.1.0` and verify full pipeline
-- Consider whether to make repos public before or after first release
+**Repo health**: Dependabot (Swift + GitHub Actions, weekly), PR template, security policy (private vulnerability reporting), CodeQL code scanning.
 
 ### 3f. Optional Enhancements (Deferred)
 
@@ -228,6 +226,7 @@ WSJT-X
 - QSO queue with offline persistence
 - Menu bar icon variants (connected/disconnected states)
 - Localization (German, at minimum)
+- Submit to `homebrew/homebrew-cask` when app has traction
 
 ---
 
@@ -267,7 +266,7 @@ WSJT-X
 | 7   | Custom Homebrew tap first        | Instant publishing. Submit to homebrew-cask when app has traction.                 | 2026-03-06 |
 | 8   | Station profile dropdown via API | Better UX than manual ID entry. `/api/station_info` provides the data.             | 2026-03-06 |
 | 9   | App name: WaveLogMoat            | Continues Gate/Goat/Stoat naming. Moat = bridge/guardian.                          | 2026-03-06 |
-| 10  | CI signing deferred              | Developer ID account pending. Pipeline prepared for secrets.                       | 2026-03-06 |
+| 10  | CI signing via manual codesign   | `xcodebuild archive` unsigned, then manual `codesign` with Developer ID. Avoids provisioning profile requirement. Sparkle nested bundles signed inside-out. | 2026-03-06 |
 | 11  | station_info key in URL path     | Wavelog expects API key at `/api/station_info/{key}`, not in JSON body.            | 2026-03-06 |
 | 12  | In-memory API key cache          | Keychain prompts on every read from unsigned builds. Load once, write-through.     | 2026-03-06 |
 | 13  | Grouped form settings UI         | `.formStyle(.grouped)` for native macOS card layout. Avoids clipping in 2-col.    | 2026-03-06 |
@@ -275,3 +274,7 @@ WSJT-X
 | 15  | Notification denied UX           | Sync toggle to OS state, show warning + "Open Notification Settings" button.       | 2026-03-06 |
 | 16  | Dock visibility via policy       | `NSApp.setActivationPolicy(.regular/.accessory)` applied on init and config save.  | 2026-03-06 |
 | 17  | Exclusive protocol choice        | Text and binary UDP are mutually exclusive (segmented picker). Eliminates dedup.   | 2026-03-06 |
+| 18  | Bundle ID `de.dl5mn.WaveLogMoat` | Changed from `com.dl5mn` to `de.dl5mn` to match German country domain convention. | 2026-03-07 |
+| 19  | MenuBarExtra local @State sync   | Binding `isInserted` directly to @Observable + UserDefaults causes cfprefsd deadlock in release builds. Fix: local @State with one-directional onChange sync. | 2026-03-08 |
+| 20  | CFBundleVersion auto-increment   | Build number increments on each `make release`. Sparkle uses build number for version comparison — prevents false "up to date" when version strings aren't monotonically increasing. | 2026-03-08 |
+| 21  | No keychain-access-groups        | This entitlement requires a provisioning profile for Developer ID distribution. Removed it; Keychain API works fine without it for non-sandboxed apps. | 2026-03-07 |
