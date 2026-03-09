@@ -20,8 +20,8 @@ targets:
       path: Sources/WaveLogMoat/Info.plist
       properties:
         CFBundleDisplayName: WaveLogMoat
-        CFBundleShortVersionString: "0.3.2"
-        CFBundleVersion: "3"
+        CFBundleShortVersionString: "0.3.3"
+        CFBundleVersion: "4"
         LSMinimumSystemVersion: "14.0"
         LSUIElement: true
         NSAppTransportSecurity:
