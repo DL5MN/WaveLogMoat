@@ -19,7 +19,7 @@ struct WaveLogMoatApp: App {
     @State private var updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
 
     var body: some Scene {
-        MenuBarExtra {
+        MenuBarExtra(isInserted: $appState.config.showInMenuBar) {
             MenuBarView(appState: appState) {
                 updaterController.checkForUpdates(nil)
             }
