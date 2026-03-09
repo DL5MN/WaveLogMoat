@@ -21,7 +21,7 @@ targets:
       properties:
         CFBundleDisplayName: WaveLogMoat
         CFBundleShortVersionString: "0.3.2"
-        CFBundleVersion: "2"
+        CFBundleVersion: "3"
         LSMinimumSystemVersion: "14.0"
         LSUIElement: true
         NSAppTransportSecurity:
