@@ -32,8 +32,9 @@ endif
 	@if git rev-parse "v$(VERSION)" >/dev/null 2>&1; then echo "Error: tag v$(VERSION) already exists"; exit 1; fi
 	@sed -i '' '/CFBundleShortVersionString/{n;s|<string>.*</string>|<string>$(VERSION)</string>|;}' Sources/WaveLogMoat/Info.plist
 	@sed -i '' 's|CFBundleShortVersionString: ".*"|CFBundleShortVersionString: "$(VERSION)"|' project.yml
-	@git add Sources/WaveLogMoat/Info.plist project.yml
-	@git diff --cached --quiet || git commit -m "bump: version $(VERSION)"
+	@git-cliff --tag v$(VERSION) --output CHANGELOG.md
+	@git add Sources/WaveLogMoat/Info.plist project.yml CHANGELOG.md
+	@git commit -m "bump: version $(VERSION)"
 	@git tag v$(VERSION)
 	@git push && git push origin v$(VERSION)
 	@echo "Released v$(VERSION)"
