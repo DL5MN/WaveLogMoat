@@ -3,12 +3,12 @@
   <channel>
     <title>WaveLogMoat</title>
     <item>
-      <title>Version 0.3.2</title>
-      <pubDate>Mon, 09 Mar 2026 06:18:17 +0000</pubDate>
-      <sparkle:version>0.3.2</sparkle:version>
-      <sparkle:shortVersionString>0.3.2</sparkle:shortVersionString>
+      <title>Version 0.3.3</title>
+      <pubDate>Mon, 09 Mar 2026 06:35:54 +0000</pubDate>
+      <sparkle:version>4</sparkle:version>
+      <sparkle:shortVersionString>0.3.3</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-      <enclosure url="https://github.com/dl5mn/WaveLogMoat/releases/download/v0.3.2/WaveLogMoat-v0.3.2.dmg" sparkle:edSignature="9vbt9HyvcVG50/DnAgph7mntdb4QLLBVlsY6WJAkrad6NPCrb5Nkq2CzzEaYHWzOJ4MorYdi3zmOgowGGL16BA==" length="2234052" type="application/octet-stream"/>
+      <enclosure url="https://github.com/dl5mn/WaveLogMoat/releases/download/v0.3.3/WaveLogMoat-v0.3.3.dmg" sparkle:edSignature="EVOPnClYmYnKxyHyjcL+HEt9zH5q7Dl9uKBJzY7IbyqymGoS70vtnXBfJKb2vfU7eAp/5rZMDli/I1DSHk+jBw==" length="2234024" type="application/octet-stream"/>
     </item>
   </channel>
 </rss>
