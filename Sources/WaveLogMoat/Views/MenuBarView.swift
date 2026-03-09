@@ -87,6 +87,15 @@ public struct MenuBarView: View {
                 }
 
                 HoverButton {
+                    dismiss()
+                    if let url = URL(string: "https://github.com/dl5mn/WaveLogMoat/issues") {
+                        NSWorkspace.shared.open(url)
+                    }
+                } label: {
+                    MenuRow(title: "Report Issue", systemImage: "exclamationmark.bubble")
+                }
+
+                HoverButton {
                     NSApplication.shared.terminate(nil)
                 } label: {
                     MenuRow(title: "Quit WaveLogMoat", systemImage: "power", shortcut: "⌘Q")

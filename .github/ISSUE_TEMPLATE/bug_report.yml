@@ -90,6 +90,13 @@ body:
       render: text
 
   - type: textarea
+    id: crash-log
+    attributes:
+      label: Crash log
+      description: "If the app crashed, paste the crash log from `~/Library/DiagnosticReports/` (look for files starting with 'WaveLogMoat')."
+      render: text
+
+  - type: textarea
     id: context
     attributes:
       label: Additional context
