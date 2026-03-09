@@ -35,6 +35,7 @@ endif
 	$(eval NEXT_BUILD := $(shell echo $$(( $(CURRENT_BUILD) + 1 ))))
 	@sed -i '' '/CFBundleVersion/{n;s|<string>.*</string>|<string>$(NEXT_BUILD)</string>|;}' Sources/WaveLogMoat/Info.plist
 	@sed -i '' 's|CFBundleShortVersionString: ".*"|CFBundleShortVersionString: "$(VERSION)"|' project.yml
+	@sed -i '' 's|CFBundleVersion: ".*"|CFBundleVersion: "$(NEXT_BUILD)"|' project.yml
 	@git-cliff --tag v$(VERSION) --output CHANGELOG.md
 	@git add Sources/WaveLogMoat/Info.plist project.yml CHANGELOG.md
 	@git commit -m "bump: version $(VERSION)"
