@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0] - 2026-03-09
+
+### Added
+
+- Add Report Issue menu item and crash log field to bug template
+
+### Fixed
+
+- Skip bump commits from changelog and filter non-conventional commits
+- Move changelog generation from CI to make release
+- Respect 'Show in menu bar' toggle via MenuBarExtra isInserted
+
 ## [0.2.0] - 2026-03-08
 
 ### Added
@@ -15,16 +27,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Replace JTAlert with JT-Bridge (macOS equivalent)
 - Clarify that WaveLogMoat receives UDP data sent by WSJT-X
-- Update changelog for v0.1.0
 
 ### Fixed
 
 - Remove keychain-access-groups entitlement that requires provisioning profile
 - Skip build workflow on version tags to avoid duplicate CI runs
-
-### Bump
-
-- Version 0.2.0
 
 ## [0.1.0] - 2026-03-07
 
