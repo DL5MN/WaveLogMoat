@@ -138,6 +138,8 @@ jobs:
         if: steps.sparkle.outcome == 'success'
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
+          APP_PATH="build/WaveLogMoat.xcarchive/Products/Applications/WaveLogMoat.app"
+          BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "$APP_PATH/Contents/Info.plist")
           DMG_PATH="dist/WaveLogMoat-${GITHUB_REF_NAME}.dmg"
           DMG_SIZE=$(stat -f%z "$DMG_PATH")
           DOWNLOAD_URL="https://github.com/dl5mn/WaveLogMoat/releases/download/${GITHUB_REF_NAME}/WaveLogMoat-${GITHUB_REF_NAME}.dmg"
@@ -151,7 +153,7 @@ jobs:
               <item>
                 <title>Version ${VERSION}</title>
                 <pubDate>$(date -R)</pubDate>
-                <sparkle:version>${VERSION}</sparkle:version>
+                <sparkle:version>${BUILD_NUMBER}</sparkle:version>
                 <sparkle:shortVersionString>${VERSION}</sparkle:shortVersionString>
                 <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
                 <enclosure url="${DOWNLOAD_URL}" ${{ steps.sparkle.outputs.SIGNATURE }} type="application/octet-stream"/>
