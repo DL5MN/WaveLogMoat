@@ -19,7 +19,6 @@ build/
 # SPM
 .build/
 .swiftpm/
-Package.resolved
 Packages/
 
 # macOS
