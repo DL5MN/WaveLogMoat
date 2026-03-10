@@ -163,7 +163,9 @@ jobs:
           EOF
 
       - name: Generate Release Notes
-        run: git-cliff --latest --strip header -o RELEASE_NOTES.md
+        run: |
+          git-cliff --latest --strip header -o RELEASE_NOTES.md
+          sed -i '' '/^## \[/d' RELEASE_NOTES.md
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
