@@ -13,6 +13,7 @@ public enum ADIFField: String, CaseIterable, Sendable {
   case rstRcvd = "RST_RCVD"
   case txPwr = "TX_PWR"
   case stationCallsign = "STATION_CALLSIGN"
+  // swift-format-ignore
   case operator_ = "OPERATOR"
   case myCall = "MY_CALL"
   case myGridsquare = "MY_GRIDSQUARE"

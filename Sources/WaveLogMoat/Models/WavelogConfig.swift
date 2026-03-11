@@ -45,6 +45,7 @@ public struct WavelogConfig: Codable, Sendable, Equatable {
     showFrequencyInMenuBar =
       try container.decodeIfPresent(Bool.self, forKey: .showFrequencyInMenuBar) ?? false
 
+    // swift-format-ignore
     if let protocol_ = try container.decodeIfPresent(UDPProtocol.self, forKey: .udpProtocol) {
       udpProtocol = protocol_
     } else {
