@@ -109,7 +109,7 @@ Switching to the binary protocol (port 2237) provides everything the text protoc
 ### Prerequisites
 
 - macOS 14+
-- Xcode 16.3+ or Swift 6.2+
+- Xcode 26.2+ or Swift 6.2+
 
 ### Build
 
