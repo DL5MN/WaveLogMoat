@@ -5,6 +5,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2026-03-11
+
+### Added
+
+- Migrate to Swift 6.2 strict concurrency
+
+### CI/CD
+
+- Refine CodeQL workflow with cache v5 and checkout labels
+- Add CodeQL advanced setup with Swift and Actions scanning
+- Add SPM cache to CodeQL workflow
+- Add custom CodeQL workflow for Swift 6.2 on macos-26
+- Switch runners to macos-26 for Swift 6.2 support
+
+### Changed
+
+- Replace DispatchQueue.main.async with async/await in notification check
+- Replace NSRegularExpression with Swift Regex literal in ADIFParser
+- Apply swift format to entire codebase
+
+### Documentation
+
+- Add Swift 6.2 migration to design decisions log
+- Update PLAN.md with current tooling and design decisions
+
+### Fixed
+
+- Replace deprecated activate(ignoringOtherApps:) with activate()
+
+### Other
+
+- Enable AlwaysUseLowerCamelCase rule with per-line ignores for keyword conflicts
+- Use SPM build instead of Xcode in CI for faster builds
+- Use make targets in CI workflows for format, lint, and test
+- Remove obsolete swiftlint disable comment
+- Replace SwiftLint with swift format, add make check target
+- Switch formatter from swiftformat to swift format
+
+### Testing
+
+- Migrate all 62 tests from XCTest to Swift Testing
+
 ## [0.4.0] - 2026-03-10
 
 ### CI/CD
