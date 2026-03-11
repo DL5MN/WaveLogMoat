@@ -74,7 +74,7 @@ public struct MenuBarView: View {
         HoverButton {
           dismiss()
           openSettings()
-          NSApplication.shared.activate(ignoringOtherApps: true)
+          NSApplication.shared.activate()
         } label: {
           MenuRow(title: "Settings", systemImage: "gear", shortcut: "⌘,")
         }
