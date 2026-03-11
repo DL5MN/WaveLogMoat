@@ -12,7 +12,6 @@
 
 ## Checklist
 
-- [ ] Builds successfully (`make build`)
+- [ ] All checks pass (`make check`)
 - [ ] Tested locally on macOS
-- [ ] Lints pass (`make lint`)
 - [ ] No new warnings or errors

@@ -1,4 +1,4 @@
-.PHONY: build test clean run lint format release release-build app archive changelog open
+.PHONY: build test clean run lint format check release release-build app archive changelog open
 
 build:
 	swift build
@@ -16,10 +16,12 @@ clean:
 	swift package clean
 
 lint:
-	swiftlint
+	swift format lint --strict -r -p Sources Tests
 
 format:
 	swift format -i -r -p Sources Tests
+
+check: format lint test
 
 release-build:
 	xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Release -destination 'platform=macOS' build

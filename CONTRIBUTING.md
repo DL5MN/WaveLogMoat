@@ -23,9 +23,7 @@ Thanks for your interest in contributing to WaveLogMoat.
    - `fix/short-description` for bug fixes
 3. Make focused, reviewable commits.
 4. Run checks locally:
-   - `make build`
-   - `make test`
-   - `make lint` (if SwiftLint is installed)
+   - `make check` (runs format, lint, and tests)
 5. Open a pull request to `main` with:
    - Problem statement
    - Summary of changes
@@ -36,14 +34,15 @@ Thanks for your interest in contributing to WaveLogMoat.
 
 - Follow existing Swift conventions in the repository.
 - Keep code clear and small in scope.
-- Use `.swiftlint.yml` rules and address lint warnings where practical.
+- Run `make format` to auto-format with `swift format` (config in `.swift-format`).
+- Address lint warnings from `make lint` before submitting.
 - Avoid unrelated refactors in the same pull request.
 
 ## Testing Requirements
 
 - Add or update unit tests for behavior changes.
 - Keep existing tests passing.
-- Ensure `swift build` and `swift test` pass before requesting review.
+- Ensure `make check` passes before requesting review.
 
 ## Communication
 
