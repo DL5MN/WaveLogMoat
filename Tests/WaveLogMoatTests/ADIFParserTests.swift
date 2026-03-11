@@ -1,8 +1,8 @@
+import Testing
 import WaveLogMoat
-import XCTest
 
-final class ADIFParserTests: XCTestCase {
-  func testParseSingleRecordWithHeader() throws {
+@Suite struct ADIFParserTests {
+  @Test func parseSingleRecordWithHeader() throws {
     let input = """
       <ADIF_VER:5>3.1.4
       <PROGRAMID:12>WaveLogMoat
@@ -11,41 +11,41 @@ final class ADIFParserTests: XCTestCase {
       """
 
     let records = try ADIFParser.parse(input)
-    XCTAssertEqual(records.count, 1)
-    XCTAssertEqual(records[0].call, "DJ7NT")
-    XCTAssertEqual(records[0].mode, "FT8")
-    XCTAssertEqual(records[0].frequency, "7.074000")
-    XCTAssertEqual(records[0].band, "40m")
+    #expect(records.count == 1)
+    #expect(records[0].call == "DJ7NT")
+    #expect(records[0].mode == "FT8")
+    #expect(records[0].frequency == "7.074000")
+    #expect(records[0].band == "40m")
   }
 
-  func testParseMultipleRecordsWithMixedCaseEOR() throws {
+  @Test func parseMultipleRecordsWithMixedCaseEOR() throws {
     let input = "<CALL:5>W1AW <MODE:3>CW <EOR><call:5>K1ABC <mode:3>SSB <eor>"
 
     let records = try ADIFParser.parse(input)
-    XCTAssertEqual(records.count, 2)
-    XCTAssertEqual(records[0].call, "W1AW")
-    XCTAssertEqual(records[1].call, "K1ABC")
-    XCTAssertEqual(records[1].mode, "SSB")
+    #expect(records.count == 2)
+    #expect(records[0].call == "W1AW")
+    #expect(records[1].call == "K1ABC")
+    #expect(records[1].mode == "SSB")
   }
 
-  func testParseFieldsHandlesTypeSpecifier() {
+  @Test func parseFieldsHandlesTypeSpecifier() {
     let record = "<CALL:5:S>DL5MN <RST_RCVD:3:N>-10"
     let fields = ADIFParser.parseFields(record)
 
-    XCTAssertEqual(fields["CALL"], "DL5MN")
-    XCTAssertEqual(fields["RST_RCVD"], "-10")
+    #expect(fields["CALL"] == "DL5MN")
+    #expect(fields["RST_RCVD"] == "-10")
   }
 
-  func testParseThrowsMissingCall() {
+  @Test func parseThrowsMissingCall() {
     let input = "<MODE:3>FT8 <EOR>"
-    XCTAssertThrowsError(try ADIFParser.parse(input)) { error in
-      XCTAssertEqual(error as? ADIFParser.ParseError, .missingRequiredField("CALL"))
+    #expect(throws: ADIFParser.ParseError.missingRequiredField("CALL")) {
+      try ADIFParser.parse(input)
     }
   }
 
-  func testParseThrowsEmptyInput() {
-    XCTAssertThrowsError(try ADIFParser.parse("  \n  ")) { error in
-      XCTAssertEqual(error as? ADIFParser.ParseError, .emptyInput)
+  @Test func parseThrowsEmptyInput() {
+    #expect(throws: ADIFParser.ParseError.emptyInput) {
+      try ADIFParser.parse("  \n  ")
     }
   }
 }

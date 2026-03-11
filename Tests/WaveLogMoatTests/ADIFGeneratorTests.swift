@@ -1,8 +1,8 @@
+import Testing
 import WaveLogMoat
-import XCTest
 
-final class ADIFGeneratorTests: XCTestCase {
-  func testGenerateSingleRecordIncludesHeaderAndEOR() {
+@Suite struct ADIFGeneratorTests {
+  @Test func generateSingleRecordIncludesHeaderAndEOR() {
     var qso = QSO()
     qso.call = "DL5MN"
     qso.mode = "FT8"
@@ -10,23 +10,23 @@ final class ADIFGeneratorTests: XCTestCase {
 
     let output = ADIFGenerator.generate([qso])
 
-    XCTAssertTrue(output.contains("<ADIF_VER:5>3.1.6"))
-    XCTAssertTrue(output.contains("<PROGRAMID:"))
-    XCTAssertTrue(output.contains("<CALL:5>DL5MN"))
-    XCTAssertTrue(output.contains("<EOR>"))
+    #expect(output.contains("<ADIF_VER:5>3.1.6"))
+    #expect(output.contains("<PROGRAMID:"))
+    #expect(output.contains("<CALL:5>DL5MN"))
+    #expect(output.contains("<EOR>"))
   }
 
-  func testGenerateWithoutHeader() {
+  @Test func generateWithoutHeader() {
     var qso = QSO()
     qso.call = "K1JT"
 
     let output = ADIFGenerator.generate([qso], includeHeader: false)
 
-    XCTAssertFalse(output.contains("<EOH>"))
-    XCTAssertTrue(output.contains("<CALL:4>K1JT"))
+    #expect(!output.contains("<EOH>"))
+    #expect(output.contains("<CALL:4>K1JT"))
   }
 
-  func testGenerateMultipleRecords() {
+  @Test func generateMultipleRecords() {
     var first = QSO()
     first.call = "W1AW"
     var second = QSO()
@@ -34,22 +34,22 @@ final class ADIFGeneratorTests: XCTestCase {
 
     let output = ADIFGenerator.generate([first, second], includeHeader: false)
 
-    XCTAssertEqual(output.components(separatedBy: "<EOR>").count - 1, 2)
-    XCTAssertTrue(output.contains("<CALL:4>W1AW"))
-    XCTAssertTrue(output.contains("<CALL:5>DL5MN"))
+    #expect(output.components(separatedBy: "<EOR>").count - 1 == 2)
+    #expect(output.contains("<CALL:4>W1AW"))
+    #expect(output.contains("<CALL:5>DL5MN"))
   }
 
-  func testFormatFieldUsesUTF8Length() {
+  @Test func formatFieldUsesUTF8Length() {
     let field = ADIFGenerator.formatField("COMMENT", value: "CQ TEST")
-    XCTAssertEqual(field, "<COMMENT:7>CQ TEST")
+    #expect(field == "<COMMENT:7>CQ TEST")
   }
 
-  func testFormatFieldMultiByteUTF8() {
+  @Test func formatFieldMultiByteUTF8() {
     let field = ADIFGenerator.formatField("COMMENT", value: "73 de DL5MN ü")
-    XCTAssertEqual(field, "<COMMENT:14>73 de DL5MN ü")
+    #expect(field == "<COMMENT:14>73 de DL5MN ü")
   }
 
-  func testRoundTripMultiByteComment() throws {
+  @Test func roundTripMultiByteComment() throws {
     var input = QSO()
     input.call = "DL5MN"
     input.comment = "Grüße aus München"
@@ -57,22 +57,22 @@ final class ADIFGeneratorTests: XCTestCase {
     let adif = ADIFGenerator.generate([input], includeHeader: false)
     let parsed = try ADIFParser.parse(adif)
 
-    XCTAssertEqual(parsed.count, 1)
-    XCTAssertEqual(parsed[0].comment, "Grüße aus München")
+    #expect(parsed.count == 1)
+    #expect(parsed[0].comment == "Grüße aus München")
   }
 
-  func testGenerateEmptyFieldsAreOmitted() {
+  @Test func generateEmptyFieldsAreOmitted() {
     var qso = QSO()
     qso.call = "W1AW"
 
     let output = ADIFGenerator.generate([qso], includeHeader: false)
 
-    XCTAssertFalse(output.contains("<MODE:"))
-    XCTAssertFalse(output.contains("<FREQ:"))
-    XCTAssertTrue(output.contains("<CALL:4>W1AW"))
+    #expect(!output.contains("<MODE:"))
+    #expect(!output.contains("<FREQ:"))
+    #expect(output.contains("<CALL:4>W1AW"))
   }
 
-  func testRoundTripGeneratorParser() throws {
+  @Test func roundTripGeneratorParser() throws {
     var input = QSO()
     input.call = "JA1ABC"
     input.mode = "FT4"
@@ -83,10 +83,10 @@ final class ADIFGeneratorTests: XCTestCase {
     let adif = ADIFGenerator.generate([input], includeHeader: true)
     let parsed = try ADIFParser.parse(adif)
 
-    XCTAssertEqual(parsed.count, 1)
-    XCTAssertEqual(parsed[0].call, "JA1ABC")
-    XCTAssertEqual(parsed[0].mode, "FT4")
-    XCTAssertEqual(parsed[0].frequency, "7.047500")
-    XCTAssertEqual(parsed[0].qsoDate, "20250105")
+    #expect(parsed.count == 1)
+    #expect(parsed[0].call == "JA1ABC")
+    #expect(parsed[0].mode == "FT4")
+    #expect(parsed[0].frequency == "7.047500")
+    #expect(parsed[0].qsoDate == "20250105")
   }
 }

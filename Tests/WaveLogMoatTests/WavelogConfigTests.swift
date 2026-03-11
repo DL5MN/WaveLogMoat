@@ -1,64 +1,59 @@
+import Foundation
+import Testing
 import WaveLogMoat
-import XCTest
 
-final class WavelogConfigTests: XCTestCase {
+@Suite struct WavelogConfigTests {
 
-  // MARK: - Migration from old format (enableBinaryUDP → udpProtocol)
-
-  func testDecodeLegacyFormatWithBinaryEnabled() throws {
+  @Test func decodeLegacyFormatWithBinaryEnabled() throws {
     let json = """
       {"wavelogURL":"https://log.example.com","enableBinaryUDP":true,"textUDPPort":2333,"binaryUDPPort":2237}
       """
     let config = try JSONDecoder().decode(WavelogConfig.self, from: Data(json.utf8))
-    XCTAssertEqual(config.udpProtocol, .binary)
+    #expect(config.udpProtocol == .binary)
   }
 
-  func testDecodeLegacyFormatWithBinaryDisabled() throws {
+  @Test func decodeLegacyFormatWithBinaryDisabled() throws {
     let json = """
       {"wavelogURL":"https://log.example.com","enableBinaryUDP":false,"textUDPPort":2333}
       """
     let config = try JSONDecoder().decode(WavelogConfig.self, from: Data(json.utf8))
-    XCTAssertEqual(config.udpProtocol, .text)
+    #expect(config.udpProtocol == .text)
   }
 
-  func testDecodeLegacyFormatWithoutBinaryField() throws {
+  @Test func decodeLegacyFormatWithoutBinaryField() throws {
     let json = """
       {"wavelogURL":"https://log.example.com","textUDPPort":2333}
       """
     let config = try JSONDecoder().decode(WavelogConfig.self, from: Data(json.utf8))
-    XCTAssertEqual(config.udpProtocol, .text)
+    #expect(config.udpProtocol == .text)
   }
 
-  func testDecodeNewFormatUsesUDPProtocolDirectly() throws {
+  @Test func decodeNewFormatUsesUDPProtocolDirectly() throws {
     let json = """
       {"wavelogURL":"https://log.example.com","udpProtocol":"binary","textUDPPort":2333}
       """
     let config = try JSONDecoder().decode(WavelogConfig.self, from: Data(json.utf8))
-    XCTAssertEqual(config.udpProtocol, .binary)
+    #expect(config.udpProtocol == .binary)
   }
 
-  func testNewFormatTakesPrecedenceOverLegacy() throws {
+  @Test func newFormatTakesPrecedenceOverLegacy() throws {
     let json = """
       {"wavelogURL":"https://log.example.com","udpProtocol":"text","enableBinaryUDP":true}
       """
     let config = try JSONDecoder().decode(WavelogConfig.self, from: Data(json.utf8))
-    XCTAssertEqual(config.udpProtocol, .text)
+    #expect(config.udpProtocol == .text)
   }
 
-  // MARK: - Encode omits legacy key
-
-  func testEncodeDoesNotIncludeLegacyBinaryKey() throws {
+  @Test func encodeDoesNotIncludeLegacyBinaryKey() throws {
     var config = WavelogConfig()
     config.udpProtocol = .binary
     let data = try JSONEncoder().encode(config)
     let json = try JSONSerialization.jsonObject(with: data) as? [String: Any]
-    XCTAssertNil(json?["enableBinaryUDP"], "Legacy key should not be encoded")
-    XCTAssertEqual(json?["udpProtocol"] as? String, "binary")
+    #expect(json?["enableBinaryUDP"] == nil)
+    #expect(json?["udpProtocol"] as? String == "binary")
   }
 
-  // MARK: - Round-trip
-
-  func testRoundTripPreservesAllFields() throws {
+  @Test func roundTripPreservesAllFields() throws {
     var config = WavelogConfig()
     config.wavelogURL = "https://log.example.com"
     config.stationProfileID = "42"
@@ -77,27 +72,25 @@ final class WavelogConfigTests: XCTestCase {
     let data = try JSONEncoder().encode(config)
     let decoded = try JSONDecoder().decode(WavelogConfig.self, from: data)
 
-    XCTAssertEqual(config, decoded)
+    #expect(config == decoded)
   }
 
-  // MARK: - Defaults
-
-  func testDefaultsAreAppliedForMissingKeys() throws {
+  @Test func defaultsAreAppliedForMissingKeys() throws {
     let json = "{}"
     let config = try JSONDecoder().decode(WavelogConfig.self, from: Data(json.utf8))
 
-    XCTAssertEqual(config.wavelogURL, "")
-    XCTAssertEqual(config.stationProfileID, "")
-    XCTAssertEqual(config.udpProtocol, .text)
-    XCTAssertEqual(config.textUDPPort, 2333)
-    XCTAssertEqual(config.binaryUDPPort, 2237)
-    XCTAssertEqual(config.listenAddress, "127.0.0.1")
-    XCTAssertEqual(config.showInDock, false)
-    XCTAssertEqual(config.showInMenuBar, true)
-    XCTAssertEqual(config.launchAtLogin, false)
-    XCTAssertEqual(config.showNotifications, true)
-    XCTAssertEqual(config.allowSelfSignedCerts, true)
-    XCTAssertEqual(config.httpTimeout, 5000)
-    XCTAssertEqual(config.showFrequencyInMenuBar, false)
+    #expect(config.wavelogURL == "")
+    #expect(config.stationProfileID == "")
+    #expect(config.udpProtocol == .text)
+    #expect(config.textUDPPort == 2333)
+    #expect(config.binaryUDPPort == 2237)
+    #expect(config.listenAddress == "127.0.0.1")
+    #expect(config.showInDock == false)
+    #expect(config.showInMenuBar == true)
+    #expect(config.launchAtLogin == false)
+    #expect(config.showNotifications == true)
+    #expect(config.allowSelfSignedCerts == true)
+    #expect(config.httpTimeout == 5000)
+    #expect(config.showFrequencyInMenuBar == false)
   }
 }

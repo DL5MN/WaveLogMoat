@@ -1,8 +1,8 @@
+import Testing
 import WaveLogMoat
-import XCTest
 
-final class XMLContactParserTests: XCTestCase {
-  func testParseValidWSJTXContactInfo() throws {
+@Suite struct XMLContactParserTests {
+  @Test func parseValidWSJTXContactInfo() throws {
     let xml = """
       <contactinfo>
         <timestamp>2024-01-10T12:00:00</timestamp>
@@ -22,25 +22,25 @@ final class XMLContactParserTests: XCTestCase {
 
     let qso = try XMLContactParser.parse(xml)
 
-    XCTAssertEqual(qso.call, "DJ7NT")
-    XCTAssertEqual(qso.mode, "FT8")
-    XCTAssertEqual(qso.frequency, "7.074000")
-    XCTAssertEqual(qso.frequencyRx, "7.074000")
-    XCTAssertEqual(qso.qsoDate, "20240110")
-    XCTAssertEqual(qso.timeOn, "120000")
+    #expect(qso.call == "DJ7NT")
+    #expect(qso.mode == "FT8")
+    #expect(qso.frequency == "7.074000")
+    #expect(qso.frequencyRx == "7.074000")
+    #expect(qso.qsoDate == "20240110")
+    #expect(qso.timeOn == "120000")
   }
 
-  func testParsePreservesRawMode() throws {
+  @Test func parsePreservesRawMode() throws {
     let usbXML = "<contactinfo><call>W1AW</call><mode>USB</mode></contactinfo>"
     let lsbXML = "<contactinfo><call>K1ABC</call><mode>LSB</mode></contactinfo>"
     let ft8XML = "<contactinfo><call>DL5MN</call><mode>FT8</mode></contactinfo>"
 
-    XCTAssertEqual(try XMLContactParser.parse(usbXML).mode, "USB")
-    XCTAssertEqual(try XMLContactParser.parse(lsbXML).mode, "LSB")
-    XCTAssertEqual(try XMLContactParser.parse(ft8XML).mode, "FT8")
+    #expect(try XMLContactParser.parse(usbXML).mode == "USB")
+    #expect(try XMLContactParser.parse(lsbXML).mode == "LSB")
+    #expect(try XMLContactParser.parse(ft8XML).mode == "FT8")
   }
 
-  func testParseSupportsMultipleTimestampFormats() throws {
+  @Test func parseSupportsMultipleTimestampFormats() throws {
     let n1mm =
       "<contactinfo><call>W1AW</call><timestamp>2024-01-10 12:00:00</timestamp></contactinfo>"
     let dxlog =
@@ -48,29 +48,29 @@ final class XMLContactParserTests: XCTestCase {
     let iso =
       "<contactinfo><call>W1AW</call><timestamp>2024-01-10T12:00:00Z</timestamp></contactinfo>"
 
-    XCTAssertEqual(try XMLContactParser.parse(n1mm).timeOn, "120000")
-    XCTAssertEqual(try XMLContactParser.parse(dxlog).timeOn, "120000")
-    XCTAssertEqual(try XMLContactParser.parse(iso).timeOn, "120000")
+    #expect(try XMLContactParser.parse(n1mm).timeOn == "120000")
+    #expect(try XMLContactParser.parse(dxlog).timeOn == "120000")
+    #expect(try XMLContactParser.parse(iso).timeOn == "120000")
   }
 
-  func testParseUsesTxAsRxWhenRxMissing() throws {
+  @Test func parseUsesTxAsRxWhenRxMissing() throws {
     let xml = "<contactinfo><call>W1AW</call><txfreq>14074000</txfreq></contactinfo>"
     let qso = try XMLContactParser.parse(xml)
-    XCTAssertEqual(qso.frequency, "14.074000")
-    XCTAssertEqual(qso.frequencyRx, "14.074000")
+    #expect(qso.frequency == "14.074000")
+    #expect(qso.frequencyRx == "14.074000")
   }
 
-  func testParseThrowsForMissingCall() {
+  @Test func parseThrowsForMissingCall() {
     let xml = "<contactinfo><mode>FT8</mode></contactinfo>"
-    XCTAssertThrowsError(try XMLContactParser.parse(xml)) { error in
-      XCTAssertEqual(error as? XMLContactParser.ParseError, .missingRequiredField("call"))
+    #expect(throws: XMLContactParser.ParseError.missingRequiredField("call")) {
+      try XMLContactParser.parse(xml)
     }
   }
 
-  func testParseThrowsForInvalidTimestamp() {
+  @Test func parseThrowsForInvalidTimestamp() {
     let xml = "<contactinfo><call>DJ7NT</call><timestamp>bad-date</timestamp></contactinfo>"
-    XCTAssertThrowsError(try XMLContactParser.parse(xml)) { error in
-      XCTAssertEqual(error as? XMLContactParser.ParseError, .invalidTimestamp("bad-date"))
+    #expect(throws: XMLContactParser.ParseError.invalidTimestamp("bad-date")) {
+      try XMLContactParser.parse(xml)
     }
   }
 }

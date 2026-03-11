@@ -1,76 +1,76 @@
+import Testing
 import WaveLogMoat
-import XCTest
 
-final class QSONormalizerTests: XCTestCase {
-  func testNormalizePowerInWatts() {
-    XCTAssertEqual(QSONormalizer.normalizePower("100w"), "100")
-    XCTAssertEqual(QSONormalizer.normalizePower("25"), "25")
+@Suite struct QSONormalizerTests {
+  @Test func normalizePowerInWatts() {
+    #expect(QSONormalizer.normalizePower("100w") == "100")
+    #expect(QSONormalizer.normalizePower("25") == "25")
   }
 
-  func testNormalizePowerInKilowatts() {
-    XCTAssertEqual(QSONormalizer.normalizePower("1kw"), "1000")
-    XCTAssertEqual(QSONormalizer.normalizePower("0.5kW"), "500")
+  @Test func normalizePowerInKilowatts() {
+    #expect(QSONormalizer.normalizePower("1kw") == "1000")
+    #expect(QSONormalizer.normalizePower("0.5kW") == "500")
   }
 
-  func testNormalizePowerInMilliwatts() {
-    XCTAssertEqual(QSONormalizer.normalizePower("500mW"), "0.500")
-    XCTAssertEqual(QSONormalizer.normalizePower("1000mw"), "1")
+  @Test func normalizePowerInMilliwatts() {
+    #expect(QSONormalizer.normalizePower("500mW") == "0.500")
+    #expect(QSONormalizer.normalizePower("1000mw") == "1")
   }
 
-  func testNormalizeMode() {
-    XCTAssertEqual(QSONormalizer.normalizeMode("USB"), "SSB")
-    XCTAssertEqual(QSONormalizer.normalizeMode("LSB"), "SSB")
-    XCTAssertEqual(QSONormalizer.normalizeMode("FT8"), "FT8")
+  @Test func normalizeMode() {
+    #expect(QSONormalizer.normalizeMode("USB") == "SSB")
+    #expect(QSONormalizer.normalizeMode("LSB") == "SSB")
+    #expect(QSONormalizer.normalizeMode("FT8") == "FT8")
   }
 
-  func testNormalizeKIndexClamping() {
-    XCTAssertEqual(QSONormalizer.normalizeKIndex("-1"), "0")
-    XCTAssertEqual(QSONormalizer.normalizeKIndex("3.6"), "4")
-    XCTAssertEqual(QSONormalizer.normalizeKIndex("11"), "9")
+  @Test func normalizeKIndexClamping() {
+    #expect(QSONormalizer.normalizeKIndex("-1") == "0")
+    #expect(QSONormalizer.normalizeKIndex("3.6") == "4")
+    #expect(QSONormalizer.normalizeKIndex("11") == "9")
   }
 
-  func testNormalizeKIndexEmptyReturnsEmpty() {
-    XCTAssertEqual(QSONormalizer.normalizeKIndex(""), "")
-    XCTAssertEqual(QSONormalizer.normalizeKIndex("  "), "  ")
+  @Test func normalizeKIndexEmptyReturnsEmpty() {
+    #expect(QSONormalizer.normalizeKIndex("") == "")
+    #expect(QSONormalizer.normalizeKIndex("  ") == "  ")
   }
 
-  func testNormalizeKIndexNonNumericReturnsEmpty() {
-    XCTAssertEqual(QSONormalizer.normalizeKIndex("abc"), "")
-    XCTAssertEqual(QSONormalizer.normalizeKIndex("N/A"), "")
+  @Test func normalizeKIndexNonNumericReturnsEmpty() {
+    #expect(QSONormalizer.normalizeKIndex("abc") == "")
+    #expect(QSONormalizer.normalizeKIndex("N/A") == "")
   }
 
-  func testNormalizeKIndexBoundaryValues() {
-    XCTAssertEqual(QSONormalizer.normalizeKIndex("0"), "0")
-    XCTAssertEqual(QSONormalizer.normalizeKIndex("9"), "9")
-    XCTAssertEqual(QSONormalizer.normalizeKIndex("4.5"), "5")
+  @Test func normalizeKIndexBoundaryValues() {
+    #expect(QSONormalizer.normalizeKIndex("0") == "0")
+    #expect(QSONormalizer.normalizeKIndex("9") == "9")
+    #expect(QSONormalizer.normalizeKIndex("4.5") == "5")
   }
 
-  func testNormalizeModeCaseInsensitive() {
-    XCTAssertEqual(QSONormalizer.normalizeMode("usb"), "SSB")
-    XCTAssertEqual(QSONormalizer.normalizeMode("lsb"), "SSB")
-    XCTAssertEqual(QSONormalizer.normalizeMode("Usb"), "SSB")
+  @Test func normalizeModeCaseInsensitive() {
+    #expect(QSONormalizer.normalizeMode("usb") == "SSB")
+    #expect(QSONormalizer.normalizeMode("lsb") == "SSB")
+    #expect(QSONormalizer.normalizeMode("Usb") == "SSB")
   }
 
-  func testNormalizePowerEmptyPassthrough() {
-    XCTAssertEqual(QSONormalizer.normalizePower(""), "")
-    XCTAssertEqual(QSONormalizer.normalizePower("  "), "  ")
+  @Test func normalizePowerEmptyPassthrough() {
+    #expect(QSONormalizer.normalizePower("") == "")
+    #expect(QSONormalizer.normalizePower("  ") == "  ")
   }
 
-  func testNormalizePowerNonNumericPassthrough() {
-    XCTAssertEqual(QSONormalizer.normalizePower("QRP"), "QRP")
+  @Test func normalizePowerNonNumericPassthrough() {
+    #expect(QSONormalizer.normalizePower("QRP") == "QRP")
   }
 
-  func testNormalizePreservesBandWhenAlreadySet() {
+  @Test func normalizePreservesBandWhenAlreadySet() {
     var qso = QSO()
     qso.call = "DL5MN"
     qso.frequency = "14.074000"
     qso.band = "20m"
 
     let normalized = QSONormalizer.normalize(qso)
-    XCTAssertEqual(normalized.band, "20m")
+    #expect(normalized.band == "20m")
   }
 
-  func testNormalizeAddsBandFromFrequency() {
+  @Test func normalizeAddsBandFromFrequency() {
     var qso = QSO()
     qso.call = "DL5MN"
     qso.frequency = "14.074000"
@@ -79,8 +79,8 @@ final class QSONormalizerTests: XCTestCase {
 
     let normalized = QSONormalizer.normalize(qso)
 
-    XCTAssertEqual(normalized.band, "20m")
-    XCTAssertEqual(normalized.mode, "SSB")
-    XCTAssertEqual(normalized.kIndex, "8")
+    #expect(normalized.band == "20m")
+    #expect(normalized.mode == "SSB")
+    #expect(normalized.kIndex == "8")
   }
 }
