@@ -3,8 +3,8 @@
 > Native macOS menu bar application bridging WSJT-X and Wavelog for automatic QSO logging.
 
 **Author**: DL5MN
-**Status**: Active (v0.3.2 released, public repos)
-**Last Updated**: 2026-03-09
+**Status**: Active (public repos)
+**Last Updated**: 2026-03-11
 
 ---
 
@@ -67,7 +67,7 @@ A moat protects the castle — a bridge/guardian between WSJT-X and Wavelog.
 | Notifications     | `UserNotifications` framework      | Native macOS notification center                |
 | Package manager   | Swift Package Manager              | Xcode-native, minimal dependencies              |
 | CI/CD             | GitHub Actions                     | macOS runners for build/test/sign/notarize      |
-| Linting           | SwiftLint                          | Standard Swift linting                          |
+| Formatting/Linting | `swift format`                    | Built-in Swift toolchain, no external dependency |
 
 ### 2b. Key Design Decisions
 
@@ -213,9 +213,11 @@ WSJT-X
 
 ### 3e. Release Pipeline
 
-**Status**: Done. Multiple releases shipped (latest: v0.3.2). Both repos (`dl5mn/WaveLogMoat` and `dl5mn/homebrew-wavelogmoat`) are public.
+**Status**: Done. Multiple releases shipped. Both repos (`dl5mn/WaveLogMoat` and `dl5mn/homebrew-wavelogmoat`) are public.
 
 **Pipeline**: `make release VERSION=x.y.z` bumps version, auto-increments `CFBundleVersion`, generates changelog (git-cliff), tags, and pushes. CI then builds, signs (Developer ID), notarizes, packages DMG, creates GitHub Release, deploys Sparkle appcast to GitHub Pages, and updates Homebrew cask.
+
+**CI workflows**: Both `build.yml` (push/PR) and `release.yml` (tag) use `make` targets (`make format`, `make lint`, `make test`, `make build`) to keep CI and local dev commands in sync. Locally, `make check` runs all three (format, lint, test) in one command.
 
 **Repo health**: Dependabot (Swift + GitHub Actions, weekly), PR template, security policy (private vulnerability reporting), CodeQL code scanning.
 
@@ -278,3 +280,7 @@ WSJT-X
 | 19  | MenuBarExtra local @State sync   | Binding `isInserted` directly to @Observable + UserDefaults causes cfprefsd deadlock in release builds. Fix: local @State with one-directional onChange sync. | 2026-03-08 |
 | 20  | CFBundleVersion auto-increment   | Build number increments on each `make release`. Sparkle uses build number for version comparison — prevents false "up to date" when version strings aren't monotonically increasing. | 2026-03-08 |
 | 21  | No keychain-access-groups        | This entitlement requires a provisioning profile for Developer ID distribution. Removed it; Keychain API works fine without it for non-sandboxed apps. | 2026-03-07 |
+| 22  | `swift format` over SwiftLint    | Built into the Swift toolchain — no `brew install` needed locally or in CI. `.swift-format` config only sets `NeverForceUnwrap: true` (all other rules use defaults). Two lines use `// swift-format-ignore` for trailing-underscore names that avoid Swift keyword conflicts (`operator_`, `protocol_`). | 2026-03-11 |
+| 23  | CI uses `make` targets           | Both workflows use `make format`, `make lint`, `make test` instead of raw commands. Single source of truth in the Makefile prevents command drift between local dev and CI. | 2026-03-11 |
+| 24  | Swift Testing over XCTest        | All 62 tests migrated to Swift Testing (`@Test`, `#expect`, `@Suite struct`). Less boilerplate, better failure diagnostics, tests run in parallel by default. | 2026-03-11 |
+| 25  | Swift Regex over NSRegularExpression | ADIFParser uses `#/(?i)<eor>/#` regex literal with `split(separator:)` instead of `NSRegularExpression` + `stringByReplacingMatches`. Type-safe, no `try!`, simpler code. | 2026-03-11 |
