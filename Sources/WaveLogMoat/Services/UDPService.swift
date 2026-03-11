@@ -3,96 +3,96 @@ import Observation
 
 @Observable
 public final class UDPService {
-    public private(set) var isTextListening = false
-    public private(set) var isBinaryListening = false
-    public private(set) var lastError: String?
+  public private(set) var isTextListening = false
+  public private(set) var isBinaryListening = false
+  public private(set) var lastError: String?
 
-    private var textListener: TextUDPListener?
-    private var binaryListener: BinaryUDPListener?
+  private var textListener: TextUDPListener?
+  private var binaryListener: BinaryUDPListener?
 
-    public var onQSOReceived: ((QSO) -> Void)?
-    public var onHeartbeat: ((String, String) -> Void)?
-    public var onStatusUpdate: ((WSJTXStatus) -> Void)?
-    public var onWSJTXClose: ((String) -> Void)?
-    public var onError: ((Error) -> Void)?
+  public var onQSOReceived: ((QSO) -> Void)?
+  public var onHeartbeat: ((String, String) -> Void)?
+  public var onStatusUpdate: ((WSJTXStatus) -> Void)?
+  public var onWSJTXClose: ((String) -> Void)?
+  public var onError: ((Error) -> Void)?
 
-    public init() {}
+  public init() {}
 
-    public func startTextListener(port: UInt16, address: String) {
-        stopTextListener()
+  public func startTextListener(port: UInt16, address: String) {
+    stopTextListener()
 
-        let listener = TextUDPListener(port: port, host: address)
-        listener.onQSOReceived = { [weak self] qso in
-            self?.onQSOReceived?(qso)
-        }
-        listener.onError = { [weak self] error in
-            self?.handleError(error)
-        }
-
-        textListener = listener
-        listener.start()
-        isTextListening = listener.isListening
+    let listener = TextUDPListener(port: port, host: address)
+    listener.onQSOReceived = { [weak self] qso in
+      self?.onQSOReceived?(qso)
+    }
+    listener.onError = { [weak self] error in
+      self?.handleError(error)
     }
 
-    public func startBinaryListener(port: UInt16, address: String) {
-        stopBinaryListener()
+    textListener = listener
+    listener.start()
+    isTextListening = listener.isListening
+  }
 
-        let listener = BinaryUDPListener(port: port, host: address)
-        listener.onHeartbeat = { [weak self] clientId, _, version, _ in
-            self?.onHeartbeat?(clientId, version)
-        }
-        listener.onStatusUpdate = { [weak self] _, status in
-            self?.onStatusUpdate?(status)
-        }
-        listener.onQSOLogged = { [weak self] _, qso in
-            let normalized = QSONormalizer.normalize(qso)
-            self?.onQSOReceived?(normalized)
-        }
-        listener.onLoggedADIF = { [weak self] _, adifText in
-            self?.handleLoggedADIF(adifText)
-        }
-        listener.onClose = { [weak self] clientId in
-            self?.onWSJTXClose?(clientId)
-        }
-        listener.onError = { [weak self] error in
-            self?.handleError(error)
-        }
+  public func startBinaryListener(port: UInt16, address: String) {
+    stopBinaryListener()
 
-        binaryListener = listener
-        listener.start()
-        isBinaryListening = listener.isListening
+    let listener = BinaryUDPListener(port: port, host: address)
+    listener.onHeartbeat = { [weak self] clientId, _, version, _ in
+      self?.onHeartbeat?(clientId, version)
+    }
+    listener.onStatusUpdate = { [weak self] _, status in
+      self?.onStatusUpdate?(status)
+    }
+    listener.onQSOLogged = { [weak self] _, qso in
+      let normalized = QSONormalizer.normalize(qso)
+      self?.onQSOReceived?(normalized)
+    }
+    listener.onLoggedADIF = { [weak self] _, adifText in
+      self?.handleLoggedADIF(adifText)
+    }
+    listener.onClose = { [weak self] clientId in
+      self?.onWSJTXClose?(clientId)
+    }
+    listener.onError = { [weak self] error in
+      self?.handleError(error)
     }
 
-    public func stopTextListener() {
-        textListener?.stop()
-        textListener = nil
-        isTextListening = false
-    }
+    binaryListener = listener
+    listener.start()
+    isBinaryListening = listener.isListening
+  }
 
-    public func stopBinaryListener() {
-        binaryListener?.stop()
-        binaryListener = nil
-        isBinaryListening = false
-    }
+  public func stopTextListener() {
+    textListener?.stop()
+    textListener = nil
+    isTextListening = false
+  }
 
-    public func stopAll() {
-        stopTextListener()
-        stopBinaryListener()
-    }
+  public func stopBinaryListener() {
+    binaryListener?.stop()
+    binaryListener = nil
+    isBinaryListening = false
+  }
 
-    private func handleLoggedADIF(_ adifText: String) {
-        do {
-            let qsos = try ADIFParser.parse(adifText)
-            for qso in qsos {
-                onQSOReceived?(QSONormalizer.normalize(qso))
-            }
-        } catch {
-            handleError(error)
-        }
-    }
+  public func stopAll() {
+    stopTextListener()
+    stopBinaryListener()
+  }
 
-    private func handleError(_ error: Error) {
-        lastError = error.localizedDescription
-        onError?(error)
+  private func handleLoggedADIF(_ adifText: String) {
+    do {
+      let qsos = try ADIFParser.parse(adifText)
+      for qso in qsos {
+        onQSOReceived?(QSONormalizer.normalize(qso))
+      }
+    } catch {
+      handleError(error)
     }
+  }
+
+  private func handleError(_ error: Error) {
+    lastError = error.localizedDescription
+    onError?(error)
+  }
 }
