@@ -1,8 +1,6 @@
 import Foundation
 
 public enum ADIFParser {
-  private static let eorRegex = try! NSRegularExpression(pattern: "(?i)<eor>")
-
   public enum ParseError: Error, LocalizedError, Equatable {
     case emptyInput
     case noRecordsFound
@@ -43,13 +41,9 @@ public enum ADIFParser {
       content = String(content[eohRange.upperBound...])
     }
 
-    let range = NSRange(content.startIndex..<content.endIndex, in: content)
-    let separated = eorRegex.stringByReplacingMatches(
-      in: content, range: range, withTemplate: "\u{1E}")
-
     return
-      separated
-      .split(separator: "\u{1E}")
+      content
+      .split(separator: #/(?i)<eor>/#)
       .map { String($0).trimmingCharacters(in: .whitespacesAndNewlines) }
       .filter { !$0.isEmpty }
   }
