@@ -1,7 +1,6 @@
 import Foundation
 
 public enum ADIFParser {
-  // swiftlint:disable:next force_try
   private static let eorRegex = try! NSRegularExpression(pattern: "(?i)<eor>")
 
   public enum ParseError: Error, LocalizedError, Equatable {
