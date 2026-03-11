@@ -31,5 +31,5 @@ jobs:
       - name: Test
         run: make test
 
-      - name: Build (Xcode)
-        run: make app
+      - name: Build
+        run: make build
