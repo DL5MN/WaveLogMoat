@@ -37,7 +37,7 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: de.dl5mn.WaveLogMoat
         PRODUCT_NAME: WaveLogMoat
-        SWIFT_VERSION: 5.9
+        SWIFT_VERSION: 6.2
         MACOSX_DEPLOYMENT_TARGET: 14.0
         SUPPORTS_MACCATALYST: NO
         SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
@@ -51,5 +51,5 @@ targets:
       - target: WaveLogMoat
     settings:
       base:
-        SWIFT_VERSION: 5.9
+        SWIFT_VERSION: 6.2
         MACOSX_DEPLOYMENT_TARGET: 14.0

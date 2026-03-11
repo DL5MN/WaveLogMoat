@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 
+@MainActor
 @Observable
 public final class UDPService {
   public private(set) var isTextListening = false
@@ -23,10 +24,14 @@ public final class UDPService {
 
     let listener = TextUDPListener(port: port, host: address)
     listener.onQSOReceived = { [weak self] qso in
-      self?.onQSOReceived?(qso)
+      Task { @MainActor in
+        self?.onQSOReceived?(qso)
+      }
     }
     listener.onError = { [weak self] error in
-      self?.handleError(error)
+      Task { @MainActor in
+        self?.handleError(error)
+      }
     }
 
     textListener = listener
@@ -39,23 +44,35 @@ public final class UDPService {
 
     let listener = BinaryUDPListener(port: port, host: address)
     listener.onHeartbeat = { [weak self] clientId, _, version, _ in
-      self?.onHeartbeat?(clientId, version)
+      Task { @MainActor in
+        self?.onHeartbeat?(clientId, version)
+      }
     }
     listener.onStatusUpdate = { [weak self] _, status in
-      self?.onStatusUpdate?(status)
+      Task { @MainActor in
+        self?.onStatusUpdate?(status)
+      }
     }
     listener.onQSOLogged = { [weak self] _, qso in
       let normalized = QSONormalizer.normalize(qso)
-      self?.onQSOReceived?(normalized)
+      Task { @MainActor in
+        self?.onQSOReceived?(normalized)
+      }
     }
     listener.onLoggedADIF = { [weak self] _, adifText in
-      self?.handleLoggedADIF(adifText)
+      Task { @MainActor in
+        self?.handleLoggedADIF(adifText)
+      }
     }
     listener.onClose = { [weak self] clientId in
-      self?.onWSJTXClose?(clientId)
+      Task { @MainActor in
+        self?.onWSJTXClose?(clientId)
+      }
     }
     listener.onError = { [weak self] error in
-      self?.handleError(error)
+      Task { @MainActor in
+        self?.handleError(error)
+      }
     }
 
     binaryListener = listener

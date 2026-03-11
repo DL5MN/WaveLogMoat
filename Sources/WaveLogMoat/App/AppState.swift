@@ -2,6 +2,7 @@ import Foundation
 import Observation
 import SwiftUI
 
+@MainActor
 @Observable
 public final class AppState {
   public var wsjtxConnectionStatus: ConnectionStatus = .disconnected

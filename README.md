@@ -3,7 +3,7 @@
 [![Build](https://github.com/dl5mn/WaveLogMoat/actions/workflows/build.yml/badge.svg)](https://github.com/dl5mn/WaveLogMoat/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![macOS](https://img.shields.io/badge/macOS-14%2B-blue)](https://www.apple.com/macos/)
-[![Swift](https://img.shields.io/badge/Swift-5.9-orange)](https://swift.org)
+[![Swift](https://img.shields.io/badge/Swift-6.2-orange)](https://swift.org)
 
 > Native macOS menu bar application for automatic QSO logging from WSJT-X to [Wavelog](https://www.wavelog.org).
 
@@ -109,7 +109,7 @@ Switching to the binary protocol (port 2237) provides everything the text protoc
 ### Prerequisites
 
 - macOS 14+
-- Xcode 15+ or Swift 5.9+
+- Xcode 16.3+ or Swift 6.2+
 
 ### Build
 
