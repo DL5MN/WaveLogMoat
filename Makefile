@@ -19,7 +19,7 @@ lint:
 	swiftlint
 
 format:
-	swiftformat Sources Tests
+	swift format -i -r -p Sources Tests
 
 release-build:
 	xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Release -destination 'platform=macOS' build
