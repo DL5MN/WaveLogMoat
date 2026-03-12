@@ -207,6 +207,7 @@ public final class AppState {
     udpService.stopAll()
     heartbeatTimer?.invalidate()
     textFlashTask?.cancel()
+    textFlashTask = nil
 
     switch config.udpProtocol {
     case .text:
@@ -222,6 +223,8 @@ public final class AppState {
     udpService.stopAll()
     wsjtxConnectionStatus = .disconnected
     heartbeatTimer?.invalidate()
+    textFlashTask?.cancel()
+    textFlashTask = nil
   }
 
   public func testWavelogConnection() async -> Bool {
