@@ -1,12 +1,15 @@
-.PHONY: build test clean run lint format check release release-build app archive changelog open
+.PHONY: build test clean run lint format check release release-build app archive changelog open project
 
 build:
 	swift build
 
-app:
+project:
+	xcodegen generate
+
+app: project
 	xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Debug -destination 'platform=macOS' build
 
-archive:
+archive: project
 	xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Release -archivePath build/WaveLogMoat.xcarchive archive
 
 test:
@@ -23,7 +26,7 @@ format:
 
 check: format lint test
 
-release-build:
+release-build: project
 	xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Release -destination 'platform=macOS' build
 
 release:
@@ -45,7 +48,7 @@ endif
 	@git push && git push origin v$(VERSION)
 	@echo "Released v$(VERSION)"
 
-open:
+open: project
 	open "$$(xcodebuild -project WaveLogMoat.xcodeproj -scheme WaveLogMoat -configuration Debug -showBuildSettings 2>/dev/null | grep -m1 'BUILT_PRODUCTS_DIR' | awk '{print $$NF}')/WaveLogMoat.app"
 
 changelog:

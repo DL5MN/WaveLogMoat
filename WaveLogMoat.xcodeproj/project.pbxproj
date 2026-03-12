@@ -18,6 +18,7 @@
 		59BFF2FABA587AEE8A66AACC /* ADIFGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F02FADA9E0D6C635A03834CD /* ADIFGenerator.swift */; };
 		61A7B5A3602F34533C5E72DA /* ConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 75B7033F9022154816223736 /* ConnectionStatus.swift */; };
 		6C139D2EFCF396769FFCAFBE /* UDPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE75B66B62508DC234CC0BD5 /* UDPService.swift */; };
+		6C6D58842D19D03F69E16670 /* WavelogConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633037D372BFC803E6C35FF8 /* WavelogConfigTests.swift */; };
 		6E0F47AAC931F01D7FFDB1CA /* ADIFGeneratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B04184CF0648EDE5A9A2DAA7 /* ADIFGeneratorTests.swift */; };
 		76811CDDDB1857E354ED1E76 /* BandMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = F57C3C819FC806322BFA9089 /* BandMap.swift */; };
 		79B463DBAA89DFCB9278142E /* BinaryUDPListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A5E8826E64EA7CFE26A7362 /* BinaryUDPListener.swift */; };
@@ -37,6 +38,7 @@
 		BC2C53173BEE3A5EA2931D9F /* GeneralSettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58445ADAC5548C06C961B32 /* GeneralSettingsTab.swift */; };
 		BC99775A0AFF65E5C14F8F62 /* WSJTXStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D830DDA3CC0D456EC8DF8BD /* WSJTXStatus.swift */; };
 		C18DFEF6D186CAD5466BE48D /* WaveLogMoatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63DA194BC9FE58C7DFF0F07 /* WaveLogMoatApp.swift */; };
+		C66EDD2FA2764366DC4E1BEB /* UDPListenerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC38A1398B7F40D2211B7C7A /* UDPListenerFactory.swift */; };
 		D39EBD60CC3784F3473D5753 /* WavelogAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD9A55B7758B8C5C5E68612 /* WavelogAPIClient.swift */; };
 		D3CD94781172F2D935ED84AF /* StationProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFD1F8EDE82391068004020 /* StationProfile.swift */; };
 		D8E8D93C15355838E6177718 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D18F21C023C134569DE93B04 /* Assets.xcassets */; };
@@ -73,6 +75,7 @@
 		5C89F54C5AEB9A1C684A21E7 /* ConnectionStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatusView.swift; sourceTree = "<group>"; };
 		5CA5DA9F5D9D416F9DE09083 /* MenuBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarView.swift; sourceTree = "<group>"; };
 		5EDDCF1E8E0FE1C880D2E26D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		633037D372BFC803E6C35FF8 /* WavelogConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavelogConfigTests.swift; sourceTree = "<group>"; };
 		66554DC434FBBD1D72127A8D /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		6D830DDA3CC0D456EC8DF8BD /* WSJTXStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSJTXStatus.swift; sourceTree = "<group>"; };
 		6D91FDD9A5D28D182469C358 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -98,6 +101,7 @@
 		D18F21C023C134569DE93B04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D2766D4EDCA643150DFDD49A /* ADIFParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADIFParser.swift; sourceTree = "<group>"; };
 		D44D6F3425897D9E01733027 /* AboutTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTab.swift; sourceTree = "<group>"; };
+		DC38A1398B7F40D2211B7C7A /* UDPListenerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPListenerFactory.swift; sourceTree = "<group>"; };
 		F02FADA9E0D6C635A03834CD /* ADIFGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADIFGenerator.swift; sourceTree = "<group>"; };
 		F57C3C819FC806322BFA9089 /* BandMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMap.swift; sourceTree = "<group>"; };
 		F80D82A316ABDF645CE0AE4D /* XMLContactParserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLContactParserTests.swift; sourceTree = "<group>"; };
@@ -125,6 +129,7 @@
 				B2F555B523E387C90F43B8D1 /* QDataStreamReaderTests.swift */,
 				0A9F399728694B255E61F52B /* QSONormalizerTests.swift */,
 				81520763129218459D693DA5 /* WavelogAPIClientTests.swift */,
+				633037D372BFC803E6C35FF8 /* WavelogConfigTests.swift */,
 				F80D82A316ABDF645CE0AE4D /* XMLContactParserTests.swift */,
 			);
 			name = WaveLogMoatTests;
@@ -189,6 +194,7 @@
 				C3B887F59C946F4C5F086BC7 /* QDataStreamReader.swift */,
 				B319338ECBF4B6F6D80734D2 /* QSONormalizer.swift */,
 				BB3F0CA2CCA7D28FA3E3468E /* TextUDPListener.swift */,
+				DC38A1398B7F40D2211B7C7A /* UDPListenerFactory.swift */,
 				CE75B66B62508DC234CC0BD5 /* UDPService.swift */,
 				8FD9A55B7758B8C5C5E68612 /* WavelogAPIClient.swift */,
 				7EDFC34FDD4FB160035B2DF6 /* XMLContactParser.swift */,
@@ -279,6 +285,8 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = C9CC5FC92F44E5DF4F725229 /* Build configuration list for PBXProject "WaveLogMoat" */;
 			developmentRegion = en;
@@ -325,6 +333,7 @@
 				ABDA1F28777EBF80678D9C14 /* QDataStreamReaderTests.swift in Sources */,
 				AE4454657D3F8E91E718C4BB /* QSONormalizerTests.swift in Sources */,
 				EFFE246ED7C9BB3D8E9CF7F3 /* WavelogAPIClientTests.swift in Sources */,
+				6C6D58842D19D03F69E16670 /* WavelogConfigTests.swift in Sources */,
 				8F30A3FDDF5700B1609FAB8B /* XMLContactParserTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -355,6 +364,7 @@
 				870A69F2347A907FA579084C /* SettingsView.swift in Sources */,
 				D3CD94781172F2D935ED84AF /* StationProfile.swift in Sources */,
 				E00182CFA71E7CAFE355CF83 /* TextUDPListener.swift in Sources */,
+				C66EDD2FA2764366DC4E1BEB /* UDPListenerFactory.swift in Sources */,
 				6C139D2EFCF396769FFCAFBE /* UDPService.swift in Sources */,
 				B4513090F85FFB95779A3604 /* WSJTXMessage.swift in Sources */,
 				EE98456F5C1A0B19C2E701BF /* WSJTXSettingsTab.swift in Sources */,
@@ -390,7 +400,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				SDKROOT = macosx;
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 6.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaveLogMoat.app/Contents/MacOS/WaveLogMoat";
 			};
 			name = Debug;
@@ -400,10 +410,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WaveLogMoat.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 48C98LB88N;
 				INFOPLIST_FILE = Sources/WaveLogMoat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -412,11 +419,10 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.dl5mn.WaveLogMoat;
 				PRODUCT_NAME = WaveLogMoat;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 6.2;
 			};
 			name = Debug;
 		};
@@ -472,7 +478,7 @@
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -481,10 +487,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = WaveLogMoat.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = 48C98LB88N;
 				INFOPLIST_FILE = Sources/WaveLogMoat/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -493,11 +496,10 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				PRODUCT_BUNDLE_IDENTIFIER = de.dl5mn.WaveLogMoat;
 				PRODUCT_NAME = WaveLogMoat;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 6.2;
 			};
 			name = Release;
 		};
@@ -560,7 +562,7 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -576,7 +578,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				SDKROOT = macosx;
-				SWIFT_VERSION = 6.0;
+				SWIFT_VERSION = 6.2;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaveLogMoat.app/Contents/MacOS/WaveLogMoat";
 			};
 			name = Release;
