@@ -23,6 +23,11 @@ public final class UDPService {
     stopTextListener()
 
     let listener = TextUDPListener(port: port, host: address)
+    listener.onListeningStateChange = { [weak self] isListening in
+      Task { @MainActor in
+        self?.isTextListening = isListening
+      }
+    }
     listener.onQSOReceived = { [weak self] qso in
       Task { @MainActor in
         self?.onQSOReceived?(qso)
@@ -36,13 +41,17 @@ public final class UDPService {
 
     textListener = listener
     listener.start()
-    isTextListening = listener.isListening
   }
 
   public func startBinaryListener(port: UInt16, address: String) {
     stopBinaryListener()
 
     let listener = BinaryUDPListener(port: port, host: address)
+    listener.onListeningStateChange = { [weak self] isListening in
+      Task { @MainActor in
+        self?.isBinaryListening = isListening
+      }
+    }
     listener.onHeartbeat = { [weak self] clientId, _, version, _ in
       Task { @MainActor in
         self?.onHeartbeat?(clientId, version)
@@ -77,7 +86,6 @@ public final class UDPService {
 
     binaryListener = listener
     listener.start()
-    isBinaryListening = listener.isListening
   }
 
   public func stopTextListener() {

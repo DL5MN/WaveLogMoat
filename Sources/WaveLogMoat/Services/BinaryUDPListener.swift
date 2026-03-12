@@ -11,6 +11,7 @@ public final class BinaryUDPListener: @unchecked Sendable {
   public var onLoggedADIF: (@Sendable (String, String) -> Void)?
   public var onClose: (@Sendable (String) -> Void)?
   public var onError: (@Sendable (Error) -> Void)?
+  public var onListeningStateChange: (@Sendable (Bool) -> Void)?
 
   public var isListening: Bool {
     listener != nil
@@ -40,13 +41,18 @@ public final class BinaryUDPListener: @unchecked Sendable {
     }
 
     do {
-      let listener = try NWListener(using: .udp, on: nwPort)
+      let listener = try UDPListenerFactory.makeListener(host: host, port: nwPort)
 
       listener.stateUpdateHandler = { [weak self] state in
         switch state {
+        case .ready:
+          self?.onListeningStateChange?(true)
         case .failed(let error):
+          self?.onListeningStateChange?(false)
           self?.onError?(error)
           self?.stop()
+        case .cancelled:
+          self?.onListeningStateChange?(false)
         default:
           break
         }
@@ -65,10 +71,14 @@ public final class BinaryUDPListener: @unchecked Sendable {
   }
 
   public func stop() {
+    let hadListener = listener != nil
     listener?.stateUpdateHandler = nil
     listener?.newConnectionHandler = nil
     listener?.cancel()
     listener = nil
+    if hadListener {
+      onListeningStateChange?(false)
+    }
     Log.udp.info("Binary UDP listener stopped on port \(self.port)")
   }
 
