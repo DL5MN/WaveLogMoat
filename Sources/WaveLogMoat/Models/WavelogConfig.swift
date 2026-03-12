@@ -19,7 +19,7 @@ public struct WavelogConfig: Codable, Sendable, Equatable {
   public var showInMenuBar: Bool = true
   public var launchAtLogin: Bool = false
   public var showNotifications: Bool = true
-  public var allowSelfSignedCerts: Bool = true
+  public var allowSelfSignedCerts: Bool = false
   public var httpTimeout: Int = 5000
 
   public var showFrequencyInMenuBar: Bool = false
@@ -40,7 +40,7 @@ public struct WavelogConfig: Codable, Sendable, Equatable {
     launchAtLogin = try container.decodeIfPresent(Bool.self, forKey: .launchAtLogin) ?? false
     showNotifications = try container.decodeIfPresent(Bool.self, forKey: .showNotifications) ?? true
     allowSelfSignedCerts =
-      try container.decodeIfPresent(Bool.self, forKey: .allowSelfSignedCerts) ?? true
+      try container.decodeIfPresent(Bool.self, forKey: .allowSelfSignedCerts) ?? false
     httpTimeout = try container.decodeIfPresent(Int.self, forKey: .httpTimeout) ?? 5000
     showFrequencyInMenuBar =
       try container.decodeIfPresent(Bool.self, forKey: .showFrequencyInMenuBar) ?? false

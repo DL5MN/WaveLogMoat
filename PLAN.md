@@ -83,7 +83,7 @@ A moat protects the castle — a bridge/guardian between WSJT-X and Wavelog.
 
 6. **@Observable over ObservableObject**: Requires macOS 14+ but produces cleaner code with the `@Observable` macro vs. `@Published` + `ObservableObject`.
 
-7. **Self-signed certificate support**: Many Wavelog instances are self-hosted with self-signed TLS. We support this via `URLSessionDelegate` with a user-visible toggle and appropriate warnings.
+7. **Self-signed certificate support**: Many Wavelog instances are self-hosted with self-signed TLS. We support this via `URLSessionDelegate` with a user-visible toggle and appropriate warnings, but the toggle defaults off for secure-by-default behavior.
 
 8. **Structured concurrency**: All async work uses Swift structured concurrency (async/await, TaskGroup) rather than Combine or callback patterns. `AppState` and `UDPService` are `@MainActor`-isolated; UDP listener callbacks hop to the main actor via `Task { @MainActor in }`. Swift 6.2 strict concurrency — zero errors, zero warnings.
 
@@ -285,3 +285,4 @@ WSJT-X
 | 24  | Swift Testing over XCTest        | All 62 tests migrated to Swift Testing (`@Test`, `#expect`, `@Suite struct`). Less boilerplate, better failure diagnostics, tests run in parallel by default. | 2026-03-11 |
 | 25  | Swift Regex over NSRegularExpression | ADIFParser uses `#/(?i)<eor>/#` regex literal with `split(separator:)` instead of `NSRegularExpression` + `stringByReplacingMatches`. Type-safe, no `try!`, simpler code. | 2026-03-11 |
 | 26  | Swift 6.2 strict concurrency | Migrated from Swift 5.9 to 6.2, enabling strict concurrency checking. `AppState` and `UDPService` annotated `@MainActor`; UDP listener callbacks wrapped in `Task { @MainActor in }` to hop from background DispatchQueues. All model types were already `Sendable`. Listener classes remain `@unchecked Sendable` (serial DispatchQueue isolation). Zero errors, zero warnings. | 2026-03-11 |
+| 27  | Self-signed TLS is opt-in        | Preserve compatibility with self-hosted Wavelog instances, but default `allowSelfSignedCerts` to `false` so certificate trust bypass is an explicit user action instead of the default. | 2026-03-12 |

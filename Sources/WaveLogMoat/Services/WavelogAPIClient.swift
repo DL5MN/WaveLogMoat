@@ -57,7 +57,7 @@ public final class WavelogAPIClient: @unchecked Sendable {
   private let jsonEncoder: JSONEncoder
   private let jsonDecoder: JSONDecoder
 
-  public init(allowSelfSignedCerts: Bool = true, timeout: TimeInterval = 5.0) {
+  public init(allowSelfSignedCerts: Bool = false, timeout: TimeInterval = 5.0) {
     let config = URLSessionConfiguration.ephemeral
     config.timeoutIntervalForRequest = timeout
     config.timeoutIntervalForResource = timeout

@@ -89,7 +89,7 @@ import WaveLogMoat
     #expect(config.showInMenuBar == true)
     #expect(config.launchAtLogin == false)
     #expect(config.showNotifications == true)
-    #expect(config.allowSelfSignedCerts == true)
+    #expect(config.allowSelfSignedCerts == false)
     #expect(config.httpTimeout == 5000)
     #expect(config.showFrequencyInMenuBar == false)
   }

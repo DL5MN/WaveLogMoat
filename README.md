@@ -88,7 +88,7 @@ Once configured, WaveLogMoat automatically receives QSOs from WSJT-X. When you l
 | Text UDP Port           | 2333      | WSJT-X Secondary UDP Server port                           |
 | Binary UDP Port         | 2237      | WSJT-X Primary UDP Server port                             |
 | Bind Address            | 127.0.0.1 | Address to receive WSJT-X data on                          |
-| Allow Self-Signed Certs | On        | For self-hosted Wavelog with self-signed TLS               |
+| Allow Self-Signed Certs | Off       | For self-hosted Wavelog with self-signed TLS               |
 | Show in Menu Bar        | On        | Display icon in menu bar                                   |
 | Show in Dock            | Off       | Display icon in dock                                       |
 | Launch at Login         | Off       | Start automatically at login                               |
