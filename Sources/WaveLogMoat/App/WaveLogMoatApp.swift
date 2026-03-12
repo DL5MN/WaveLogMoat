@@ -16,10 +16,19 @@ import SwiftUI
   @main
 #endif
 struct WaveLogMoatApp: App {
-  @State private var appState = AppState()
-  @State private var updaterController = SPUStandardUpdaterController(
-    startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
-  @State private var isMenuBarInserted = true
+  @State private var appState: AppState
+  @State private var updaterController: SPUStandardUpdaterController
+  @State private var isMenuBarInserted: Bool
+
+  init() {
+    let initialAppState = AppState()
+    _appState = State(initialValue: initialAppState)
+    _updaterController = State(
+      initialValue: SPUStandardUpdaterController(
+        startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
+    )
+    _isMenuBarInserted = State(initialValue: initialAppState.config.showInMenuBar)
+  }
 
   var body: some Scene {
     MenuBarExtra(isInserted: $isMenuBarInserted) {
