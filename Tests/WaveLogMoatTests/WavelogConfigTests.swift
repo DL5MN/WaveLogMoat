@@ -93,4 +93,14 @@ import WaveLogMoat
     #expect(config.httpTimeout == 5000)
     #expect(config.showFrequencyInMenuBar == false)
   }
+
+  @Test func decodeRestoresVisibleEntryPointWhenBothAreDisabled() throws {
+    let json = """
+      {"showInDock":false,"showInMenuBar":false}
+      """
+    let config = try JSONDecoder().decode(WavelogConfig.self, from: Data(json.utf8))
+
+    #expect(config.showInDock == false)
+    #expect(config.showInMenuBar == true)
+  }
 }

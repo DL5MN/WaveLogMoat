@@ -276,6 +276,13 @@ public final class AppState {
   }
 
   public func saveConfig(previous: WavelogConfig? = nil) {
+    var sanitizedConfig = config
+    sanitizedConfig.enforceVisibleEntryPoint()
+    if sanitizedConfig != config {
+      config = sanitizedConfig
+      return
+    }
+
     if let encoded = try? JSONEncoder().encode(config) {
       UserDefaults.standard.set(encoded, forKey: "wavelog_config")
     }

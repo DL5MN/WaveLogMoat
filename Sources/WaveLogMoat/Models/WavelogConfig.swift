@@ -53,6 +53,8 @@ public struct WavelogConfig: Codable, Sendable, Equatable {
         try container.decodeIfPresent(Bool.self, forKey: .enableBinaryUDP) ?? false
       udpProtocol = enableBinaryUDP ? .binary : .text
     }
+
+    enforceVisibleEntryPoint()
   }
 
   public func encode(to encoder: Encoder) throws {
@@ -79,5 +81,11 @@ public struct WavelogConfig: Codable, Sendable, Equatable {
     case showInDock, showInMenuBar, launchAtLogin, showNotifications
     case allowSelfSignedCerts, httpTimeout, showFrequencyInMenuBar
     case enableBinaryUDP
+  }
+
+  public mutating func enforceVisibleEntryPoint() {
+    if !showInMenuBar && !showInDock {
+      showInMenuBar = true
+    }
   }
 }
