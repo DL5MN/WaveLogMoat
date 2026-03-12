@@ -13,5 +13,5 @@
 ## Checklist
 
 - [ ] All checks pass (`make check`)
-- [ ] Tested locally on macOS
+- [ ] Tested locally on macOS (`make app` and `make open`)
 - [ ] No new warnings or errors
