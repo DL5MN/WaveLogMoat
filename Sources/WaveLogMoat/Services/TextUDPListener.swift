@@ -106,8 +106,7 @@ public final class TextUDPListener: @unchecked Sendable {
     }
 
     do {
-      let lowercased = payload.lowercased()
-      if lowercased.contains("xml") || lowercased.contains("<contactinfo") {
+      if Self.isXMLContactInfoPayload(payload) {
         let qso = try XMLContactParser.parse(payload)
         onQSOReceived?(QSONormalizer.normalize(qso))
       } else {
@@ -119,6 +118,14 @@ public final class TextUDPListener: @unchecked Sendable {
     } catch {
       onError?(error)
     }
+  }
+
+  static func isXMLContactInfoPayload(_ payload: String) -> Bool {
+    let trimmed = payload.trimmingCharacters(in: .whitespacesAndNewlines)
+    guard !trimmed.isEmpty else { return false }
+
+    let pattern = #"^(?:<\?xml\b[^>]*>\s*)?<contactinfo\b"#
+    return trimmed.range(of: pattern, options: [.regularExpression, .caseInsensitive]) != nil
   }
 }
 
