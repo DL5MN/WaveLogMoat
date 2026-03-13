@@ -1,14 +1,14 @@
 <?xml version="1.0" standalone="yes"?>
 <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
   <channel>
-    <title>WaveLogMoat</title>
+    <title>WaveLogMate</title>
     <item>
-      <title>Version 0.6.0</title>
-      <pubDate>Thu, 12 Mar 2026 07:48:15 +0000</pubDate>
-      <sparkle:version>7</sparkle:version>
-      <sparkle:shortVersionString>0.6.0</sparkle:shortVersionString>
+      <title>Version 1.0.0</title>
+      <pubDate>Fri, 13 Mar 2026 05:36:48 +0000</pubDate>
+      <sparkle:version>8</sparkle:version>
+      <sparkle:shortVersionString>1.0.0</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-      <enclosure url="https://github.com/dl5mn/WaveLogMoat/releases/download/v0.6.0/WaveLogMoat-v0.6.0.dmg" sparkle:edSignature="WXetwq+JEnuKds0ALOxE+rLBXj5gS1/hLFP1WTkOeY1r4kGD1VoitPRvMDbylGQdl+CDl2GdVgREZDtZlWlfDA==" length="2252431" type="application/octet-stream"/>
+      <enclosure url="https://github.com/dl5mn/WaveLogMate/releases/download/v1.0.0/WaveLogMate-v1.0.0.dmg" sparkle:edSignature="Fj6FyMvttUrKxr8D0xaTgWVqitCmy6u/U8Y8OF7sfHmJ+qsVirCEzxWUl0JNKKhBUFtj9KBiT/JLyvcGW1meBA==" length="2252431" type="application/octet-stream"/>
     </item>
   </channel>
 </rss>
