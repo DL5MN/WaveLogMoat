@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2026-03-13
+
+### Added
+
+- Rename WaveLogMoat to WaveLogMate
+
+### CI/CD
+
+- Bump softprops/action-gh-release to v2.5.0 (Node 24)
+
 ## [0.6.0] - 2026-03-12
 
 ### Documentation
@@ -122,7 +132,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Documentation
 
 - Replace JTAlert with JT-Bridge (macOS equivalent)
-- Clarify that WaveLogMate receives UDP data sent by WSJT-X
+- Clarify that WaveLogMoat receives UDP data sent by WSJT-X
 
 ### Fixed
 
