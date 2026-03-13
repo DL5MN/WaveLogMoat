@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Thanks for suggesting an improvement!
-        Please search [existing issues](https://github.com/dl5mn/WaveLogMoat/issues?q=is%3Aissue+label%3Aenhancement) before filing a new one.
+        Please search [existing issues](https://github.com/dl5mn/WaveLogMate/issues?q=is%3Aissue+label%3Aenhancement) before filing a new one.
 
   - type: textarea
     id: problem

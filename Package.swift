@@ -3,14 +3,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "WaveLogMoat",
+    name: "WaveLogMate",
     platforms: [
         .macOS(.v14),
     ],
     products: [
         .library(
-            name: "WaveLogMoat",
-            targets: ["WaveLogMoat"]
+            name: "WaveLogMate",
+            targets: ["WaveLogMate"]
         ),
     ],
     dependencies: [
@@ -18,7 +18,7 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "WaveLogMoat",
+            name: "WaveLogMate",
             dependencies: [
                 .product(name: "Sparkle", package: "Sparkle"),
             ],
@@ -31,8 +31,8 @@ let package = Package(
             ]
         ),
         .testTarget(
-            name: "WaveLogMoatTests",
-            dependencies: ["WaveLogMoat"]
+            name: "WaveLogMateTests",
+            dependencies: ["WaveLogMate"]
         ),
     ]
 )

@@ -89,7 +89,7 @@ public struct MenuBarView: View {
 
         HoverButton {
           dismiss()
-          if let url = URL(string: "https://github.com/dl5mn/WaveLogMoat/issues") {
+          if let url = URL(string: "https://github.com/dl5mn/WaveLogMate/issues") {
             NSWorkspace.shared.open(url)
           }
         } label: {
@@ -99,7 +99,7 @@ public struct MenuBarView: View {
         HoverButton {
           NSApplication.shared.terminate(nil)
         } label: {
-          MenuRow(title: "Quit WaveLogMoat", systemImage: "power", shortcut: "⌘Q")
+          MenuRow(title: "Quit WaveLogMate", systemImage: "power", shortcut: "⌘Q")
         }
       }
       .padding(.vertical, 4)

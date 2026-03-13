@@ -122,7 +122,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Documentation
 
 - Replace JTAlert with JT-Bridge (macOS equivalent)
-- Clarify that WaveLogMoat receives UDP data sent by WSJT-X
+- Clarify that WaveLogMate receives UDP data sent by WSJT-X
 
 ### Fixed
 

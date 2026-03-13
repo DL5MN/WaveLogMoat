@@ -1,4 +1,4 @@
-# WaveLogMoat — Project Plan
+# WaveLogMate — Project Plan
 
 > Native macOS menu bar application bridging WSJT-X and Wavelog for automatic QSO logging.
 
@@ -39,14 +39,14 @@ A native macOS menu bar app that:
 
 ### Naming
 
-"WaveLogMoat" continues the Wavelog companion app naming convention:
+"WaveLogMate" continues the Wavelog companion app naming convention:
 
 - WaveLogGate (official Electron app)
 - WaveLogGoat (Go-based CAT control)
 - WaveLogStoat (Go-based QSO transport CLI)
-- **WaveLogMoat** (native macOS QSO bridge)
+- **WaveLogMate** (native macOS QSO bridge)
 
-A moat protects the castle — a bridge/guardian between WSJT-X and Wavelog.
+A mate — your companion at the radio, bridging WSJT-X and Wavelog.
 
 ---
 
@@ -137,7 +137,7 @@ WSJT-X
 
 ```
 ┌──────────────────────────────────────────────────────────────────────┐
-│                         WaveLogMoatApp                               │
+│                         WaveLogMateApp                               │
 │  @main, MenuBarExtra, Settings Window                                │
 ├──────────────────────────────────────────────────────────────────────┤
 │                      AppState (@Observable)                          │
@@ -185,13 +185,13 @@ WSJT-X
 
 **Completed:**
 
-- GitHub Pages enabled, appcast deployed at `https://dl5mn.github.io/WaveLogMoat/appcast.xml`
+- GitHub Pages enabled, appcast deployed at `https://dl5mn.github.io/WaveLogMate/appcast.xml`
 - `SUFeedURL` set in Info.plist
 - `sparkle:version` fixed to use build number instead of version string (prevents false "up to date" results)
 
 ### 3c. Homebrew — Official Cask
 
-**Status**: Custom tap (`dl5mn/homebrew-wavelogmoat`) exists and auto-updates on release.
+**Status**: Custom tap (`dl5mn/homebrew-wavelogmate`) exists and auto-updates on release.
 
 **Future:** Submit PR to `homebrew/homebrew-cask` when app has traction (GitHub stars, downloads).
 
@@ -213,7 +213,7 @@ WSJT-X
 
 ### 3e. Release Pipeline
 
-**Status**: Done. Multiple releases shipped. Both repos (`dl5mn/WaveLogMoat` and `dl5mn/homebrew-wavelogmoat`) are public.
+**Status**: Done. Multiple releases shipped. Both repos (`dl5mn/WaveLogMate` and `dl5mn/homebrew-wavelogmate`) are public.
 
 **Pipeline**: `make release VERSION=x.y.z` bumps version, auto-increments `CFBundleVersion`, generates changelog (git-cliff), tags, and pushes. CI then builds, signs (Developer ID), notarizes, packages DMG, creates GitHub Release, deploys Sparkle appcast to GitHub Pages, and updates Homebrew cask.
 
@@ -267,7 +267,7 @@ WSJT-X
 | 6   | Sparkle for updates              | Industry standard for non-App Store macOS. EdDSA signing, GitHub Releases hosting. | 2026-03-06 |
 | 7   | Custom Homebrew tap first        | Instant publishing. Submit to homebrew-cask when app has traction.                 | 2026-03-06 |
 | 8   | Station profile dropdown via API | Better UX than manual ID entry. `/api/station_info` provides the data.             | 2026-03-06 |
-| 9   | App name: WaveLogMoat            | Continues Gate/Goat/Stoat naming. Moat = bridge/guardian.                          | 2026-03-06 |
+| 9   | App name: WaveLogMoat            | Continues Gate/Goat/Stoat naming. Moat = bridge/guardian. Renamed to WaveLogMate in #28. | 2026-03-06 |
 | 10  | CI signing via manual codesign   | `xcodebuild archive` unsigned, then manual `codesign` with Developer ID. Avoids provisioning profile requirement. Sparkle nested bundles signed inside-out. | 2026-03-06 |
 | 11  | station_info key in URL path     | Wavelog expects API key at `/api/station_info/{key}`, not in JSON body.            | 2026-03-06 |
 | 12  | In-memory API key cache          | Keychain prompts on every read from unsigned builds. Load once, write-through.     | 2026-03-06 |
@@ -276,7 +276,7 @@ WSJT-X
 | 15  | Notification denied UX           | Sync toggle to OS state, show warning + "Open Notification Settings" button.       | 2026-03-06 |
 | 16  | Dock visibility via policy       | `NSApp.setActivationPolicy(.regular/.accessory)` applied on init and config save.  | 2026-03-06 |
 | 17  | Exclusive protocol choice        | Text and binary UDP are mutually exclusive (segmented picker). Eliminates dedup.   | 2026-03-06 |
-| 18  | Bundle ID `de.dl5mn.WaveLogMoat` | Changed from `com.dl5mn` to `de.dl5mn` to match German country domain convention. | 2026-03-07 |
+| 18  | Bundle ID `de.dl5mn.WaveLogMate` | Changed from `com.dl5mn` to `de.dl5mn` to match German country domain convention. | 2026-03-07 |
 | 19  | MenuBarExtra local @State sync   | Binding `isInserted` directly to @Observable + UserDefaults causes cfprefsd deadlock in release builds. Fix: local @State with one-directional onChange sync. | 2026-03-08 |
 | 20  | CFBundleVersion auto-increment   | Build number increments on each `make release`. Sparkle uses build number for version comparison — prevents false "up to date" when version strings aren't monotonically increasing. | 2026-03-08 |
 | 21  | No keychain-access-groups        | This entitlement requires a provisioning profile for Developer ID distribution. Removed it; Keychain API works fine without it for non-sandboxed apps. | 2026-03-07 |
@@ -286,3 +286,4 @@ WSJT-X
 | 25  | Swift Regex over NSRegularExpression | ADIFParser uses `#/(?i)<eor>/#` regex literal with `split(separator:)` instead of `NSRegularExpression` + `stringByReplacingMatches`. Type-safe, no `try!`, simpler code. | 2026-03-11 |
 | 26  | Swift 6.2 strict concurrency | Migrated from Swift 5.9 to 6.2, enabling strict concurrency checking. `AppState` and `UDPService` annotated `@MainActor`; UDP listener callbacks wrapped in `Task { @MainActor in }` to hop from background DispatchQueues. All model types were already `Sendable`. Listener classes remain `@unchecked Sendable` (serial DispatchQueue isolation). Zero errors, zero warnings. | 2026-03-11 |
 | 27  | Self-signed TLS is opt-in        | Preserve compatibility with self-hosted Wavelog instances, but default `allowSelfSignedCerts` to `false` so certificate trust bypass is an explicit user action instead of the default. | 2026-03-12 |
+| 28  | Rename WaveLogMoat → WaveLogMate | "Mate" — your companion at the radio. Better name, same Gate/Goat/Stoat convention. Full rename: bundle ID, Keychain service, module names, Homebrew tap, CI workflows, docs. New bundle ID `de.dl5mn.WaveLogMate`. No migration needed (no existing users). | 2026-03-13 |

@@ -50,18 +50,18 @@ jobs:
 
       - name: Archive Release (unsigned)
         run: >
-          xcodebuild -project WaveLogMoat.xcodeproj
-          -scheme WaveLogMoat
+          xcodebuild -project WaveLogMate.xcodeproj
+          -scheme WaveLogMate
           -configuration Release
           -destination 'platform=macOS'
-          -archivePath build/WaveLogMoat.xcarchive
+          -archivePath build/WaveLogMate.xcarchive
           CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED=NO
           archive
 
       - name: Sign App
         run: |
-          APP_PATH="build/WaveLogMoat.xcarchive/Products/Applications/WaveLogMoat.app"
-          ENTITLEMENTS="WaveLogMoat.entitlements"
+          APP_PATH="build/WaveLogMate.xcarchive/Products/Applications/WaveLogMate.app"
+          ENTITLEMENTS="WaveLogMate.entitlements"
 
           # Sign frameworks and helpers first, then the app bundle
           find "$APP_PATH/Contents/Frameworks" -type f -perm +111 -o -name "*.dylib" | while read -r binary; do
@@ -91,8 +91,8 @@ jobs:
           APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
           APPLE_APP_PASSWORD: ${{ secrets.APPLE_APP_PASSWORD }}
         run: |
-          APP_PATH="build/WaveLogMoat.xcarchive/Products/Applications/WaveLogMoat.app"
-          ZIP_PATH="$RUNNER_TEMP/WaveLogMoat-notarize.zip"
+          APP_PATH="build/WaveLogMate.xcarchive/Products/Applications/WaveLogMate.app"
+          ZIP_PATH="$RUNNER_TEMP/WaveLogMate-notarize.zip"
 
           ditto -c -k --keepParent "$APP_PATH" "$ZIP_PATH"
 
@@ -106,8 +106,8 @@ jobs:
 
       - name: Package DMG
         run: |
-          APP_NAME="WaveLogMoat"
-          APP_PATH="build/WaveLogMoat.xcarchive/Products/Applications/${APP_NAME}.app"
+          APP_NAME="WaveLogMate"
+          APP_PATH="build/WaveLogMate.xcarchive/Products/Applications/${APP_NAME}.app"
           if [ ! -d "$APP_PATH" ]; then
             echo "Could not locate ${APP_NAME}.app at $APP_PATH"
             exit 1
@@ -118,7 +118,7 @@ jobs:
 
       - name: Compute DMG SHA256
         id: sha
-        run: echo "SHA256=$(shasum -a 256 dist/WaveLogMoat-${GITHUB_REF_NAME}.dmg | awk '{print $1}')" >> $GITHUB_OUTPUT
+        run: echo "SHA256=$(shasum -a 256 dist/WaveLogMate-${GITHUB_REF_NAME}.dmg | awk '{print $1}')" >> $GITHUB_OUTPUT
 
       - name: Check optional secrets
         id: secrets
@@ -132,7 +132,7 @@ jobs:
         env:
           SPARKLE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
         run: |
-          DMG_PATH="dist/WaveLogMoat-${GITHUB_REF_NAME}.dmg"
+          DMG_PATH="dist/WaveLogMate-${GITHUB_REF_NAME}.dmg"
           SIGN_OUTPUT=$(echo "$SPARKLE_KEY" | .build/artifacts/sparkle/Sparkle/bin/sign_update "$DMG_PATH" --ed-key-file -)
           echo "SIGNATURE=${SIGN_OUTPUT}" >> $GITHUB_OUTPUT
 
@@ -140,18 +140,18 @@ jobs:
         if: steps.sparkle.outcome == 'success'
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          APP_PATH="build/WaveLogMoat.xcarchive/Products/Applications/WaveLogMoat.app"
+          APP_PATH="build/WaveLogMate.xcarchive/Products/Applications/WaveLogMate.app"
           BUILD_NUMBER=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "$APP_PATH/Contents/Info.plist")
-          DMG_PATH="dist/WaveLogMoat-${GITHUB_REF_NAME}.dmg"
+          DMG_PATH="dist/WaveLogMate-${GITHUB_REF_NAME}.dmg"
           DMG_SIZE=$(stat -f%z "$DMG_PATH")
-          DOWNLOAD_URL="https://github.com/dl5mn/WaveLogMoat/releases/download/${GITHUB_REF_NAME}/WaveLogMoat-${GITHUB_REF_NAME}.dmg"
+          DOWNLOAD_URL="https://github.com/dl5mn/WaveLogMate/releases/download/${GITHUB_REF_NAME}/WaveLogMate-${GITHUB_REF_NAME}.dmg"
 
           mkdir -p docs
           cat > docs/appcast.xml << EOF
           <?xml version="1.0" standalone="yes"?>
           <rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
             <channel>
-              <title>WaveLogMoat</title>
+              <title>WaveLogMate</title>
               <item>
                 <title>Version ${VERSION}</title>
                 <pubDate>$(date -R)</pubDate>
@@ -172,11 +172,11 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2.5.0
         with:
-          name: WaveLogMoat ${{ github.ref_name }}
+          name: WaveLogMate ${{ github.ref_name }}
           draft: false
           prerelease: false
           body_path: RELEASE_NOTES.md
-          files: dist/WaveLogMoat-${{ github.ref_name }}.dmg
+          files: dist/WaveLogMate-${{ github.ref_name }}.dmg
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -211,13 +211,13 @@ jobs:
           VERSION="${GITHUB_REF_NAME#v}"
           SHA256="${{ steps.sha.outputs.SHA256 }}"
 
-          git clone https://x-access-token:${TAP_TOKEN}@github.com/dl5mn/homebrew-wavelogmoat.git /tmp/tap
+          git clone https://x-access-token:${TAP_TOKEN}@github.com/dl5mn/homebrew-wavelogmate.git /tmp/tap
           cd /tmp/tap
 
-          sed -i '' "s/version \".*\"/version \"${VERSION}\"/" Casks/wavelogmoat.rb
-          sed -i '' "s/sha256 .*/sha256 \"${SHA256}\"/" Casks/wavelogmoat.rb
+          sed -i '' "s/version \".*\"/version \"${VERSION}\"/" Casks/wavelogmate.rb
+          sed -i '' "s/sha256 .*/sha256 \"${SHA256}\"/" Casks/wavelogmate.rb
 
           git config user.name "DL5MN"
           git config user.email "dl5mn@users.noreply.github.com"
-          git add Casks/wavelogmoat.rb
-          git diff --cached --quiet && echo "No changes to commit" || (git commit -m "bump: WaveLogMoat ${VERSION}" && git push)
+          git add Casks/wavelogmate.rb
+          git diff --cached --quiet && echo "No changes to commit" || (git commit -m "bump: WaveLogMate ${VERSION}" && git push)

@@ -38,7 +38,7 @@
 		BB2BFC6D6F90E6A27C8B3F80 /* XMLContactParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EDFC34FDD4FB160035B2DF6 /* XMLContactParser.swift */; };
 		BC2C53173BEE3A5EA2931D9F /* GeneralSettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = B58445ADAC5548C06C961B32 /* GeneralSettingsTab.swift */; };
 		BC99775A0AFF65E5C14F8F62 /* WSJTXStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D830DDA3CC0D456EC8DF8BD /* WSJTXStatus.swift */; };
-		C18DFEF6D186CAD5466BE48D /* WaveLogMoatApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63DA194BC9FE58C7DFF0F07 /* WaveLogMoatApp.swift */; };
+		C18DFEF6D186CAD5466BE48D /* WaveLogMateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A63DA194BC9FE58C7DFF0F07 /* WaveLogMateApp.swift */; };
 		C66EDD2FA2764366DC4E1BEB /* UDPListenerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC38A1398B7F40D2211B7C7A /* UDPListenerFactory.swift */; };
 		D39EBD60CC3784F3473D5753 /* WavelogAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FD9A55B7758B8C5C5E68612 /* WavelogAPIClient.swift */; };
 		D3CD94781172F2D935ED84AF /* StationProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2AFD1F8EDE82391068004020 /* StationProfile.swift */; };
@@ -58,7 +58,7 @@
 			containerPortal = 3F18F0FEF5FE4BAB2C137110 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 63B0C65D9F8B7EB050A241B3;
-			remoteInfo = WaveLogMoat;
+			remoteInfo = WaveLogMate;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -81,7 +81,7 @@
 		66554DC434FBBD1D72127A8D /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		6D830DDA3CC0D456EC8DF8BD /* WSJTXStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WSJTXStatus.swift; sourceTree = "<group>"; };
 		6D91FDD9A5D28D182469C358 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
-		75295FB2DB1CD0497BCFAB38 /* WaveLogMoatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WaveLogMoatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		75295FB2DB1CD0497BCFAB38 /* WaveLogMateTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WaveLogMateTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		75B7033F9022154816223736 /* ConnectionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatus.swift; sourceTree = "<group>"; };
 		7EDFC34FDD4FB160035B2DF6 /* XMLContactParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XMLContactParser.swift; sourceTree = "<group>"; };
 		81520763129218459D693DA5 /* WavelogAPIClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavelogAPIClientTests.swift; sourceTree = "<group>"; };
@@ -90,7 +90,7 @@
 		9A23D5FDFE1BFFD32785B0E0 /* WavelogConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavelogConfig.swift; sourceTree = "<group>"; };
 		9A8DF31EFA48937836FDD825 /* BandMapTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandMapTests.swift; sourceTree = "<group>"; };
 		A29F6B11D010882D776A1E38 /* WavelogSettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavelogSettingsTab.swift; sourceTree = "<group>"; };
-		A63DA194BC9FE58C7DFF0F07 /* WaveLogMoatApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveLogMoatApp.swift; sourceTree = "<group>"; };
+		A63DA194BC9FE58C7DFF0F07 /* WaveLogMateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveLogMateApp.swift; sourceTree = "<group>"; };
 		B04184CF0648EDE5A9A2DAA7 /* ADIFGeneratorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADIFGeneratorTests.swift; sourceTree = "<group>"; };
 		B2F555B523E387C90F43B8D1 /* QDataStreamReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QDataStreamReaderTests.swift; sourceTree = "<group>"; };
 		B319338ECBF4B6F6D80734D2 /* QSONormalizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QSONormalizer.swift; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 		C27FBF4B021E2C8553778A59 /* QSO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QSO.swift; sourceTree = "<group>"; };
 		C3B887F59C946F4C5F086BC7 /* QDataStreamReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QDataStreamReader.swift; sourceTree = "<group>"; };
 		CE75B66B62508DC234CC0BD5 /* UDPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPService.swift; sourceTree = "<group>"; };
-		CF12265720C120E9E01764C7 /* WaveLogMoat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaveLogMoat.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CF12265720C120E9E01764C7 /* WaveLogMate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaveLogMate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D18F21C023C134569DE93B04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D2766D4EDCA643150DFDD49A /* ADIFParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADIFParser.swift; sourceTree = "<group>"; };
 		D44D6F3425897D9E01733027 /* AboutTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTab.swift; sourceTree = "<group>"; };
@@ -122,7 +122,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		25E42050F750DD2FB2B66EFF /* WaveLogMoatTests */ = {
+		25E42050F750DD2FB2B66EFF /* WaveLogMateTests */ = {
 			isa = PBXGroup;
 			children = (
 				B04184CF0648EDE5A9A2DAA7 /* ADIFGeneratorTests.swift */,
@@ -135,15 +135,15 @@
 				633037D372BFC803E6C35FF8 /* WavelogConfigTests.swift */,
 				F80D82A316ABDF645CE0AE4D /* XMLContactParserTests.swift */,
 			);
-			name = WaveLogMoatTests;
-			path = Tests/WaveLogMoatTests;
+			name = WaveLogMateTests;
+			path = Tests/WaveLogMateTests;
 			sourceTree = "<group>";
 		};
 		2B951068868D709BD55F7663 /* App */ = {
 			isa = PBXGroup;
 			children = (
 				66554DC434FBBD1D72127A8D /* AppState.swift */,
-				A63DA194BC9FE58C7DFF0F07 /* WaveLogMoatApp.swift */,
+				A63DA194BC9FE58C7DFF0F07 /* WaveLogMateApp.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -166,8 +166,8 @@
 		6668120E00EA9BE478095450 = {
 			isa = PBXGroup;
 			children = (
-				A09D95967077D62498305056 /* WaveLogMoat */,
-				25E42050F750DD2FB2B66EFF /* WaveLogMoatTests */,
+				A09D95967077D62498305056 /* WaveLogMate */,
+				25E42050F750DD2FB2B66EFF /* WaveLogMateTests */,
 				F49A90160660A23AC9228F75 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -215,7 +215,7 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		A09D95967077D62498305056 /* WaveLogMoat */ = {
+		A09D95967077D62498305056 /* WaveLogMate */ = {
 			isa = PBXGroup;
 			children = (
 				D18F21C023C134569DE93B04 /* Assets.xcassets */,
@@ -226,15 +226,15 @@
 				9D0E066E8FB3B61698A4B650 /* Utilities */,
 				62811118575515BF4A86DAE9 /* Views */,
 			);
-			name = WaveLogMoat;
-			path = Sources/WaveLogMoat;
+			name = WaveLogMate;
+			path = Sources/WaveLogMate;
 			sourceTree = "<group>";
 		};
 		F49A90160660A23AC9228F75 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CF12265720C120E9E01764C7 /* WaveLogMoat.app */,
-				75295FB2DB1CD0497BCFAB38 /* WaveLogMoatTests.xctest */,
+				CF12265720C120E9E01764C7 /* WaveLogMate.app */,
+				75295FB2DB1CD0497BCFAB38 /* WaveLogMateTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -242,9 +242,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5ACFEA050F5EA503E09FB005 /* WaveLogMoatTests */ = {
+		5ACFEA050F5EA503E09FB005 /* WaveLogMateTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3CA7DE00E38B0CC99C55F632 /* Build configuration list for PBXNativeTarget "WaveLogMoatTests" */;
+			buildConfigurationList = 3CA7DE00E38B0CC99C55F632 /* Build configuration list for PBXNativeTarget "WaveLogMateTests" */;
 			buildPhases = (
 				4DCF6869A8388C0A579EFCB9 /* Sources */,
 			);
@@ -253,16 +253,16 @@
 			dependencies = (
 				38C343B615963F43699D2B35 /* PBXTargetDependency */,
 			);
-			name = WaveLogMoatTests;
+			name = WaveLogMateTests;
 			packageProductDependencies = (
 			);
-			productName = WaveLogMoatTests;
-			productReference = 75295FB2DB1CD0497BCFAB38 /* WaveLogMoatTests.xctest */;
+			productName = WaveLogMateTests;
+			productReference = 75295FB2DB1CD0497BCFAB38 /* WaveLogMateTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		63B0C65D9F8B7EB050A241B3 /* WaveLogMoat */ = {
+		63B0C65D9F8B7EB050A241B3 /* WaveLogMate */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13FFA15027889E3CCC7E9F74 /* Build configuration list for PBXNativeTarget "WaveLogMoat" */;
+			buildConfigurationList = 13FFA15027889E3CCC7E9F74 /* Build configuration list for PBXNativeTarget "WaveLogMate" */;
 			buildPhases = (
 				80371F0C34ACD1DB08FBC117 /* Sources */,
 				0A47AC7200BC1F4E8AD56050 /* Resources */,
@@ -272,12 +272,12 @@
 			);
 			dependencies = (
 			);
-			name = WaveLogMoat;
+			name = WaveLogMate;
 			packageProductDependencies = (
 				E3C3D3C4DFB97E1B4CACA84E /* Sparkle */,
 			);
-			productName = WaveLogMoat;
-			productReference = CF12265720C120E9E01764C7 /* WaveLogMoat.app */;
+			productName = WaveLogMate;
+			productReference = CF12265720C120E9E01764C7 /* WaveLogMate.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -291,7 +291,7 @@
 				TargetAttributes = {
 				};
 			};
-			buildConfigurationList = C9CC5FC92F44E5DF4F725229 /* Build configuration list for PBXProject "WaveLogMoat" */;
+			buildConfigurationList = C9CC5FC92F44E5DF4F725229 /* Build configuration list for PBXProject "WaveLogMate" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -308,8 +308,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				63B0C65D9F8B7EB050A241B3 /* WaveLogMoat */,
-				5ACFEA050F5EA503E09FB005 /* WaveLogMoatTests */,
+				63B0C65D9F8B7EB050A241B3 /* WaveLogMate */,
+				5ACFEA050F5EA503E09FB005 /* WaveLogMateTests */,
 			);
 		};
 /* End PBXProject section */
@@ -373,7 +373,7 @@
 				B4513090F85FFB95779A3604 /* WSJTXMessage.swift in Sources */,
 				EE98456F5C1A0B19C2E701BF /* WSJTXSettingsTab.swift in Sources */,
 				BC99775A0AFF65E5C14F8F62 /* WSJTXStatus.swift in Sources */,
-				C18DFEF6D186CAD5466BE48D /* WaveLogMoatApp.swift in Sources */,
+				C18DFEF6D186CAD5466BE48D /* WaveLogMateApp.swift in Sources */,
 				D39EBD60CC3784F3473D5753 /* WavelogAPIClient.swift in Sources */,
 				8DD27C8C09B001B075543C7C /* WavelogConfig.swift in Sources */,
 				888F98D430EBE9307B9E7751 /* WavelogSettingsTab.swift in Sources */,
@@ -386,7 +386,7 @@
 /* Begin PBXTargetDependency section */
 		38C343B615963F43699D2B35 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 63B0C65D9F8B7EB050A241B3 /* WaveLogMoat */;
+			target = 63B0C65D9F8B7EB050A241B3 /* WaveLogMate */;
 			targetProxy = 5DB22937EB7DF8FB57E5027B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -405,7 +405,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				SDKROOT = macosx;
 				SWIFT_VERSION = 6.2;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaveLogMoat.app/Contents/MacOS/WaveLogMoat";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaveLogMate.app/Contents/MacOS/WaveLogMate";
 			};
 			name = Debug;
 		};
@@ -413,16 +413,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = WaveLogMoat.entitlements;
+				CODE_SIGN_ENTITLEMENTS = WaveLogMate.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = Sources/WaveLogMoat/Info.plist;
+				INFOPLIST_FILE = Sources/WaveLogMate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = de.dl5mn.WaveLogMoat;
-				PRODUCT_NAME = WaveLogMoat;
+				PRODUCT_BUNDLE_IDENTIFIER = de.dl5mn.WaveLogMate;
+				PRODUCT_NAME = WaveLogMate;
 				SDKROOT = macosx;
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -490,16 +490,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = WaveLogMoat.entitlements;
+				CODE_SIGN_ENTITLEMENTS = WaveLogMate.entitlements;
 				COMBINE_HIDPI_IMAGES = YES;
-				INFOPLIST_FILE = Sources/WaveLogMoat/Info.plist;
+				INFOPLIST_FILE = Sources/WaveLogMate/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				PRODUCT_BUNDLE_IDENTIFIER = de.dl5mn.WaveLogMoat;
-				PRODUCT_NAME = WaveLogMoat;
+				PRODUCT_BUNDLE_IDENTIFIER = de.dl5mn.WaveLogMate;
+				PRODUCT_NAME = WaveLogMate;
 				SDKROOT = macosx;
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -583,14 +583,14 @@
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
 				SDKROOT = macosx;
 				SWIFT_VERSION = 6.2;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaveLogMoat.app/Contents/MacOS/WaveLogMoat";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WaveLogMate.app/Contents/MacOS/WaveLogMate";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		13FFA15027889E3CCC7E9F74 /* Build configuration list for PBXNativeTarget "WaveLogMoat" */ = {
+		13FFA15027889E3CCC7E9F74 /* Build configuration list for PBXNativeTarget "WaveLogMate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				4DAF5DC3038133A685779486 /* Debug */,
@@ -599,7 +599,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		3CA7DE00E38B0CC99C55F632 /* Build configuration list for PBXNativeTarget "WaveLogMoatTests" */ = {
+		3CA7DE00E38B0CC99C55F632 /* Build configuration list for PBXNativeTarget "WaveLogMateTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				24DD1985C90C586759127337 /* Debug */,
@@ -608,7 +608,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		C9CC5FC92F44E5DF4F725229 /* Build configuration list for PBXProject "WaveLogMoat" */ = {
+		C9CC5FC92F44E5DF4F725229 /* Build configuration list for PBXProject "WaveLogMate" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E329D03C1140AC2356A4D763 /* Debug */,

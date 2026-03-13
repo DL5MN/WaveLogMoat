@@ -158,7 +158,7 @@ public final class WavelogAPIClient: @unchecked Sendable {
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.setValue("application/json", forHTTPHeaderField: "Accept")
-    request.setValue("WaveLogMoat/1.0", forHTTPHeaderField: "User-Agent")
+    request.setValue("WaveLogMate/1.0", forHTTPHeaderField: "User-Agent")
     request.httpBody = body
     return request
   }

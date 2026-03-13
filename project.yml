@@ -1,4 +1,4 @@
-name: WaveLogMoat
+name: WaveLogMate
 options:
   deploymentTarget:
     macOS: "14.0"
@@ -7,48 +7,48 @@ packages:
     url: https://github.com/sparkle-project/Sparkle
     from: 2.5.0
 targets:
-  WaveLogMoat:
+  WaveLogMate:
     type: application
     platform: macOS
     deploymentTarget: "14.0"
     sources:
-      - path: Sources/WaveLogMoat
+      - path: Sources/WaveLogMate
     dependencies:
       - package: Sparkle
         product: Sparkle
     info:
-      path: Sources/WaveLogMoat/Info.plist
+      path: Sources/WaveLogMate/Info.plist
       properties:
-        CFBundleDisplayName: WaveLogMoat
+        CFBundleDisplayName: WaveLogMate
         CFBundleShortVersionString: "0.6.0"
         CFBundleVersion: "7"
         LSMinimumSystemVersion: "14.0"
         LSUIElement: true
         NSAppTransportSecurity:
           NSAllowsArbitraryLoads: true
-        SUFeedURL: "https://dl5mn.github.io/WaveLogMoat/appcast.xml"
+        SUFeedURL: "https://dl5mn.github.io/WaveLogMate/appcast.xml"
         SUPublicEDKey: "Rpryv9ry5XZedQXt2w1hTetQP3dB0dM67TqmT0T1XZA="
     entitlements:
-      path: WaveLogMoat.entitlements
+      path: WaveLogMate.entitlements
       properties:
         com.apple.security.network.client: true
         com.apple.security.network.server: true
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: de.dl5mn.WaveLogMoat
-        PRODUCT_NAME: WaveLogMoat
+        PRODUCT_BUNDLE_IDENTIFIER: de.dl5mn.WaveLogMate
+        PRODUCT_NAME: WaveLogMate
         SWIFT_VERSION: 6.2
         MACOSX_DEPLOYMENT_TARGET: 14.0
         SUPPORTS_MACCATALYST: NO
         SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
-  WaveLogMoatTests:
+  WaveLogMateTests:
     type: bundle.unit-test
     platform: macOS
     deploymentTarget: "14.0"
     sources:
-      - path: Tests/WaveLogMoatTests
+      - path: Tests/WaveLogMateTests
     dependencies:
-      - target: WaveLogMoat
+      - target: WaveLogMate
     settings:
       base:
         SWIFT_VERSION: 6.2

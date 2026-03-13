@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Thanks for taking the time to report a bug!
-        Please search [existing issues](https://github.com/dl5mn/WaveLogMoat/issues?q=is%3Aissue) before filing a new one.
+        Please search [existing issues](https://github.com/dl5mn/WaveLogMate/issues?q=is%3Aissue) before filing a new one.
 
   - type: textarea
     id: description
@@ -43,7 +43,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: WaveLogMoat version
+      label: WaveLogMate version
       description: "Found in Settings → About"
       placeholder: "e.g. 0.1.0 (1)"
     validations:
@@ -69,7 +69,7 @@ body:
     id: wavelog-version
     attributes:
       label: Wavelog version
-      description: "Shown in the WaveLogMoat menu bar panel"
+      description: "Shown in the WaveLogMate menu bar panel"
       placeholder: "e.g. 2.1.0"
 
   - type: dropdown
@@ -86,14 +86,14 @@ body:
     id: logs
     attributes:
       label: Log output
-      description: "Paste any relevant log output from Console.app (filter by 'WaveLogMoat')."
+      description: "Paste any relevant log output from Console.app (filter by 'WaveLogMate')."
       render: text
 
   - type: textarea
     id: crash-log
     attributes:
       label: Crash log
-      description: "If the app crashed, paste the crash log from `~/Library/DiagnosticReports/` (look for files starting with 'WaveLogMoat')."
+      description: "If the app crashed, paste the crash log from `~/Library/DiagnosticReports/` (look for files starting with 'WaveLogMate')."
       render: text
 
   - type: textarea

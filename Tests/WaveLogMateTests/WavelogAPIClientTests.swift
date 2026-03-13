@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-import WaveLogMoat
+import WaveLogMate
 
 @Suite struct WavelogAPIClientTests {
   @Test func buildQSOPayload() throws {

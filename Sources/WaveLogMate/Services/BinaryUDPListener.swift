@@ -1,11 +1,15 @@
 import Foundation
 import Network
 
-public final class TextUDPListener: @unchecked Sendable {
+public final class BinaryUDPListener: @unchecked Sendable {
   public let port: UInt16
   public let host: String
 
-  public var onQSOReceived: (@Sendable (QSO) -> Void)?
+  public var onHeartbeat: (@Sendable (String, UInt32, String, String) -> Void)?
+  public var onStatusUpdate: (@Sendable (String, WSJTXStatus) -> Void)?
+  public var onQSOLogged: (@Sendable (String, QSO) -> Void)?
+  public var onLoggedADIF: (@Sendable (String, String) -> Void)?
+  public var onClose: (@Sendable (String) -> Void)?
   public var onError: (@Sendable (Error) -> Void)?
   public var onListeningStateChange: (@Sendable (Bool) -> Void)?
 
@@ -14,12 +18,16 @@ public final class TextUDPListener: @unchecked Sendable {
   }
 
   private let queue: DispatchQueue
+  private let reader: QDataStreamReader
   private var listener: NWListener?
 
-  public init(port: UInt16, host: String = "127.0.0.1") {
+  public init(
+    port: UInt16, host: String = "127.0.0.1", reader: QDataStreamReader = QDataStreamReader()
+  ) {
     self.port = port
     self.host = host
-    self.queue = DispatchQueue(label: "de.dl5mn.WaveLogMoat.text-udp-listener", qos: .utility)
+    self.reader = reader
+    self.queue = DispatchQueue(label: "de.dl5mn.WaveLogMate.binary-udp-listener", qos: .utility)
   }
 
   public func start() {
@@ -56,7 +64,7 @@ public final class TextUDPListener: @unchecked Sendable {
 
       self.listener = listener
       listener.start(queue: queue)
-      Log.udp.info("Text UDP listener started on port \(self.port)")
+      Log.udp.info("Binary UDP listener started on port \(self.port)")
     } catch {
       onError?(error)
     }
@@ -71,13 +79,14 @@ public final class TextUDPListener: @unchecked Sendable {
     if hadListener {
       onListeningStateChange?(false)
     }
-    Log.udp.info("Text UDP listener stopped on port \(self.port)")
+    Log.udp.info("Binary UDP listener stopped on port \(self.port)")
   }
 
   private func handleConnection(_ connection: NWConnection) {
     connection.stateUpdateHandler = { state in
       if case .failed(let error) = state {
-        Log.udp.error("Text UDP connection failed: \(error.localizedDescription, privacy: .public)")
+        Log.udp.error(
+          "Binary UDP connection failed: \(error.localizedDescription, privacy: .public)")
       }
     }
 
@@ -94,51 +103,33 @@ public final class TextUDPListener: @unchecked Sendable {
         return
       }
 
-      self.processDatagram(data)
+      do {
+        let message = try self.reader.parseMessage(data)
+        self.dispatch(message)
+      } catch {
+        self.onError?(error)
+      }
+
       connection.cancel()
     }
   }
 
-  private func processDatagram(_ data: Data) {
-    guard let payload = String(data: data, encoding: .utf8) else {
-      onError?(UDPListenerError.invalidUTF8)
-      return
-    }
-
-    do {
-      if Self.isXMLContactInfoPayload(payload) {
-        let qso = try XMLContactParser.parse(payload)
-        onQSOReceived?(QSONormalizer.normalize(qso))
-      } else {
-        let qsos = try ADIFParser.parse(payload)
-        for qso in qsos {
-          onQSOReceived?(QSONormalizer.normalize(qso))
-        }
-      }
-    } catch {
-      onError?(error)
-    }
-  }
-
-  static func isXMLContactInfoPayload(_ payload: String) -> Bool {
-    let trimmed = payload.trimmingCharacters(in: .whitespacesAndNewlines)
-    guard !trimmed.isEmpty else { return false }
-
-    let pattern = #"^(?:<\?xml\b[^>]*>\s*)?<contactinfo\b"#
-    return trimmed.range(of: pattern, options: [.regularExpression, .caseInsensitive]) != nil
-  }
-}
-
-public enum UDPListenerError: Error, LocalizedError {
-  case invalidPort(UInt16)
-  case invalidUTF8
-
-  public var errorDescription: String? {
-    switch self {
-    case .invalidPort(let port):
-      return "Invalid UDP port: \(port)"
-    case .invalidUTF8:
-      return "Incoming UDP payload is not valid UTF-8"
+  private func dispatch(_ message: WSJTXParsedMessage) {
+    switch message {
+    case .heartbeat(let clientId, let maxSchema, let version, let revision):
+      onHeartbeat?(clientId, maxSchema, version, revision)
+    case .status(let clientId, let status):
+      onStatusUpdate?(clientId, status)
+    case .qsoLogged(let clientId, let qso):
+      onQSOLogged?(clientId, qso)
+    case .loggedADIF(let clientId, let adifText):
+      onLoggedADIF?(clientId, adifText)
+    case .close(let clientId):
+      onClose?(clientId)
+    case .unknown(let typeValue, let clientId):
+      Log.udp.debug(
+        "Ignoring unknown WSJT-X message type \(typeValue, privacy: .public) from \(clientId, privacy: .public)"
+      )
     }
   }
 }

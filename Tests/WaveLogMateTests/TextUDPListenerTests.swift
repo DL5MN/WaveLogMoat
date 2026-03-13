@@ -1,5 +1,5 @@
 import Testing
-@testable import WaveLogMoat
+@testable import WaveLogMate
 
 @Suite struct TextUDPListenerTests {
   @Test func detectsContactInfoXMLPayloads() {

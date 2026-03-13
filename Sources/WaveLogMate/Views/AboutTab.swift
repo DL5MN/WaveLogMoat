@@ -21,7 +21,7 @@ public struct AboutTab: View {
         .frame(width: 64, height: 64)
         .foregroundStyle(.blue)
 
-      Text("WaveLogMoat")
+      Text("WaveLogMate")
         .font(.title)
         .fontWeight(.bold)
 
@@ -32,8 +32,8 @@ public struct AboutTab: View {
         .multilineTextAlignment(.center)
 
       VStack(spacing: 6) {
-        if let githubURL = URL(string: "https://github.com/dl5mn/WaveLogMoat") {
-          Link("GitHub: dl5mn/WaveLogMoat", destination: githubURL)
+        if let githubURL = URL(string: "https://github.com/dl5mn/WaveLogMate") {
+          Link("GitHub: dl5mn/WaveLogMate", destination: githubURL)
         }
         if let wavelogURL = URL(string: "https://wavelog.org") {
           Link("Wavelog: wavelog.org", destination: wavelogURL)

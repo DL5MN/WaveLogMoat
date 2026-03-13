@@ -1,15 +1,15 @@
-# WaveLogMoat
+# WaveLogMate
 
-[![Build](https://github.com/dl5mn/WaveLogMoat/actions/workflows/build.yml/badge.svg)](https://github.com/dl5mn/WaveLogMoat/actions/workflows/build.yml)
+[![Build](https://github.com/dl5mn/WaveLogMate/actions/workflows/build.yml/badge.svg)](https://github.com/dl5mn/WaveLogMate/actions/workflows/build.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![macOS](https://img.shields.io/badge/macOS-14%2B-blue)](https://www.apple.com/macos/)
 [![Swift](https://img.shields.io/badge/Swift-6.2-orange)](https://swift.org)
 
 > Native macOS menu bar application for automatic QSO logging from WSJT-X to [Wavelog](https://www.wavelog.org).
 
-There are already several tools that bridge WSJT-X and Wavelog — [WaveLogGate](https://github.com/wavelog/WaveLogGate), [WaveLogStoat](https://github.com/int2001/WaveLogStoat), and [WaveLogGoat](https://github.com/johnsonm/WaveLogGoat). They all work, but none of them are native macOS apps. I wanted something that feels at home on my Mac: a lightweight menu bar app built with SwiftUI that uses the macOS Keychain for secrets, sends native notifications, supports Sparkle auto-updates, and doesn't bundle an entire Electron runtime or require a terminal to run. That's WaveLogMoat.
+There are already several tools that bridge WSJT-X and Wavelog — [WaveLogGate](https://github.com/wavelog/WaveLogGate), [WaveLogStoat](https://github.com/int2001/WaveLogStoat), and [WaveLogGoat](https://github.com/johnsonm/WaveLogGoat). They all work, but none of them are native macOS apps. I wanted something that feels at home on my Mac: a lightweight menu bar app built with SwiftUI that uses the macOS Keychain for secrets, sends native notifications, supports Sparkle auto-updates, and doesn't bundle an entire Electron runtime or require a terminal to run. That's WaveLogMate.
 
-WaveLogMoat receives QSO data from WSJT-X and automatically forwards it to your Wavelog instance in real-time. WSJT-X sends UDP packets to WaveLogMoat — you just need to point WSJT-X at the right address and port. You choose between the text-based ADIF/XML protocol (Secondary UDP Server) or the binary QDataStream protocol, which adds real-time frequency and status display.
+WaveLogMate receives QSO data from WSJT-X and automatically forwards it to your Wavelog instance in real-time. WSJT-X sends UDP packets to WaveLogMate — you just need to point WSJT-X at the right address and port. You choose between the text-based ADIF/XML protocol (Secondary UDP Server) or the binary QDataStream protocol, which adds real-time frequency and status display.
 
 ## Features
 
@@ -35,33 +35,33 @@ WaveLogMoat receives QSO data from WSJT-X and automatically forwards it to your 
 
 ### Download
 
-Download the latest release from the [Releases page](https://github.com/dl5mn/WaveLogMoat/releases).
+Download the latest release from the [Releases page](https://github.com/dl5mn/WaveLogMate/releases).
 
 ### Homebrew
 
 ```bash
-brew tap dl5mn/wavelogmoat
-brew install --cask wavelogmoat
+brew tap dl5mn/wavelogmate
+brew install --cask wavelogmate
 ```
 
 ## Setup
 
 ### 1. Configure WSJT-X
 
-WSJT-X sends UDP data to a configured address and port. Despite the label "UDP Server" in WSJT-X settings, WSJT-X is the sender — WaveLogMoat receives the data on the address and port you configure here.
+WSJT-X sends UDP data to a configured address and port. Despite the label "UDP Server" in WSJT-X settings, WSJT-X is the sender — WaveLogMate receives the data on the address and port you configure here.
 
-**Text protocol (default):** In WSJT-X, go to **Settings -> Reporting** and configure the **Secondary UDP Server** to point at WaveLogMoat:
+**Text protocol (default):** In WSJT-X, go to **Settings -> Reporting** and configure the **Secondary UDP Server** to point at WaveLogMate:
 
 - **Address**: `127.0.0.1`
 - **Port**: `2333`
 
 > **Important**: Use the _Secondary_ UDP Server, NOT the primary one. This keeps the primary port free for JT-Bridge, GridTracker, or other tools.
 
-**Binary protocol:** WaveLogMoat receives on the primary UDP port (2237) by default — no special WSJT-X configuration needed. Note that only one application can receive on this port at a time.
+**Binary protocol:** WaveLogMate receives on the primary UDP port (2237) by default — no special WSJT-X configuration needed. Note that only one application can receive on this port at a time.
 
-### 2. Configure WaveLogMoat
+### 2. Configure WaveLogMate
 
-1. Open WaveLogMoat from the menu bar (antenna icon)
+1. Open WaveLogMate from the menu bar (antenna icon)
 2. Click **Settings**
 3. **Wavelog tab**:
    - Enter your Wavelog URL (e.g., `https://log.example.com`)
@@ -75,7 +75,7 @@ WSJT-X sends UDP data to a configured address and port. Despite the label "UDP S
 
 ### 3. Start Logging
 
-Once configured, WaveLogMoat automatically receives QSOs from WSJT-X. When you log a QSO in WSJT-X, it appears in the menu bar dropdown and is forwarded to Wavelog.
+Once configured, WaveLogMate automatically receives QSOs from WSJT-X. When you log a QSO in WSJT-X, it appears in the menu bar dropdown and is forwarded to Wavelog.
 
 ## Configuration Options
 
@@ -114,8 +114,8 @@ Switching to the binary protocol (port 2237) provides everything the text protoc
 ### Build
 
 ```bash
-git clone https://github.com/dl5mn/WaveLogMoat.git
-cd WaveLogMoat
+git clone https://github.com/dl5mn/WaveLogMate.git
+cd WaveLogMate
 make build
 ```
 
@@ -143,7 +143,7 @@ This bumps the version in `Info.plist` and `project.yml`, commits, tags `v0.2.0`
 
 ## Architecture
 
-WaveLogMoat is built with:
+WaveLogMate is built with:
 
 - **SwiftUI** - Native macOS UI with MenuBarExtra
 - **Network.framework** - UDP receiver for WSJT-X data
@@ -156,7 +156,7 @@ See [PLAN.md](PLAN.md) for detailed architecture documentation.
 
 ## How It Compares
 
-|                       | WaveLogMoat            | [WaveLogGate](https://github.com/wavelog/WaveLogGate) | [WaveLogStoat](https://github.com/int2001/WaveLogStoat) | [WaveLogGoat](https://github.com/johnsonm/WaveLogGoat) |
+|                       | WaveLogMate            | [WaveLogGate](https://github.com/wavelog/WaveLogGate) | [WaveLogStoat](https://github.com/int2001/WaveLogStoat) | [WaveLogGoat](https://github.com/johnsonm/WaveLogGoat) |
 | --------------------- | ---------------------- | ----------------------------------------------------- | ------------------------------------------------------- | ------------------------------------------------------ |
 | **Platform**          | macOS (native)         | Windows, macOS, Linux (Electron)                      | Windows, macOS, Linux (Go CLI)                          | Windows, macOS, Linux (Go)                             |
 | **QSO Logging**       | Yes                    | Yes                                                   | Yes                                                     | No                                                     |
@@ -167,7 +167,7 @@ See [PLAN.md](PLAN.md) for detailed architecture documentation.
 | **Notifications**     | Native macOS           | Electron notifications                                | None                                                    | None                                                   |
 | **Self-signed certs** | Yes                    | Yes                                                   | Yes                                                     | Yes                                                    |
 
-WaveLogMoat focuses on doing one thing well: getting QSOs from WSJT-X into Wavelog with zero friction. If you need CAT control, use WaveLogGate or WaveLogGoat. If you want a native Mac experience for QSO logging, this is it.
+WaveLogMate focuses on doing one thing well: getting QSOs from WSJT-X into Wavelog with zero friction. If you need CAT control, use WaveLogGate or WaveLogGoat. If you want a native Mac experience for QSO logging, this is it.
 
 See also: [Wavelog](https://github.com/wavelog/wavelog) — the logging platform itself.
 

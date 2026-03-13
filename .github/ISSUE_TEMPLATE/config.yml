@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: "\U0001F4D6 Documentation"
-    url: https://github.com/dl5mn/WaveLogMoat#readme
+    url: https://github.com/dl5mn/WaveLogMate#readme
     about: Check the README for setup instructions and troubleshooting
   - name: "\U0001F4AC Discussions"
-    url: https://github.com/dl5mn/WaveLogMoat/discussions
+    url: https://github.com/dl5mn/WaveLogMate/discussions
     about: Ask questions or share ideas in GitHub Discussions

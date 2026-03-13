@@ -3,7 +3,7 @@ import Foundation
 public enum ADIFGenerator {
   private static let adifVersion = "3.1.6"
   private static var programName: String {
-    Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? "WaveLogMoat"
+    Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? "WaveLogMate"
   }
 
   private static func generateHeader() -> String {

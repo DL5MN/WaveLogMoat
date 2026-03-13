@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>WaveLogMoat</string>
+	<string>WaveLogMate</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -30,7 +30,7 @@
 		<true/>
 	</dict>
 	<key>SUFeedURL</key>
-	<string>https://dl5mn.github.io/WaveLogMoat/appcast.xml</string>
+	<string>https://dl5mn.github.io/WaveLogMate/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>Rpryv9ry5XZedQXt2w1hTetQP3dB0dM67TqmT0T1XZA=</string>
 </dict>

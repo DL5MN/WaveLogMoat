@@ -15,7 +15,7 @@ import SwiftUI
 #if !BUILDING_FOR_SWIFT_PACKAGE
   @main
 #endif
-struct WaveLogMoatApp: App {
+struct WaveLogMateApp: App {
   @State private var appState: AppState
   @State private var updaterController: SPUStandardUpdaterController
   @State private var isMenuBarInserted: Bool

@@ -1,5 +1,5 @@
 import Testing
-import WaveLogMoat
+import WaveLogMate
 
 @Suite struct BandMapTests {
   @Test func bandLookupForHFFrequencies() {

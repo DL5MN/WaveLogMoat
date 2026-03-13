@@ -1,12 +1,12 @@
-# WaveLogMoat Roadmap
+# WaveLogMate Roadmap
 
 > From QSO forwarder to goal-oriented WSJT-X companion for macOS — powered by Wavelog.
 
 ## Vision
 
-WaveLogMoat started as a simple bridge: receive QSOs from WSJT-X, forward them to Wavelog. The next step is to become a **goal-oriented hunting tool** — not another decode list (WSJT-X already does that well), but an app that answers: _"I'm chasing DXCC on 20m — what do I still need, and is any of it on the band right now?"_
+WaveLogMate started as a simple bridge: receive QSOs from WSJT-X, forward them to Wavelog. The next step is to become a **goal-oriented hunting tool** — not another decode list (WSJT-X already does that well), but an app that answers: _"I'm chasing DXCC on 20m — what do I still need, and is any of it on the band right now?"_
 
-JTAlert and JT-Bridge duplicate WSJT-X's decode list with color coding. WaveLogMoat takes a different approach: **center the UI around award goals**, overlay live band activity on your progress, and make it one click to work a needed station.
+JTAlert and JT-Bridge duplicate WSJT-X's decode list with color coding. WaveLogMate takes a different approach: **center the UI around award goals**, overlay live band activity on your progress, and make it one click to work a needed station.
 
 The unique edge: **Wavelog is the single source of truth.** No local log databases to sync. Your award progress is always current, from any Mac.
 
@@ -14,7 +14,7 @@ The unique edge: **Wavelog is the single source of truth.** No local log databas
 
 ## Phase 1 — QSO Forwarding (Done)
 
-The current release. WSJT-X → WaveLogMoat → Wavelog.
+The current release. WSJT-X → WaveLogMate → Wavelog.
 
 - Text protocol (Secondary UDP Server, port 2333) and binary protocol (port 2237)
 - Real-time frequency, mode, DX call display (binary protocol)
@@ -27,7 +27,7 @@ The current release. WSJT-X → WaveLogMoat → Wavelog.
 
 ## Phase 2 — Goal-Oriented Companion App
 
-**Goal**: Transform WaveLogMoat from a menu bar utility into a proper windowed macOS application centered around award hunting. The primary question is not "what's being decoded?" (WSJT-X shows that) but **"what do I still need, and is it on the band?"**
+**Goal**: Transform WaveLogMate from a menu bar utility into a proper windowed macOS application centered around award hunting. The primary question is not "what's being decoded?" (WSJT-X shows that) but **"what do I still need, and is it on the band?"**
 
 ### 2a. Application Architecture
 
@@ -111,7 +111,7 @@ For every decoded callsign, evaluate against active goals and send highlight com
 - **Yellow background**: New band slot (worked on other bands, not this one)
 - No highlight: already worked+confirmed on this band
 
-This is the **lowest friction possible** — the user doesn't even need to look at WaveLogMoat's window. Needed stations light up right where they're already looking.
+This is the **lowest friction possible** — the user doesn't even need to look at WaveLogMate's window. Needed stations light up right where they're already looking.
 
 ### 2f. Main Window Layout
 
@@ -119,7 +119,7 @@ The main window is NOT a decode list. It's a **goal dashboard with a live "neede
 
 ```
 ┌──────────────────────────────────────────────────────────────────────────────────┐
-│ WaveLogMoat                                                                      │
+│ WaveLogMate                                                                      │
 ├──────────────────────────────────────────────────────────────────────────────────┤
 │  Toolbar                                                                         │
 │  ┌───────────┐  ┌────────────────────┐  ┌───────────────────────────────┐        │
@@ -202,7 +202,7 @@ Optional: system sounds per alert category.
 
 ### 2h. Reply to CQ
 
-Send commands to WSJT-X via UDP to initiate QSOs directly from WaveLogMoat:
+Send commands to WSJT-X via UDP to initiate QSOs directly from WaveLogMate:
 
 **Type 4 (Reply)**: Echo back the exact decode fields to start the QSO sequence.
 
@@ -317,7 +317,7 @@ Visual representation of the audio passband:
 | 1    | Out       | Status (frequency, mode, DX call)             |
 | 2    | Out       | Decode (callsign, SNR, Δf, message)           |
 | 3    | In/Out    | Clear (reset decode list)                     |
-| 4    | In        | Reply (initiate QSO from WaveLogMoat)         |
+| 4    | In        | Reply (initiate QSO from WaveLogMate)         |
 | 5    | Out       | QSO Logged (forward to Wavelog)               |
 | 7    | In        | Replay (request decode history on connect)    |
 | 8    | In        | HaltTx (stop transmitting)                    |
@@ -329,7 +329,7 @@ Visual representation of the audio passband:
 
 ## Competitive Advantage
 
-|                     | WaveLogMoat            | JTAlert              | JT-Bridge                       |
+|                     | WaveLogMate            | JTAlert              | JT-Bridge                       |
 | ------------------- | ---------------------- | -------------------- | ------------------------------- |
 | Platform            | macOS (native SwiftUI) | Windows (.NET)       | macOS (unmaintained since 2021) |
 | Core concept        | Goal-oriented hunting  | Decode list + alerts | Decode list + alerts            |
@@ -341,4 +341,4 @@ Visual representation of the audio passband:
 | Award progress view | Built-in dashboard     | External (logger)    | External (logger)               |
 | Auto-updates        | Sparkle                | Built-in             | Manual                          |
 
-**Why this is different from JTAlert**: JTAlert adds color coding to a decode list — it answers "what is this station's status?" WaveLogMoat answers "**what do I need, and is it available right now?**" The decode list stays in WSJT-X where it belongs. WaveLogMoat is the strategic layer on top.
+**Why this is different from JTAlert**: JTAlert adds color coding to a decode list — it answers "what is this station's status?" WaveLogMate answers "**what do I need, and is it available right now?**" The decode list stays in WSJT-X where it belongs. WaveLogMate is the strategic layer on top.

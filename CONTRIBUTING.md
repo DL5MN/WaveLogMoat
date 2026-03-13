@@ -1,17 +1,17 @@
-# Contributing to WaveLogMoat
+# Contributing to WaveLogMate
 
-Thanks for your interest in contributing to WaveLogMoat.
+Thanks for your interest in contributing to WaveLogMate.
 
 ## Reporting Bugs
 
-- Use [GitHub Issues](https://github.com/dl5mn/WaveLogMoat/issues).
+- Use [GitHub Issues](https://github.com/dl5mn/WaveLogMate/issues).
 - Include a clear title, expected behavior, actual behavior, and reproduction steps.
-- Share environment details (macOS version, WSJT-X version, WaveLogMoat version).
+- Share environment details (macOS version, WSJT-X version, WaveLogMate version).
 - Add logs or screenshots when useful, but never include API keys or sensitive data.
 
 ## Suggesting Features
 
-- Open a feature request in [GitHub Issues](https://github.com/dl5mn/WaveLogMoat/issues).
+- Open a feature request in [GitHub Issues](https://github.com/dl5mn/WaveLogMate/issues).
 - Explain the problem you are trying to solve and your proposed solution.
 - Include usage examples from WSJT-X and Wavelog workflows if possible.
 
@@ -50,4 +50,4 @@ Thanks for your interest in contributing to WaveLogMoat.
 - Assume positive intent and focus feedback on code and behavior.
 - Prefer actionable review comments with concrete suggestions.
 
-Thanks again for helping improve WaveLogMoat.
+Thanks again for helping improve WaveLogMate.

@@ -1,11 +1,11 @@
 import Testing
-import WaveLogMoat
+import WaveLogMate
 
 @Suite struct ADIFParserTests {
   @Test func parseSingleRecordWithHeader() throws {
     let input = """
       <ADIF_VER:5>3.1.4
-      <PROGRAMID:12>WaveLogMoat
+      <PROGRAMID:12>WaveLogMate
       <EOH>
       <CALL:5>DJ7NT <MODE:3>FT8 <FREQ:8>7.074000 <QSO_DATE:8>20240110 <TIME_ON:6>120000 <RST_SENT:3>-15 <RST_RCVD:3>-10 <BAND:3>40m <EOR>
       """
