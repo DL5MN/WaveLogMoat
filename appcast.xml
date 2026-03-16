@@ -3,12 +3,12 @@
   <channel>
     <title>WaveLogMate</title>
     <item>
-      <title>Version 1.0.0</title>
-      <pubDate>Fri, 13 Mar 2026 05:36:48 +0000</pubDate>
-      <sparkle:version>8</sparkle:version>
-      <sparkle:shortVersionString>1.0.0</sparkle:shortVersionString>
+      <title>Version 1.0.1</title>
+      <pubDate>Mon, 16 Mar 2026 06:42:58 +0000</pubDate>
+      <sparkle:version>9</sparkle:version>
+      <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>14.0</sparkle:minimumSystemVersion>
-      <enclosure url="https://github.com/dl5mn/WaveLogMate/releases/download/v1.0.0/WaveLogMate-v1.0.0.dmg" sparkle:edSignature="Fj6FyMvttUrKxr8D0xaTgWVqitCmy6u/U8Y8OF7sfHmJ+qsVirCEzxWUl0JNKKhBUFtj9KBiT/JLyvcGW1meBA==" length="2252431" type="application/octet-stream"/>
+      <enclosure url="https://github.com/dl5mn/WaveLogMate/releases/download/v1.0.1/WaveLogMate-v1.0.1.dmg" sparkle:edSignature="akQnq3J4NnaEvDrq1SSsu8pfzW16EV8FQUMRP5ngb38QLovlXTbS5gCIS0HZkw1pSbQkuJ5OEJvEBFAb5do1AQ==" length="2252436" type="application/octet-stream"/>
     </item>
   </channel>
 </rss>
