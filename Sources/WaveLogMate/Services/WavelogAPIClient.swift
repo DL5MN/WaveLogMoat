@@ -69,7 +69,7 @@ public final class WavelogAPIClient: @unchecked Sendable {
     self.jsonDecoder = JSONDecoder()
   }
 
-  public func logQSO(
+  public func sendQSO(
     adifString: String,
     apiKey: String,
     stationProfileID: String,

@@ -121,7 +121,7 @@ public final class AppState {
 
     do {
       let adifString = ADIFGenerator.generate([newQSO])
-      _ = try await apiClient.logQSO(
+      _ = try await apiClient.sendQSO(
         adifString: adifString,
         apiKey: apiKey,
         stationProfileID: config.stationProfileID,
