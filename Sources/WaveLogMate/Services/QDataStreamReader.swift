@@ -9,7 +9,7 @@ public enum WSJTXParsedMessage: Sendable, Equatable {
   case unknown(typeValue: UInt32, clientId: String)
 }
 
-public final class QDataStreamReader: @unchecked Sendable {
+public struct QDataStreamReader: Sendable {
   public enum ReaderError: Error, LocalizedError {
     case insufficientData(operation: String, expected: Int, remaining: Int)
     case invalidBool(UInt8)
@@ -61,11 +61,11 @@ public final class QDataStreamReader: @unchecked Sendable {
     max(0, buffer.count - position)
   }
 
-  public func reset() {
+  public mutating func reset() {
     position = 0
   }
 
-  public func readUInt32() throws -> UInt32 {
+  public mutating func readUInt32() throws -> UInt32 {
     let data = try readRaw(byteCount: 4, operation: "UInt32")
     var value: UInt32 = 0
     for byte in data {
@@ -74,7 +74,7 @@ public final class QDataStreamReader: @unchecked Sendable {
     return value
   }
 
-  public func readUInt64() throws -> UInt64 {
+  public mutating func readUInt64() throws -> UInt64 {
     let data = try readRaw(byteCount: 8, operation: "UInt64")
     var value: UInt64 = 0
     for byte in data {
@@ -83,17 +83,17 @@ public final class QDataStreamReader: @unchecked Sendable {
     return value
   }
 
-  public func readInt32() throws -> Int32 {
+  public mutating func readInt32() throws -> Int32 {
     let raw = try readUInt32()
     return Int32(bitPattern: raw)
   }
 
-  public func readInt64() throws -> Int64 {
+  public mutating func readInt64() throws -> Int64 {
     let raw = try readUInt64()
     return Int64(bitPattern: raw)
   }
 
-  public func readBool() throws -> Bool {
+  public mutating func readBool() throws -> Bool {
     let value = try readUInt8()
     switch value {
     case 0: return false
@@ -102,7 +102,7 @@ public final class QDataStreamReader: @unchecked Sendable {
     }
   }
 
-  public func readUTF8() throws -> String? {
+  public mutating func readUTF8() throws -> String? {
     let length = try readUInt32()
     if length == 0xFFFF_FFFF {
       return nil
@@ -116,12 +116,12 @@ public final class QDataStreamReader: @unchecked Sendable {
     return string
   }
 
-  public func readDouble() throws -> Double {
+  public mutating func readDouble() throws -> Double {
     let raw = try readUInt64()
     return Double(bitPattern: raw)
   }
 
-  public func readQTime() throws -> UInt32 {
+  public mutating func readQTime() throws -> UInt32 {
     let milliseconds = try readUInt32()
     guard milliseconds < 86_400_000 else {
       throw ReaderError.invalidQTime(milliseconds)
@@ -129,7 +129,7 @@ public final class QDataStreamReader: @unchecked Sendable {
     return milliseconds
   }
 
-  public func readQDateTime() throws -> Date {
+  public mutating func readQDateTime() throws -> Date {
     let julianDay = try readInt64()
     guard julianDay > 0 else {
       throw ReaderError.invalidJulianDay(julianDay)
@@ -171,7 +171,7 @@ public final class QDataStreamReader: @unchecked Sendable {
     return date
   }
 
-  public func parseMessage(_ data: Data) throws -> WSJTXParsedMessage {
+  public mutating func parseMessage(_ data: Data) throws -> WSJTXParsedMessage {
     buffer = data
     reset()
 
@@ -283,12 +283,12 @@ public final class QDataStreamReader: @unchecked Sendable {
     }
   }
 
-  private func readUInt8() throws -> UInt8 {
+  private mutating func readUInt8() throws -> UInt8 {
     let data = try readRaw(byteCount: 1, operation: "UInt8")
     return data[data.startIndex]
   }
 
-  private func readRaw(byteCount: Int, operation: String) throws -> Data {
+  private mutating func readRaw(byteCount: Int, operation: String) throws -> Data {
     guard byteCount >= 0 else {
       return Data()
     }

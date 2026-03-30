@@ -7,7 +7,7 @@ import WaveLogMate
     var data = Data()
     data.appendUInt32(0x1234_5678)
 
-    let reader = QDataStreamReader(data: data)
+    var reader = QDataStreamReader(data: data)
     #expect(try reader.readUInt32() == 0x1234_5678)
     #expect(reader.bytesRemaining == 0)
   }
@@ -16,7 +16,7 @@ import WaveLogMate
     var data = Data()
     data.appendUInt64(0x1122_3344_5566_7788)
 
-    let reader = QDataStreamReader(data: data)
+    var reader = QDataStreamReader(data: data)
     #expect(try reader.readUInt64() == 0x1122_3344_5566_7788)
     #expect(reader.bytesRemaining == 0)
   }
@@ -26,7 +26,7 @@ import WaveLogMate
     data.appendUInt8(1)
     data.appendUInt8(0)
 
-    let reader = QDataStreamReader(data: data)
+    var reader = QDataStreamReader(data: data)
     #expect(try reader.readBool() == true)
     #expect(try reader.readBool() == false)
   }
@@ -35,7 +35,7 @@ import WaveLogMate
     var data = Data()
     data.appendUTF8("WSJT-X")
 
-    let reader = QDataStreamReader(data: data)
+    var reader = QDataStreamReader(data: data)
     #expect(try reader.readUTF8() == "WSJT-X")
   }
 
@@ -43,7 +43,7 @@ import WaveLogMate
     var data = Data()
     data.appendUInt32(0xFFFF_FFFF)
 
-    let reader = QDataStreamReader(data: data)
+    var reader = QDataStreamReader(data: data)
     #expect(try reader.readUTF8() == nil)
   }
 
@@ -53,7 +53,7 @@ import WaveLogMate
     data.appendUInt32(3_600_000)
     data.appendUInt8(1)
 
-    let reader = QDataStreamReader(data: data)
+    var reader = QDataStreamReader(data: data)
     let date = try reader.readQDateTime()
 
     let formatter = DateFormatter()
@@ -68,7 +68,7 @@ import WaveLogMate
     var data = Data()
     data.appendDouble(14.074)
 
-    let reader = QDataStreamReader(data: data)
+    var reader = QDataStreamReader(data: data)
     let value = try reader.readDouble()
     #expect(abs(value - 14.074) < 0.000_000_1)
   }
@@ -83,7 +83,7 @@ import WaveLogMate
     payload.appendUTF8("2.7.0")
     payload.appendUTF8("r123")
 
-    let reader = QDataStreamReader()
+    var reader = QDataStreamReader()
     let message = try reader.parseMessage(payload)
 
     #expect(
@@ -119,7 +119,7 @@ import WaveLogMate
     payload.appendUTF8("002")
     payload.appendUTF8("TR")
 
-    let reader = QDataStreamReader()
+    var reader = QDataStreamReader()
     let message = try reader.parseMessage(payload)
 
     guard case .qsoLogged(let clientId, let qso) = message else {
@@ -155,7 +155,7 @@ import WaveLogMate
     payload.appendUTF8("WSJT-X")
     payload.appendUTF8(adif)
 
-    let reader = QDataStreamReader()
+    var reader = QDataStreamReader()
     let message = try reader.parseMessage(payload)
     #expect(message == .loggedADIF(clientId: "WSJT-X", adifText: adif))
   }
@@ -167,14 +167,14 @@ import WaveLogMate
     payload.appendUInt32(WSJTXMessageType.heartbeat.rawValue)
     payload.appendUTF8("WSJT-X")
 
-    let reader = QDataStreamReader()
+    var reader = QDataStreamReader()
     #expect(throws: QDataStreamReader.ReaderError.self) {
       try reader.parseMessage(payload)
     }
   }
 
   @Test func insufficientDataThrows() throws {
-    let reader = QDataStreamReader(data: Data([0x00, 0x01]))
+    var reader = QDataStreamReader(data: Data([0x00, 0x01]))
     #expect(throws: QDataStreamReader.ReaderError.self) {
       try reader.readUInt32()
     }

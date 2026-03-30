@@ -18,15 +18,11 @@ public final class BinaryUDPListener: @unchecked Sendable {
   }
 
   private let queue: DispatchQueue
-  private let reader: QDataStreamReader
   private var listener: NWListener?
 
-  public init(
-    port: UInt16, host: String = "127.0.0.1", reader: QDataStreamReader = QDataStreamReader()
-  ) {
+  public init(port: UInt16, host: String = "127.0.0.1") {
     self.port = port
     self.host = host
-    self.reader = reader
     self.queue = DispatchQueue(label: "de.dl5mn.WaveLogMate.binary-udp-listener", qos: .utility)
   }
 
@@ -104,7 +100,8 @@ public final class BinaryUDPListener: @unchecked Sendable {
       }
 
       do {
-        let message = try self.reader.parseMessage(data)
+        var reader = QDataStreamReader()
+        let message = try reader.parseMessage(data)
         self.dispatch(message)
       } catch {
         self.onError?(error)
