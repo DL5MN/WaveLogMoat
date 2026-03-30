@@ -5,15 +5,6 @@ public enum ConnectionStatus: String, Sendable {
   case listening
   case error
 
-  public var color: String {
-    switch self {
-    case .connected: return "green"
-    case .disconnected: return "gray"
-    case .connecting, .listening: return "yellow"
-    case .error: return "red"
-    }
-  }
-
   public var label: String {
     switch self {
     case .connected: return "Connected"
