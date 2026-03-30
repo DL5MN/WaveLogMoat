@@ -53,6 +53,12 @@ public final class WavelogAPIClient: @unchecked Sendable {
     let key: String
   }
 
+  private static let userAgent: String = {
+    let version =
+      Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "unknown"
+    return "WaveLogMate/\(version)"
+  }()
+
   private let urlSession: URLSession
   private let jsonEncoder: JSONEncoder
   private let jsonDecoder: JSONDecoder
@@ -155,7 +161,7 @@ public final class WavelogAPIClient: @unchecked Sendable {
     request.httpMethod = "POST"
     request.setValue("application/json", forHTTPHeaderField: "Content-Type")
     request.setValue("application/json", forHTTPHeaderField: "Accept")
-    request.setValue("WaveLogMate/1.0", forHTTPHeaderField: "User-Agent")
+    request.setValue(Self.userAgent, forHTTPHeaderField: "User-Agent")
     request.httpBody = body
     return request
   }
