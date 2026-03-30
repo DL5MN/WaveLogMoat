@@ -25,7 +25,7 @@ targets:
         LSMinimumSystemVersion: "14.0"
         LSUIElement: true
         NSAppTransportSecurity:
-          NSAllowsArbitraryLoads: true
+          NSAllowsLocalNetworking: true
         SUFeedURL: "https://dl5mn.github.io/WaveLogMate/appcast.xml"
         SUPublicEDKey: "Rpryv9ry5XZedQXt2w1hTetQP3dB0dM67TqmT0T1XZA="
     entitlements:
