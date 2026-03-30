@@ -41,7 +41,7 @@ public struct WavelogConfig: Codable, Sendable, Equatable {
     showNotifications = try container.decodeIfPresent(Bool.self, forKey: .showNotifications) ?? true
     allowSelfSignedCerts =
       try container.decodeIfPresent(Bool.self, forKey: .allowSelfSignedCerts) ?? false
-    httpTimeout = try container.decodeIfPresent(Int.self, forKey: .httpTimeout) ?? 5000
+    httpTimeout = max(500, try container.decodeIfPresent(Int.self, forKey: .httpTimeout) ?? 5000)
     showFrequencyInMenuBar =
       try container.decodeIfPresent(Bool.self, forKey: .showFrequencyInMenuBar) ?? false
 

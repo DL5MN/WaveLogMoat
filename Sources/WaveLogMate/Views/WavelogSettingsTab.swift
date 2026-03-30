@@ -128,6 +128,27 @@ public struct WavelogSettingsTab: View {
           .font(.callout)
           .foregroundStyle(.secondary)
       }
+
+      Section("Advanced") {
+        HStack {
+          Text("HTTP Timeout")
+          Spacer()
+          TextField("", value: $appState.config.httpTimeout, format: .number.grouping(.never))
+            .frame(width: 60)
+            .multilineTextAlignment(.trailing)
+            .onChange(of: appState.config.httpTimeout) { _, newValue in
+              if newValue < 500 {
+                appState.config.httpTimeout = 500
+              }
+            }
+          Text("ms")
+            .foregroundStyle(.secondary)
+        }
+
+        Text("Time to wait for a response from the Wavelog server before giving up.")
+          .font(.callout)
+          .foregroundStyle(.secondary)
+      }
     }
     .formStyle(.grouped)
     .onAppear {
