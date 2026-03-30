@@ -5,7 +5,7 @@ import WaveLogMate
 @Suite struct WavelogAPIClientTests {
   @Test func buildQSOPayload() throws {
     let adif = "<CALL:5>DJ7NT <MODE:3>FT8 <EOR>"
-    let payload = WavelogAPIClient.buildQSOPayload(
+    let payload = try WavelogAPIClient.buildQSOPayload(
       adifString: adif,
       apiKey: "API_KEY",
       stationProfileID: "42"
@@ -19,7 +19,7 @@ import WaveLogMate
   }
 
   @Test func buildVersionPayload() throws {
-    let payload = WavelogAPIClient.buildVersionPayload(apiKey: "VERSION_KEY")
+    let payload = try WavelogAPIClient.buildVersionPayload(apiKey: "VERSION_KEY")
     let json = try decodeJSON(payload)
 
     #expect(json.count == 1)

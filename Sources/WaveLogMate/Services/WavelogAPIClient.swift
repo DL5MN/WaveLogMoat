@@ -75,7 +75,7 @@ public final class WavelogAPIClient: @unchecked Sendable {
     stationProfileID: String,
     baseURL: String
   ) async throws -> QSOResponse {
-    let payload = Self.buildQSOPayload(
+    let payload = try Self.buildQSOPayload(
       adifString: adifString,
       apiKey: apiKey,
       stationProfileID: stationProfileID
@@ -98,7 +98,7 @@ public final class WavelogAPIClient: @unchecked Sendable {
   ) async throws -> Bool {
     let testADIF =
       "<CALL:4>TEST <MODE:3>FT8 <FREQ:9>14.074000 <QSO_DATE:8>20240101 <TIME_ON:6>000000 <RST_SENT:3>-10 <RST_RCVD:3>-10 <EOR>"
-    let payload = Self.buildQSOPayload(
+    let payload = try Self.buildQSOPayload(
       adifString: testADIF,
       apiKey: apiKey,
       stationProfileID: stationProfileID
@@ -121,7 +121,7 @@ public final class WavelogAPIClient: @unchecked Sendable {
     apiKey: String,
     baseURL: String
   ) async throws -> String {
-    let payload = Self.buildVersionPayload(apiKey: apiKey)
+    let payload = try Self.buildVersionPayload(apiKey: apiKey)
     let request = try buildRequest(baseURL: baseURL, endpointPath: "version", body: payload)
     let response: VersionResponse = try await perform(request, decodeAs: VersionResponse.self)
     return response.version
@@ -131,21 +131,18 @@ public final class WavelogAPIClient: @unchecked Sendable {
     adifString: String,
     apiKey: String,
     stationProfileID: String
-  ) -> Data {
+  ) throws -> Data {
     let payload = QSORequestPayload(
       key: apiKey,
       stationProfileID: stationProfileID,
       type: "adif",
       string: adifString
     )
-    let encoder = JSONEncoder()
-    return (try? encoder.encode(payload)) ?? Data()
+    return try JSONEncoder().encode(payload)
   }
 
-  public static func buildVersionPayload(apiKey: String) -> Data {
-    let payload = KeyPayload(key: apiKey)
-    let encoder = JSONEncoder()
-    return (try? encoder.encode(payload)) ?? Data()
+  public static func buildVersionPayload(apiKey: String) throws -> Data {
+    return try JSONEncoder().encode(KeyPayload(key: apiKey))
   }
 
   private func buildRequest(baseURL: String, endpointPath: String, body: Data) throws -> URLRequest
