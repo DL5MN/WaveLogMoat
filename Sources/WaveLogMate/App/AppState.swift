@@ -279,8 +279,9 @@ public final class AppState {
     var sanitizedConfig = config
     sanitizedConfig.enforceVisibleEntryPoint()
     if sanitizedConfig != config {
+      isLoadingConfig = true
+      defer { isLoadingConfig = false }
       config = sanitizedConfig
-      return
     }
 
     if let encoded = try? JSONEncoder().encode(config) {
