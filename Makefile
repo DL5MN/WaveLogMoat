@@ -49,6 +49,7 @@ endif
 	@echo "Released v$(VERSION)"
 
 open: project
+	@pkill -x WaveLogMate 2>/dev/null; sleep 0.5; true
 	open "$$(xcodebuild -project WaveLogMate.xcodeproj -scheme WaveLogMate -configuration Debug -showBuildSettings 2>/dev/null | grep -m1 'BUILT_PRODUCTS_DIR' | awk '{print $$NF}')/WaveLogMate.app"
 
 changelog:
