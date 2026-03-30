@@ -99,7 +99,8 @@ public struct GeneralSettingsTab: View {
           }
           .disabled(
             appState.recentQSOs.isEmpty && appState.totalQSOsLogged == 0
-              && appState.totalQSOsFailed == 0)
+              && appState.totalQSOsFailed == 0
+          )
           .confirmationDialog(
             "Clear QSO Log?",
             isPresented: $showClearConfirmation
