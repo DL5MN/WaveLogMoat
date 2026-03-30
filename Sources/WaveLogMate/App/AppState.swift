@@ -54,6 +54,7 @@ public final class AppState {
     self.apiClient = WavelogAPIClient()
     self.apiKey = (try? KeychainHelper.load(key: "wavelog_api_key")) ?? ""
     loadConfig()
+    loadQSOLog()
     setupCallbacks()
     startListening()
     applyDockVisibility()
@@ -152,9 +153,10 @@ public final class AppState {
     }
 
     recentQSOs.insert(newQSO, at: 0)
-    if recentQSOs.count > 50 {
+    if recentQSOs.count > 10 {
       recentQSOs.removeLast()
     }
+    saveQSOLog()
   }
 
   private func checkConnectionsOnStartup() {
@@ -257,6 +259,65 @@ public final class AppState {
       lastError = error.localizedDescription
       showingError = true
     }
+  }
+
+  public func retryFailedQSO(_ qso: QSO) async {
+    guard recentQSOs.contains(where: { $0.id == qso.id }) else { return }
+
+    do {
+      let adifString = ADIFGenerator.generate([qso])
+      _ = try await apiClient.sendQSO(
+        adifString: adifString,
+        apiKey: apiKey,
+        stationProfileID: config.stationProfileID,
+        baseURL: config.wavelogURL
+      )
+
+      guard let index = recentQSOs.firstIndex(where: { $0.id == qso.id }) else { return }
+      recentQSOs[index].loggedSuccessfully = true
+      recentQSOs[index].logError = nil
+      recentQSOs[index].logErrorRaw = nil
+      recentQSOs[index].loggedAt = Date()
+      totalQSOsLogged += 1
+      totalQSOsFailed = max(0, totalQSOsFailed - 1)
+
+      if config.showNotifications {
+        NotificationService.sendQSOLoggedNotification(
+          call: qso.call, band: qso.band, mode: qso.mode)
+      }
+    } catch {
+      guard let index = recentQSOs.firstIndex(where: { $0.id == qso.id }) else { return }
+      recentQSOs[index].logError = error.localizedDescription
+      if let apiError = error as? WavelogAPIClient.APIError {
+        recentQSOs[index].logErrorRaw = apiError.rawBody
+      }
+      recentQSOs[index].loggedAt = Date()
+    }
+    saveQSOLog()
+  }
+
+  public func clearQSOLog() {
+    recentQSOs = []
+    totalQSOsLogged = 0
+    totalQSOsFailed = 0
+    QSOLogStore.clear()
+  }
+
+  private func loadQSOLog() {
+    let log = QSOLogStore.load()
+    recentQSOs = log.recentQSOs
+    totalQSOsLogged = log.totalQSOsLogged
+    totalQSOsFailed = log.totalQSOsFailed
+  }
+
+  private func saveQSOLog() {
+    QSOLogStore.save(
+      PersistedQSOLog(
+        recentQSOs: recentQSOs,
+        totalQSOsLogged: totalQSOsLogged,
+        totalQSOsFailed: totalQSOsFailed
+      )
+    )
   }
 
   public func loadConfig() {

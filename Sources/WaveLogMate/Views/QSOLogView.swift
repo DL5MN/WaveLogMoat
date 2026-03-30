@@ -2,9 +2,11 @@ import SwiftUI
 
 public struct QSOLogView: View {
   let qsos: [QSO]
+  let appState: AppState
 
-  public init(qsos: [QSO]) {
+  public init(qsos: [QSO], appState: AppState) {
     self.qsos = qsos
+    self.appState = appState
   }
 
   public var body: some View {
@@ -14,7 +16,7 @@ public struct QSOLogView: View {
         .font(.caption)
     } else {
       ForEach(qsos.prefix(10)) { qso in
-        QSORowView(qso: qso)
+        QSORowView(qso: qso, appState: appState)
       }
     }
   }
@@ -22,6 +24,7 @@ public struct QSOLogView: View {
 
 struct QSORowView: View {
   let qso: QSO
+  let appState: AppState
   @State private var showErrorDetail = false
 
   private var hasFailed: Bool {
@@ -60,7 +63,7 @@ struct QSORowView: View {
       }
     }
     .popover(isPresented: $showErrorDetail, arrowEdge: .trailing) {
-      QSOErrorDetailView(qso: qso)
+      QSOErrorDetailView(qso: qso, appState: appState)
     }
   }
 
@@ -73,7 +76,9 @@ struct QSORowView: View {
 
 private struct QSOErrorDetailView: View {
   let qso: QSO
+  let appState: AppState
   @Environment(\.dismiss) private var dismiss
+  @State private var isRetrying = false
 
   var body: some View {
     VStack(alignment: .leading, spacing: 12) {
@@ -125,7 +130,28 @@ private struct QSOErrorDetailView: View {
       }
 
       HStack {
+        Button {
+          isRetrying = true
+          Task {
+            await appState.retryFailedQSO(qso)
+            isRetrying = false
+            if appState.recentQSOs.first(where: { $0.id == qso.id })?.loggedSuccessfully == true {
+              dismiss()
+            }
+          }
+        } label: {
+          HStack(spacing: 4) {
+            if isRetrying {
+              ProgressView().controlSize(.small)
+            }
+            Text("Retry")
+          }
+        }
+        .controlSize(.small)
+        .disabled(isRetrying)
+
         Spacer()
+
         if let rawBody = qso.logErrorRaw, !rawBody.isEmpty {
           Button("Copy Raw JSON") {
             NSPasteboard.general.clearContents()

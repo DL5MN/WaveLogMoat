@@ -52,7 +52,7 @@ public struct MenuBarView: View {
         Text("Recent QSOs")
           .font(.headline)
 
-        QSOLogView(qsos: appState.recentQSOs)
+        QSOLogView(qsos: appState.recentQSOs, appState: appState)
       }
       .padding()
 

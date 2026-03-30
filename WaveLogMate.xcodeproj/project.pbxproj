@@ -16,6 +16,7 @@
 		32A9C02980660FAC3FADD221 /* QSO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B512AF51BCF010991C1B0AE /* QSO.swift */; };
 		43123BEA9C485498B6BA2DEF /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF887141B735451D1E8F283 /* Logger.swift */; };
 		46E07B57ADF66FDED4ABAC02 /* BandMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56C77B4AB5AE67DB031CC039 /* BandMap.swift */; };
+		4B303B28AFD7878BBA8D5DF5 /* QSOLogStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0E78BA12FD7AD276578BDAE9 /* QSOLogStore.swift */; };
 		5265A0237A8961F4AA157041 /* WaveLogMateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6580E6FD32F7FD7AAD812865 /* WaveLogMateApp.swift */; };
 		5C08700DF8E14D8F3B45EB07 /* ConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEC662087E983EA64C1FC26 /* ConnectionStatus.swift */; };
 		5D7AD82C3DFE093C1462CBCD /* XMLContactParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F8B3F977657116565F0E4AF /* XMLContactParser.swift */; };
@@ -66,6 +67,7 @@
 		03415E71D5D0FBDA5FD56A83 /* ConnectionStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatusView.swift; sourceTree = "<group>"; };
 		068BB3CC01AB35ED075320DA /* ADIFParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ADIFParser.swift; sourceTree = "<group>"; };
 		0B512AF51BCF010991C1B0AE /* QSO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QSO.swift; sourceTree = "<group>"; };
+		0E78BA12FD7AD276578BDAE9 /* QSOLogStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QSOLogStore.swift; sourceTree = "<group>"; };
 		16D8ECBE7949D7A55DBDEB58 /* WavelogSettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WavelogSettingsTab.swift; sourceTree = "<group>"; };
 		18C1EC67BAA6153A910D3E09 /* QSONormalizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QSONormalizerTests.swift; sourceTree = "<group>"; };
 		1C59003E5D40501D94AEE740 /* KeychainHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
@@ -140,6 +142,7 @@
 				EA73E2A504675AC79D1CCDA4 /* LaunchAtLoginService.swift */,
 				EC759D5D7F8B8C2FE23C4D26 /* NotificationService.swift */,
 				FEB583C8AF58CCB9652CEE2B /* QDataStreamReader.swift */,
+				0E78BA12FD7AD276578BDAE9 /* QSOLogStore.swift */,
 				B0DCFFBDCA2D2C35EE62B853 /* QSONormalizer.swift */,
 				29C2A3556FFF533FD7CBF68F /* TextUDPListener.swift */,
 				93A4173E7439DD56B3E71EA6 /* UDPListenerFactory.swift */,
@@ -363,6 +366,7 @@
 				DCA7B30D4CF00DCB7C198F0D /* NotificationService.swift in Sources */,
 				A099CE17752D842A70BE1A4C /* QDataStreamReader.swift in Sources */,
 				32A9C02980660FAC3FADD221 /* QSO.swift in Sources */,
+				4B303B28AFD7878BBA8D5DF5 /* QSOLogStore.swift in Sources */,
 				8D12033F6F0FB45F108436A2 /* QSOLogView.swift in Sources */,
 				0D85326A63FC9336E64F8D2C /* QSONormalizer.swift in Sources */,
 				9C046AB2780C9EBD835A2015 /* SettingsView.swift in Sources */,

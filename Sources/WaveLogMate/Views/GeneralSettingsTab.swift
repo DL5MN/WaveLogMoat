@@ -4,6 +4,7 @@ import UserNotifications
 public struct GeneralSettingsTab: View {
   @Bindable var appState: AppState
   @State private var notificationsDenied = false
+  @State private var showClearConfirmation = false
   @Environment(\.scenePhase) private var scenePhase
 
   public init(appState: AppState) {
@@ -81,6 +82,34 @@ public struct GeneralSettingsTab: View {
           Text("Get notified when a QSO is logged or fails to log.")
             .font(.callout)
             .foregroundStyle(.secondary)
+        }
+      }
+
+      Section("QSO Log") {
+        HStack {
+          VStack(alignment: .leading) {
+            Text("\(appState.totalQSOsLogged) logged, \(appState.totalQSOsFailed) failed")
+            Text("\(appState.recentQSOs.count) recent QSOs stored")
+              .font(.callout)
+              .foregroundStyle(.secondary)
+          }
+          Spacer()
+          Button("Clear Log", role: .destructive) {
+            showClearConfirmation = true
+          }
+          .disabled(
+            appState.recentQSOs.isEmpty && appState.totalQSOsLogged == 0
+              && appState.totalQSOsFailed == 0)
+          .confirmationDialog(
+            "Clear QSO Log?",
+            isPresented: $showClearConfirmation
+          ) {
+            Button("Clear Log", role: .destructive) {
+              appState.clearQSOLog()
+            }
+          } message: {
+            Text("This will reset all QSO counters and remove stored QSOs. This cannot be undone.")
+          }
         }
       }
     }
