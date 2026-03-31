@@ -1,7 +1,7 @@
 import Foundation
 
 public enum ADIFGenerator {
-  private static let adifVersion = "3.1.6"
+  private static let adifVersion = "3.1.7"
   private static var programName: String {
     Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? "WaveLogMate"
   }

@@ -10,7 +10,7 @@ import WaveLogMate
 
     let output = ADIFGenerator.generate([qso])
 
-    #expect(output.contains("<ADIF_VER:5>3.1.6"))
+    #expect(output.contains("<ADIF_VER:5>3.1.7"))
     #expect(output.contains("<PROGRAMID:"))
     #expect(output.contains("<CALL:5>DL5MN"))
     #expect(output.contains("<EOR>"))
