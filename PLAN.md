@@ -4,7 +4,7 @@
 
 **Author**: DL5MN
 **Status**: Active (public repos)
-**Last Updated**: 2026-03-11
+**Last Updated**: 2026-03-31
 
 ---
 
@@ -61,7 +61,7 @@ A mate — your companion at the radio, bridging WSJT-X and Wavelog.
 | Networking (UDP)  | `Network.framework` (`NWListener`) | Apple's modern networking, native UDP support   |
 | Networking (HTTP) | `URLSession`                       | Native, async/await, certificate trust handling |
 | Auto-updates      | Sparkle 2.x via SPM                | Industry standard for non-App Store macOS apps  |
-| Settings storage  | `@AppStorage` / `UserDefaults`     | Simple, native, automatic sync                  |
+| Settings storage  | `UserDefaults` + JSON file          | Config in UserDefaults, QSO log in App Support  |
 | Secure storage    | Keychain (Security framework)      | API keys must not be in plaintext               |
 | Launch at login   | `ServiceManagement` framework      | `SMAppService.mainApp.register()` (macOS 13+)   |
 | Notifications     | `UserNotifications` framework      | Native macOS notification center                |
@@ -155,6 +155,7 @@ WSJT-X
 │ QSOLogView     │ XMLContact     │ ADIFField      │                   │
 │ ConnectionSt.  │  Parser        │                │                   │
 │  View          │ QSONormalizer  │                │                   │
+│                │ QSOLogStore    │                │                   │
 │                │ WavelogAPI     │                │                   │
 │                │ Notification   │                │                   │
 │                │  Service       │                │                   │
@@ -197,7 +198,7 @@ WSJT-X
 
 ### 3d. Live Testing
 
-**Status**: All 62 unit tests pass. Tested against WSJT-X 3.1.0 and a live Wavelog instance.
+**Status**: All 65 unit tests pass. Tested against WSJT-X 3.1.0 and a live Wavelog instance.
 
 **Completed:**
 
@@ -224,8 +225,8 @@ WSJT-X
 ### 3f. Optional Enhancements (Deferred)
 
 - First-launch onboarding flow (guided setup wizard)
-- Retry logic for failed QSO submissions
-- QSO queue with offline persistence
+- ~~Retry logic for failed QSO submissions~~ — Done in v1.1.0
+- ~~QSO queue with offline persistence~~ — Partially addressed: recent QSOs (10) and counters persist across restarts via JSON in Application Support
 - Menu bar icon variants (connected/disconnected states)
 - Localization (German, at minimum)
 - Submit to `homebrew/homebrew-cask` when app has traction
@@ -287,3 +288,7 @@ WSJT-X
 | 26  | Swift 6.2 strict concurrency | Migrated from Swift 5.9 to 6.2, enabling strict concurrency checking. `AppState` and `UDPService` annotated `@MainActor`; UDP listener callbacks wrapped in `Task { @MainActor in }` to hop from background DispatchQueues. All model types were already `Sendable`. Listener classes remain `@unchecked Sendable` (serial DispatchQueue isolation). Zero errors, zero warnings. | 2026-03-11 |
 | 27  | Self-signed TLS is opt-in        | Preserve compatibility with self-hosted Wavelog instances, but default `allowSelfSignedCerts` to `false` so certificate trust bypass is an explicit user action instead of the default. | 2026-03-12 |
 | 28  | Rename WaveLogMoat → WaveLogMate | "Mate" — your companion at the radio. Better name, same Gate/Goat/Stoat convention. Full rename: bundle ID, Keychain service, module names, Homebrew tap, CI workflows, docs. New bundle ID `de.dl5mn.WaveLogMate`. No migration needed (no existing users). | 2026-03-13 |
+| 29  | NSAllowsLocalNetworking over NSAllowsArbitraryLoads | Narrows ATS exception to local network only (RFC 1918, loopback, .local). Remote servers require HTTPS. Self-signed certs handled by `SelfSignedCertificateDelegate`. | 2026-03-30 |
+| 30  | QDataStreamReader as struct | Changed from `class @unchecked Sendable` to `struct Sendable` with `mutating` methods. Value semantics eliminate shared mutable state. `BinaryUDPListener` creates a local reader per message instead of reusing an instance variable. | 2026-03-30 |
+| 31  | QSO log persistence via JSON file | Recent QSOs (capped at 10) and counters stored as JSON at `~/Library/Application Support/WaveLogMate/qso-log.json`. Chose JSON file over UserDefaults (better for structured data) and SwiftData (overkill for 10 records). Atomic writes, error logging. | 2026-03-30 |
+| 32  | HTTP timeout configurable with 500ms floor | Exposed in Wavelog settings tab. Minimum enforced both in UI (`onChange`) and config decoder (`max(500, ...)`). Default remains 5000ms. | 2026-03-30 |
