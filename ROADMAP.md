@@ -294,20 +294,22 @@ Visual representation of the audio passband:
 
 ## API Dependencies
 
-| Endpoint                | Phase    | Purpose                                     |
-| ----------------------- | -------- | ------------------------------------------- |
-| `api/qso`               | 1 (done) | Log QSOs                                    |
-| `api/station_info`      | 1 (done) | Station profile picker                      |
-| `api/private_lookup`    | 2        | Per-callsign worked/confirmed status        |
-| `api/get_contacts_adif` | 2        | Bulk QSO export for local award computation |
-| `api/statistics`        | 3        | Dashboard stats                             |
+| Endpoint                     | Phase    | Purpose                                                    |
+| ---------------------------- | -------- | ---------------------------------------------------------- |
+| `api/qso`                    | 1 (done) | Log QSOs                                                   |
+| `api/station_info`           | 1 (done) | Station profile picker                                     |
+| `api/version`                | 1 (done) | Connection health check, version display                   |
+| `api/private_lookup`         | 2        | Per-callsign worked/confirmed status                       |
+| `api/get_contacts_adif`      | 2        | Bulk QSO export for local award computation                |
+| `api/logbook_get_worked_grids` | 2/3    | Grids worked per logbook/band (Wavelog 2.4+). Replaces bulk ADIF parsing for grid goal progress and grid map overlay. |
+| `api/statistics`             | 3        | Dashboard stats                                            |
 
 **Upstream feature requests for Wavelog**:
 
 - `api/awards/dxcc` — DXCC band matrix (worked/confirmed per entity per band), mirroring internal `Dxcc::get_dxcc_array()`
 - `api/awards/waz` / `was` / `itu` — Same for other awards
 - Batch `private_lookup` — multiple callsigns in one request (critical for performance)
-- Grid worked status in `private_lookup` response
+- ~~Grid worked status in `private_lookup` response~~ — Partially addressed: Wavelog 2.4 added `logbook_get_worked_grids` for bulk grid retrieval by logbook/band
 
 ## WSJT-X UDP Messages Used
 
