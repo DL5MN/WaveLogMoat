@@ -29,7 +29,7 @@ WaveLogMate receives QSO data from WSJT-X and automatically forwards it to your 
 
 - macOS 14 (Sonoma) or later
 - [WSJT-X](https://wsjt-x.sourceforge.io/) or [WSJT-X Improved](https://wsjt-x-improved.sourceforge.io/)
-- A [Wavelog](https://www.wavelog.org) instance with API access
+- A [Wavelog](https://www.wavelog.org) instance (2.4 or later recommended) with API access
 
 ## Installation
 
