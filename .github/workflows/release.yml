@@ -170,7 +170,7 @@ jobs:
           sed -i '' '/^## \[/d' RELEASE_NOTES.md
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2.6.1
+        uses: softprops/action-gh-release@v2
         with:
           name: WaveLogMate ${{ github.ref_name }}
           draft: false
