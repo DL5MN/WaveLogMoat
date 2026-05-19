@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2026-05-19
+
+### CI/CD
+
+- Track action-gh-release major version tag
+
+### Documentation
+
+- Recommend Wavelog 2.4+ in README requirements
+- Update PLAN.md and ROADMAP.md for ADIF 3.1.7 and Wavelog 2.4
+- Update PLAN.md for v1.1.0 changes
+
+### Other
+
+- Bump github.com/sparkle-project/sparkle from 2.9.1 to 2.9.2 (#5)
+- Bump softprops/action-gh-release from 2 to 3 (#4)
+- Bump ADIF version to 3.1.7
+
 ## [1.1.1] - 2026-03-30
 
 ### Changed
